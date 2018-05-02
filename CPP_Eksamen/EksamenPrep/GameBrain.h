@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #define PLAYERPOSY 750
+#include <vector>
 class GameBrain {
 
 public: 
@@ -8,6 +9,7 @@ public:
 	~GameBrain();
 	
 	void createWindow(const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
+	void updateEnemyVectors();
 	void updatePos(int direction);
 	void render();
 	void handleEvents();
@@ -51,6 +53,12 @@ private:
 	SDL_Surface * m_playerBMP;
 	SDL_Texture * m_player_drawable;
 	SDL_Rect m_player_coords;
+
+	// Enemy type 1
+	SDL_Surface * m_enemy1_BMP;
+	SDL_Texture * m_enemy1_drawable;
+	SDL_Rect m_enemy1_coords;
+	std::vector<SDL_Rect> m_arr_enemy1_coords;
 
 	bool isRunning;
 };
