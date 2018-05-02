@@ -8,6 +8,7 @@ public:
 	~GameBrain();
 	
 	void createWindow(const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
+	void updatePos(int direction);
 	void render();
 	void handleEvents();
 	void clean();

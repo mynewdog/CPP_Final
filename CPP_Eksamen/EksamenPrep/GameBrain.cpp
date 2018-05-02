@@ -1,6 +1,11 @@
 #include "stdafx.h"
 #include "GameBrain.h"
 #include <iostream>
+#include "Player.h"
+
+#ifndef SCREEN_SIZE
+#define SCREEN_SIZE 800
+#endif
 
 void GameBrain::createWindow(const char* title, int xPos, int yPos, int width, int height, bool fullscreen) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
@@ -65,8 +70,8 @@ void GameBrain::initImages() {
 	m_player_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_playerBMP);
 	m_player_coords.h = m_playerBMP->h;
 	m_player_coords.w = m_playerBMP->w;
-	m_player_coords.x = 0;
-	m_player_coords.y = 0;
+	m_player_coords.x = (800-64)/2;
+	m_player_coords.y = 685;
 	SDL_FreeSurface(m_playerBMP);
 }
 	
@@ -89,7 +94,22 @@ void GameBrain::updateCursor() {
 void GameBrain::update() {
 
 }
+void GameBrain::updatePos(int direction) {
+	if (m_player_coords.x >= 0 && m_player_coords.x <= (800 - 64)) {
+		// Update
+		if (direction == 0) {
+			m_player_coords.x = (m_player_coords.x - 6);
+		}
+		else if (direction == 1) {
+			m_player_coords.x = (m_player_coords.x + 6);
+		}
+	}
 
+	if (m_player_coords.x < 0) { m_player_coords.x = 0; }
+	if (m_player_coords.x > (SCREEN_SIZE - 64)) {
+		m_player_coords.x = (SCREEN_SIZE - 64);
+	}
+}
 void GameBrain::handleEvents() {
 	SDL_Event event;
 	SDL_PollEvent(&event);
@@ -104,6 +124,13 @@ void GameBrain::handleEvents() {
 
 	// Check main menu cursor select
 	if (event.type == SDL_KEYDOWN) {
+			if (event.key.keysym.sym == SDLK_LEFT && m_screen == 2) {
+				updatePos(0);
+			}
+			else if (event.key.keysym.sym == SDLK_RIGHT && m_screen == 2) {
+				updatePos(1);
+			}
+
 			// Pressed down arrow
 			if (event.key.keysym.sym == SDLK_DOWN) {
 				m_menuChoice++;
