@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL.h>
+#include "Projectile.h"
 #define PLAYERPOSY 750
 #include <vector>
 class GameBrain {
@@ -9,7 +10,7 @@ public:
 	~GameBrain();
 	
 	void createWindow(const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
-	void updateEnemyVectors();
+	void updateEnemyVectors(std::vector<SDL_Rect> &arr);
 	void updatePos(int direction);
 	void render();
 	void handleEvents();
@@ -24,6 +25,7 @@ public:
 private:
 	int m_menuChoice = 0;
 	int m_screen = 0;
+	std::vector<Projectile> bullets;
 
 	SDL_Window * m_gameWindow;
 	SDL_Renderer * m_gameRenderer;
@@ -59,6 +61,30 @@ private:
 	SDL_Texture * m_enemy1_drawable;
 	SDL_Rect m_enemy1_coords;
 	std::vector<SDL_Rect> m_arr_enemy1_coords;
+
+	// Enemy type 2
+	SDL_Surface * m_enemy2_BMP;
+	SDL_Texture * m_enemy2_drawable;
+	SDL_Rect m_enemy2_coords;
+	std::vector<SDL_Rect> m_arr_enemy2_coords;
+
+	// Enemy type 3
+	SDL_Surface * m_enemy3_BMP;
+	SDL_Texture * m_enemy3_drawable;
+	SDL_Rect m_enemy3_coords;
+	std::vector<SDL_Rect> m_arr_enemy3_coords;
+
+	// Enemy type 4
+	SDL_Surface * m_enemy4_BMP;
+	SDL_Texture * m_enemy4_drawable;
+	SDL_Rect m_enemy4_coords;
+	std::vector<SDL_Rect> m_arr_enemy4_coords;
+
+	// Enemy type 5
+	SDL_Surface * m_enemy5_BMP;
+	SDL_Texture * m_enemy5_drawable;
+	SDL_Rect m_enemy5_coords;
+	std::vector<SDL_Rect> m_arr_enemy5_coords;
 
 	bool isRunning;
 };

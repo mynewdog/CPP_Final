@@ -2,11 +2,14 @@
 #include "GameBrain.h"
 #include <iostream>
 #include <SDL.h>
+#include "Projectile.h"
 #include "Player.h"
 
 #ifndef SCREEN_SIZE
 #define SCREEN_SIZE 800
 #endif
+// Dir 0 = LEFT | 1 = RIGHT
+int direction = 0;
 
 void GameBrain::createWindow(const char* title, int xPos, int yPos, int width, int height, bool fullscreen) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
@@ -27,47 +30,36 @@ void GameBrain::createWindow(const char* title, int xPos, int yPos, int width, i
 		isRunning = false;
 	}
 }
-void GameBrain::updateEnemyVectors() {
-	// Dir 0 = LEFT | 1 = RIGHT
-	int direction = 1;
-	if (m_arr_enemy1_coords.front().x >= 0 && m_arr_enemy1_coords.back().x <= (SCREEN_SIZE - 48)) {
-		for (int i = 0; i < m_arr_enemy1_coords.size(); i++) {
-			
-			// Check if hit left wall
-			if (direction == 0) {
-				if (m_arr_enemy1_coords.front().x < 5) {
-					m_arr_enemy1_coords[i].x -= m_arr_enemy1_coords.front().x;
-				}
-				else {
-					m_arr_enemy1_coords[i].x -= 5;
-				}
-				
+void GameBrain::updateEnemyVectors(std::vector<SDL_Rect> &arr) {
+	// Check right
+	if (arr.back().x >= (SCREEN_SIZE - 48)) {
+		if (arr[0].y <= 660) {
+			for (int i = 0; i < arr.size(); i++) {
+				arr[i].y += 48;
 			}
+		}
+		
+		direction = 0;
+	}
+	else if (arr.front().x <= 0) {
+		if (arr[0].y <= 660) {
+			for (int i = 0; i < arr.size(); i++) {
+				arr[i].y += 48;
+			}
+		}
+		direction = 1;
 
-			// Check if hit right wall
-			else if (direction == 1) {
-				if ((SCREEN_SIZE - m_arr_enemy1_coords.back().x - 48) < 5) {
-					m_arr_enemy1_coords[i].x += (SCREEN_SIZE - 48 - m_arr_enemy1_coords.back().x);
-					std::cout << m_arr_enemy1_coords.back().x << "px" << std::endl;
-				}
-				else {
-					m_arr_enemy1_coords[i].x += 5;
-				}
-				
-			}
-			
+	}
+
+	if (direction == 1) {
+		for (int i = 0; i < arr.size(); i++) {
+			arr[i].x += 1;
 		}
 	}
-
-	// If hit right wall
-	if (m_arr_enemy1_coords.back().x >= (SCREEN_SIZE - 48)) {
-		direction = 0;
-		std::cout << direction << std::endl;
-	}
-	// If hit left wall
-	if (m_arr_enemy1_coords.front().x <= 0) {
-		direction = 1;
-		std::cout << direction << std::endl;
+	else if (direction == 0) {
+		for (int i = 0; i < arr.size(); i++) {
+			arr[i].x -= 1;
+		}
 	}
 	
 }
@@ -93,7 +85,7 @@ void GameBrain::initImages() {
 
 	// Back button
 	m_backBMP = SDL_LoadBMP("Img/goback.bmp");
-	
+
 	m_back_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_backBMP);
 	m_back_coords.h = m_backBMP->h;
 	m_back_coords.w = m_backBMP->w;
@@ -135,6 +127,74 @@ void GameBrain::initImages() {
 	}
 
 	SDL_FreeSurface(m_enemy1_BMP);
+
+	// Enemy type 2
+	m_enemy2_BMP = SDL_LoadBMP("Img/enemy_2.bmp");
+	m_enemy2_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_enemy2_BMP);
+	m_enemy2_coords.h = m_enemy2_BMP->h;
+	m_enemy2_coords.w = m_enemy2_BMP->w;
+	m_enemy2_coords.x = 45;
+	m_enemy2_coords.y = (SCREEN_SIZE - 460);
+
+	for (int i = 0; i < 11; i++) {
+		m_arr_enemy2_coords.push_back(m_enemy2_coords);
+		if (i > 0) {
+			m_arr_enemy2_coords[i].x = (m_arr_enemy2_coords[i - 1].x + 60);
+		}
+	}
+
+	SDL_FreeSurface(m_enemy2_BMP);
+
+	// Enemy type 3
+	m_enemy3_BMP = SDL_LoadBMP("Img/enemy_2.bmp");
+	m_enemy3_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_enemy3_BMP);
+	m_enemy3_coords.h = m_enemy3_BMP->h;
+	m_enemy3_coords.w = m_enemy3_BMP->w;
+	m_enemy3_coords.x = 45;
+	m_enemy3_coords.y = (SCREEN_SIZE - 520);
+
+	for (int i = 0; i < 11; i++) {
+		m_arr_enemy3_coords.push_back(m_enemy3_coords);
+		if (i > 0) {
+			m_arr_enemy3_coords[i].x = (m_arr_enemy3_coords[i - 1].x + 60);
+		}
+	}
+
+	SDL_FreeSurface(m_enemy3_BMP);
+
+	// Enemy type 4
+	m_enemy4_BMP = SDL_LoadBMP("Img/enemy_2.bmp");
+	m_enemy4_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_enemy4_BMP);
+	m_enemy4_coords.h = m_enemy4_BMP->h;
+	m_enemy4_coords.w = m_enemy4_BMP->w;
+	m_enemy4_coords.x = 45;
+	m_enemy4_coords.y = (SCREEN_SIZE - 580);
+
+	for (int i = 0; i < 11; i++) {
+		m_arr_enemy4_coords.push_back(m_enemy4_coords);
+		if (i > 0) {
+			m_arr_enemy4_coords[i].x = (m_arr_enemy4_coords[i - 1].x + 60);
+		}
+	}
+
+	SDL_FreeSurface(m_enemy4_BMP);
+
+	// Enemy type 5
+	m_enemy5_BMP = SDL_LoadBMP("Img/enemy_2.bmp");
+	m_enemy5_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_enemy5_BMP);
+	m_enemy5_coords.h = m_enemy5_BMP->h;
+	m_enemy5_coords.w = m_enemy5_BMP->w;
+	m_enemy5_coords.x = 45;
+	m_enemy5_coords.y = (SCREEN_SIZE - 640);
+
+	for (int i = 0; i < 11; i++) {
+		m_arr_enemy5_coords.push_back(m_enemy5_coords);
+		if (i > 0) {
+			m_arr_enemy5_coords[i].x = (m_arr_enemy5_coords[i - 1].x + 60);
+		}
+	}
+
+	SDL_FreeSurface(m_enemy5_BMP);
 }
 	
 
@@ -185,6 +245,13 @@ void GameBrain::handleEvents() {
 
 	// Check main menu cursor select
 	if (event.type == SDL_KEYDOWN) {
+			if (event.key.keysym.sym == SDLK_SPACE && m_screen == 2) {
+				Projectile p;
+				p.spawn(m_player_coords.x, m_player_coords.y);
+			}
+			if (event.key.keysym.sym == SDLK_ESCAPE && m_screen == 2) {
+				m_screen = 0;
+			}
 			if (event.key.keysym.sym == SDLK_LEFT && m_screen == 2) {
 				updatePos(0);
 			}
@@ -258,13 +325,21 @@ void GameBrain::render() {
 	else if (m_screen == 2) {
 		drawGameScreen();
 		SDL_RenderCopy(m_gameRenderer, m_player_drawable, nullptr, &m_player_coords);
+		
 		for (int i = 0; i < 11; i++) {
 			SDL_RenderCopy(m_gameRenderer, m_enemy1_drawable, nullptr, &m_arr_enemy1_coords[i]);
+			SDL_RenderCopy(m_gameRenderer, m_enemy2_drawable, nullptr, &m_arr_enemy2_coords[i]);
+			SDL_RenderCopy(m_gameRenderer, m_enemy3_drawable, nullptr, &m_arr_enemy3_coords[i]);
+			SDL_RenderCopy(m_gameRenderer, m_enemy4_drawable, nullptr, &m_arr_enemy4_coords[i]);
+			SDL_RenderCopy(m_gameRenderer, m_enemy5_drawable, nullptr, &m_arr_enemy5_coords[i]);
 		}
-
-		updateEnemyVectors();
+		updateEnemyVectors(m_arr_enemy1_coords);
+		updateEnemyVectors(m_arr_enemy2_coords);
+		updateEnemyVectors(m_arr_enemy3_coords);
+		updateEnemyVectors(m_arr_enemy4_coords);
+		updateEnemyVectors(m_arr_enemy5_coords);
+		
 	}
-
 	// Update this frame
 	SDL_RenderPresent(m_gameRenderer);
 }
