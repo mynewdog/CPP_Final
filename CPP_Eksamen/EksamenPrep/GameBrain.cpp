@@ -25,40 +25,51 @@ void GameBrain::createWindow(const char* title, int xPos, int yPos, int width, i
 void GameBrain::initImages() {
 	// Main Menu Background
 	m_mainMenuBMP = SDL_LoadBMP("Img/mainmenu.bmp");
-
 	m_menu_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_mainMenuBMP);
 	m_menu_coords.h = m_mainMenuBMP->h;
 	m_menu_coords.w = m_mainMenuBMP->w;
-
 	m_menu_coords.x = 225;
 	m_menu_coords.y = 300;
-
 	SDL_FreeSurface(m_mainMenuBMP);
 
 	// Cursor
 	m_cursorBMP = SDL_LoadBMP("Img/selectarrow.bmp");
-
 	m_cursor_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_cursorBMP);
 	m_cursor_coords.h = m_cursorBMP->h;
 	m_cursor_coords.w = m_cursorBMP->w;
-
 	m_cursor_coords.x = 190;
 	m_cursor_coords.y = 305;
-
 	SDL_FreeSurface(m_cursorBMP);
 
-	// Back buttons
+	// Back button
 	m_backBMP = SDL_LoadBMP("Img/goback.bmp");
+	
 	m_back_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_backBMP);
 	m_back_coords.h = m_backBMP->h;
 	m_back_coords.w = m_backBMP->w;
-
 	m_back_coords.x = 225;
 	m_back_coords.y = 700;
-
 	SDL_FreeSurface(m_backBMP);
-	
+
+	// Game background
+	m_gameBG_BMP = SDL_LoadBMP("Img/gameBG.bmp");
+	m_gameBG_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_gameBG_BMP);
+	m_gameBG_coords.h = m_gameBG_BMP->h;
+	m_gameBG_coords.w = m_gameBG_BMP->w;
+	m_gameBG_coords.x = 0;
+	m_gameBG_coords.y = 0;
+	SDL_FreeSurface(m_gameBG_BMP);
+
+	// Spaceship(Player)
+	m_playerBMP = SDL_LoadBMP("Img/player.bmp");
+	m_player_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_playerBMP);
+	m_player_coords.h = m_playerBMP->h;
+	m_player_coords.w = m_playerBMP->w;
+	m_player_coords.x = 0;
+	m_player_coords.y = 0;
+	SDL_FreeSurface(m_playerBMP);
 }
+	
 
 void GameBrain::updateCursor() {
 	if (m_menuChoice == 0) {
@@ -112,6 +123,11 @@ void GameBrain::handleEvents() {
 			// Pressed enter
 			if (event.key.keysym.sym == SDLK_RETURN) {
 				std::cout << "Enter: " << m_menuChoice << std::endl;
+				// Change to game screen
+				if (m_menuChoice == 0 && m_screen == 0) {
+					m_screen = 2;
+				}
+
 
 				// Change to how to screen
 				if (m_menuChoice == 1 && m_screen == 0) {
@@ -130,6 +146,10 @@ void GameBrain::handleEvents() {
 	}
 
 }
+void GameBrain::drawGameScreen() {
+	SDL_RenderCopy(m_gameRenderer, m_gameBG_drawable, nullptr, &m_gameBG_coords);
+}
+
 
 void GameBrain::render() {
 	// Clear last frame
@@ -144,6 +164,12 @@ void GameBrain::render() {
 	// Update if on how to screen
 	else if (m_screen == 1) {
 		SDL_RenderCopy(m_gameRenderer, m_back_drawable, nullptr, &m_back_coords);
+	}
+	
+	// Update if playing game
+	else if (m_screen == 2) {
+		drawGameScreen();
+		SDL_RenderCopy(m_gameRenderer, m_player_drawable, nullptr, &m_player_coords);
 	}
 
 	// Update this frame

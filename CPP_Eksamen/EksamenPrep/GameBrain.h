@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL.h>
+#define PLAYERPOSY 750
 class GameBrain {
 
 public: 
@@ -12,6 +13,7 @@ public:
 	void clean();
 	void update();
 	void initImages();
+	void drawGameScreen();
 
 	void updateCursor();
 	bool running();
@@ -38,7 +40,16 @@ private:
 	SDL_Surface * m_backBMP;
 	SDL_Texture * m_back_drawable;
 	SDL_Rect m_back_coords;
-	
+
+	//Game Background
+	SDL_Surface * m_gameBG_BMP;
+	SDL_Texture * m_gameBG_drawable;
+	SDL_Rect m_gameBG_coords;
+
+	// Spaceship(player)
+	SDL_Surface * m_playerBMP;
+	SDL_Texture * m_player_drawable;
+	SDL_Rect m_player_coords;
 
 	bool isRunning;
 };
