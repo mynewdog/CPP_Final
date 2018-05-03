@@ -15,7 +15,7 @@ int main(void) {
 
 	test = new GameBrain();
 	test->createWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 800, false);
-	test->initImages();
+	test->init();
 
 	while (test->running()) {
 		frameStart = SDL_GetTicks();

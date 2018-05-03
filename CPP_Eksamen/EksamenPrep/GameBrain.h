@@ -1,8 +1,11 @@
 #pragma once
 #include <SDL.h>
 #include "Projectile.h"
-#define PLAYERPOSY 750
 #include <vector>
+#include "Enemy.h"
+
+#define PLAYERPOSY 750
+
 class GameBrain {
 
 public: 
@@ -10,13 +13,15 @@ public:
 	~GameBrain();
 	
 	void createWindow(const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
-	void updateEnemyVectors(std::vector<SDL_Rect> &arr);
+	void updateEnemyVectors(std::vector<SDL_Rect> arr);
 	void render();
 	void handleEvents();
 	void clean();
 	void update();
-	void initImages();
+	void init();
 	void drawGameScreen();
+
+	int checkCollision();
 
 	void updateCursor();
 	bool running();
@@ -49,11 +54,23 @@ private:
 	SDL_Texture * m_gameBG_drawable;
 	SDL_Rect m_gameBG_coords;
 
+	// Game logo
+	SDL_Surface * m_logoBMP;
+	SDL_Texture * m_logo_drawable;
+	SDL_Rect m_logo_coords;
+
 	// Spaceship(player)
 	SDL_Surface * m_playerBMP;
 	SDL_Texture * m_player_drawable;
 	SDL_Rect m_player_coords;
 
+	std::vector<Enemy> enemy1;
+	std::vector<Enemy> enemy2;
+	std::vector<Enemy> enemy3;
+	std::vector<Enemy> enemy4;
+	std::vector<Enemy> enemy5;
+
+	/*
 	// Enemy type 1
 	SDL_Surface * m_enemy1_BMP;
 	SDL_Texture * m_enemy1_drawable;
@@ -83,6 +100,6 @@ private:
 	SDL_Texture * m_enemy5_drawable;
 	SDL_Rect m_enemy5_coords;
 	std::vector<SDL_Rect> m_arr_enemy5_coords;
-
+	*/
 	bool isRunning;
 };

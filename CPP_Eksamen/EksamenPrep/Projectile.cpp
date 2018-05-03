@@ -28,6 +28,14 @@ void Projectile::move() {
 	}
 }
 
+int Projectile::getX() {
+	return getCoords()->x;
+}
+
+int Projectile::getY() {
+	return getCoords()->y;
+}
+
 Projectile::Projectile()
 {
 }

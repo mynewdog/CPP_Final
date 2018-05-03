@@ -31,7 +31,7 @@ void GameBrain::createWindow(const char* title, int xPos, int yPos, int width, i
 		isRunning = false;
 	}
 }
-void GameBrain::updateEnemyVectors(std::vector<SDL_Rect> &arr) {
+void GameBrain::updateEnemyVectors(std::vector<Enemy> arr) {
 	// Check right
 	if (arr.back().x >= (SCREEN_SIZE - 48)) {
 		if (arr[0].y <= 660) {
@@ -65,7 +65,9 @@ void GameBrain::updateEnemyVectors(std::vector<SDL_Rect> &arr) {
 	
 }
 
-void GameBrain::initImages() {
+void GameBrain::init() {
+	p1->spawnPlayer(m_gameRenderer);
+
 	// Main Menu Background
 	m_mainMenuBMP = SDL_LoadBMP("Img/mainmenu.bmp");
 	m_menu_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_mainMenuBMP);
@@ -83,6 +85,15 @@ void GameBrain::initImages() {
 	m_cursor_coords.x = 190;
 	m_cursor_coords.y = 305;
 	SDL_FreeSurface(m_cursorBMP);
+
+	// Logo
+	m_logoBMP = SDL_LoadBMP("Img/logo.bmp");
+	m_logo_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_logoBMP);
+	m_logo_coords.h = m_logoBMP->h;
+	m_logo_coords.w = m_logoBMP->w;
+	m_logo_coords.x = (800-480)/2;
+	m_logo_coords.y = 50;
+	SDL_FreeSurface(m_logoBMP);
 
 	// Back button
 	m_backBMP = SDL_LoadBMP("Img/goback.bmp");
@@ -102,104 +113,68 @@ void GameBrain::initImages() {
 	m_gameBG_coords.x = 0;
 	m_gameBG_coords.y = 0;
 	SDL_FreeSurface(m_gameBG_BMP);
+	Enemy e1(m_gameRenderer, 1, 45, 400);
+	Enemy e2(m_gameRenderer, 2, 45, 340);
+	Enemy e3(m_gameRenderer, 3, 45, 280);
+	Enemy e4(m_gameRenderer, 4, 45, 220);
+	Enemy e5(m_gameRenderer, 5, 45, 160);
 
-	// Spaceship(Player)
-	/*m_playerBMP = SDL_LoadBMP("Img/player.bmp");
-	m_player_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_playerBMP);
-	m_player_coords.h = m_playerBMP->h;
-	m_player_coords.w = m_playerBMP->w;
-	m_player_coords.x = (SCREEN_SIZE - 54) / 2;
-	m_player_coords.y = (SCREEN_SIZE - 100);
-	SDL_FreeSurface(m_playerBMP);*/
-	p1->spawnPlayer(m_gameRenderer);
+	enemy1.push_back(e1);
+	enemy2.push_back(e2);
+	enemy3.push_back(e3);
+	enemy4.push_back(e4);
+	enemy5.push_back(e5);
 
-	// Enemy type 1
-	m_enemy1_BMP = SDL_LoadBMP("Img/enemy_1.bmp");
-	m_enemy1_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_enemy1_BMP);
-	m_enemy1_coords.h = m_enemy1_BMP->h;
-	m_enemy1_coords.w = m_enemy1_BMP->w;
-	m_enemy1_coords.x = 45;
-	m_enemy1_coords.y = (SCREEN_SIZE - 400);
-
-	for (int i = 0; i < 11; i++) {
-		m_arr_enemy1_coords.push_back(m_enemy1_coords);
-		if (i > 0) {
-			m_arr_enemy1_coords[i].x = (m_arr_enemy1_coords[i - 1].x + 60);
-		}
+	for (int i = 1; i < 11; i++) {
+		Enemy enemy_1(m_gameRenderer, 1, enemy1[i-1].getX()+60, 400);
+		enemy1.push_back(enemy_1);
 	}
-
-	SDL_FreeSurface(m_enemy1_BMP);
-
-	// Enemy type 2
-	m_enemy2_BMP = SDL_LoadBMP("Img/enemy_2.bmp");
-	m_enemy2_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_enemy2_BMP);
-	m_enemy2_coords.h = m_enemy2_BMP->h;
-	m_enemy2_coords.w = m_enemy2_BMP->w;
-	m_enemy2_coords.x = 45;
-	m_enemy2_coords.y = (SCREEN_SIZE - 460);
-
-	for (int i = 0; i < 11; i++) {
-		m_arr_enemy2_coords.push_back(m_enemy2_coords);
-		if (i > 0) {
-			m_arr_enemy2_coords[i].x = (m_arr_enemy2_coords[i - 1].x + 60);
-		}
+	for (int i = 1; i < 11; i++) {
+		Enemy enemy_2(m_gameRenderer, 2, enemy2[i - 1].getX() + 60, 340);
+		enemy2.push_back(enemy_2);
 	}
-
-	SDL_FreeSurface(m_enemy2_BMP);
-
-	// Enemy type 3
-	m_enemy3_BMP = SDL_LoadBMP("Img/enemy_3.bmp");
-	m_enemy3_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_enemy3_BMP);
-	m_enemy3_coords.h = m_enemy3_BMP->h;
-	m_enemy3_coords.w = m_enemy3_BMP->w;
-	m_enemy3_coords.x = 45;
-	m_enemy3_coords.y = (SCREEN_SIZE - 520);
-
-	for (int i = 0; i < 11; i++) {
-		m_arr_enemy3_coords.push_back(m_enemy3_coords);
-		if (i > 0) {
-			m_arr_enemy3_coords[i].x = (m_arr_enemy3_coords[i - 1].x + 60);
-		}
+	for (int i = 1; i < 11; i++) {
+		Enemy enemy_3(m_gameRenderer, 3, enemy3[i - 1].getX() + 60, 280);
+		enemy3.push_back(enemy_3);
 	}
-
-	SDL_FreeSurface(m_enemy3_BMP);
-
-	// Enemy type 4
-	m_enemy4_BMP = SDL_LoadBMP("Img/enemy_4.bmp");
-	m_enemy4_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_enemy4_BMP);
-	m_enemy4_coords.h = m_enemy4_BMP->h;
-	m_enemy4_coords.w = m_enemy4_BMP->w;
-	m_enemy4_coords.x = 45;
-	m_enemy4_coords.y = (SCREEN_SIZE - 580);
-
-	for (int i = 0; i < 11; i++) {
-		m_arr_enemy4_coords.push_back(m_enemy4_coords);
-		if (i > 0) {
-			m_arr_enemy4_coords[i].x = (m_arr_enemy4_coords[i - 1].x + 60);
-		}
+	for (int i = 1; i < 11; i++) {
+		Enemy enemy_4(m_gameRenderer, 4, enemy4[i - 1].getX() + 60, 220);
+		enemy4.push_back(enemy_4);
 	}
-
-	SDL_FreeSurface(m_enemy4_BMP);
-
-	// Enemy type 5
-	m_enemy5_BMP = SDL_LoadBMP("Img/enemy_5.bmp");
-	m_enemy5_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_enemy5_BMP);
-	m_enemy5_coords.h = m_enemy5_BMP->h;
-	m_enemy5_coords.w = m_enemy5_BMP->w;
-	m_enemy5_coords.x = 45;
-	m_enemy5_coords.y = (SCREEN_SIZE - 640);
-
-	for (int i = 0; i < 11; i++) {
-		m_arr_enemy5_coords.push_back(m_enemy5_coords);
-		if (i > 0) {
-			m_arr_enemy5_coords[i].x = (m_arr_enemy5_coords[i - 1].x + 60);
-		}
+	for (int i = 1; i < 11; i++) {
+		Enemy enemy_5(m_gameRenderer, 5, enemy5[i - 1].getX() + 60, 160);
+		enemy5.push_back(enemy_5);
 	}
-
-	SDL_FreeSurface(m_enemy5_BMP);
 }
-	
+	/*
+int GameBrain::checkCollision() {
+	for (int i = 0; i < p1->getBullets().size(); i++) {
+		for (int j = 0; j < m_arr_enemy1_coords.size(); j++) {
+			if (p1->getBullets()[i]->getY() == m_arr_enemy1_coords[j].y) {
+				if (p1->getBullets()[i]->getX()+1 >= m_arr_enemy1_coords[j].x &&
+					p1->getBullets()[i]->getX()+1 <= (m_arr_enemy1_coords[j].x + 47 )) {
+					std::cout << "Player: " << p1->getBullets()[i]->getX() << std::endl;
+					std::cout << "HIT TARGET: " << j << std::endl;
+				}
+			}
+		}
+	}
 
+	for (int i = 0; i < p1->getBullets().size(); i++) {
+		for (int j = 0; j < m_arr_enemy2_coords.size(); j++) {
+			if (p1->getBullets()[i]->getY() == m_arr_enemy2_coords[j].y) {
+				if (p1->getBullets()[i]->getX() + 1 >= m_arr_enemy2_coords[j].x &&
+					p1->getBullets()[i]->getX() + 1 <= (m_arr_enemy2_coords[j].x + 47)) {
+					std::cout << "Player: " << p1->getBullets()[i]->getX() << std::endl;
+					std::cout << "HIT TARGET: " << j << std::endl;
+				}
+			}
+		}
+	}
+		
+	return 1;
+}
+*/
 void GameBrain::updateCursor() {
 	if (m_menuChoice == 0) {
 		m_cursor_coords.x = 190;
@@ -237,6 +212,7 @@ void GameBrain::handleEvents() {
 				Projectile *p = new Projectile();
 				p->spawn(m_gameRenderer, p1->getX(), p1->getY());
 				p1->addBullets(p);
+				
 			}
 			if (event.key.keysym.sym == SDLK_ESCAPE && m_screen == 2) {
 				m_screen = 0;
@@ -301,6 +277,7 @@ void GameBrain::render() {
 
 	// Update if on main menu
 	if (m_screen == 0) {
+		SDL_RenderCopy(m_gameRenderer, m_logo_drawable, nullptr, &m_logo_coords);
 		SDL_RenderCopy(m_gameRenderer, m_menu_drawable, nullptr, &m_menu_coords);
 		SDL_RenderCopy(m_gameRenderer, m_cursor_drawable, nullptr, &m_cursor_coords);
 	}
@@ -316,24 +293,31 @@ void GameBrain::render() {
 		SDL_RenderCopy(m_gameRenderer, p1->getDrawable(), nullptr, p1->getCoords());
 		
 		for (int i = 0; i < 11; i++) {
+			SDL_RenderCopy(m_gameRenderer, enemy1[i].getDrawable(), nullptr, enemy1[i].getCoords());
+			SDL_RenderCopy(m_gameRenderer, enemy2[i].getDrawable(), nullptr, enemy2[i].getCoords());
+			SDL_RenderCopy(m_gameRenderer, enemy3[i].getDrawable(), nullptr, enemy3[i].getCoords());
+			SDL_RenderCopy(m_gameRenderer, enemy4[i].getDrawable(), nullptr, enemy4[i].getCoords());
+			SDL_RenderCopy(m_gameRenderer, enemy5[i].getDrawable(), nullptr, enemy5[i].getCoords());
+			/*
 			SDL_RenderCopy(m_gameRenderer, m_enemy1_drawable, nullptr, &m_arr_enemy1_coords[i]);
 			SDL_RenderCopy(m_gameRenderer, m_enemy2_drawable, nullptr, &m_arr_enemy2_coords[i]);
 			SDL_RenderCopy(m_gameRenderer, m_enemy3_drawable, nullptr, &m_arr_enemy3_coords[i]);
 			SDL_RenderCopy(m_gameRenderer, m_enemy4_drawable, nullptr, &m_arr_enemy4_coords[i]);
 			SDL_RenderCopy(m_gameRenderer, m_enemy5_drawable, nullptr, &m_arr_enemy5_coords[i]);
+			*/
 		}
-		updateEnemyVectors(m_arr_enemy1_coords);
-		updateEnemyVectors(m_arr_enemy2_coords);
-		updateEnemyVectors(m_arr_enemy3_coords);
-		updateEnemyVectors(m_arr_enemy4_coords);
-		updateEnemyVectors(m_arr_enemy5_coords);
+		//checkCollision();
+		updateEnemyVectors(enemy1);
+		updateEnemyVectors(enemy2);
+		updateEnemyVectors(enemy3);
+		updateEnemyVectors(enemy4);
+		updateEnemyVectors(enemy5);
 
 		// Try projectiles
 		if (p1->getBullets().size() > 0) {
 			for (int i = 0; i < p1->getBullets().size(); i++) {
 				SDL_RenderCopy(m_gameRenderer, p1->getBullets()[i]->getDrawable(), nullptr, p1->getBullets()[i]->getCoords());
 				p1->getBullets()[i]->move();
-				std::cout << i << std::endl;
 			}
 		}
 		
