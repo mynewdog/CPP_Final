@@ -25,7 +25,7 @@ public:
 private:
 	int m_menuChoice = 0;
 	int m_screen = 0;
-	std::vector<Projectile> bullets;
+	std::vector<Projectile*> bullets;
 
 	SDL_Window * m_gameWindow;
 	SDL_Renderer * m_gameRenderer;

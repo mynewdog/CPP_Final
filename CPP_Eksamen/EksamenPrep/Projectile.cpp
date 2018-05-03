@@ -12,8 +12,6 @@ void Projectile::spawn(SDL_Renderer* render, int spawnX, int spawnY) {
 	projectile_coords.x = spawnX;
 	projectile_coords.y = spawnY;
 	SDL_FreeSurface(projectile_BMP);
-	move();
-
 }
 
 SDL_Rect* Projectile::getCoords() {
@@ -25,10 +23,9 @@ SDL_Texture* Projectile::getDrawable() {
 }
 
 void Projectile::move() {
-	while (projectile_coords.y > 0) {
+	if (projectile_coords.y >= -10) {
 		projectile_coords.y -= 5;
 	}
-	std::cout << m_projectileY << std::endl;
 }
 
 Projectile::Projectile()
