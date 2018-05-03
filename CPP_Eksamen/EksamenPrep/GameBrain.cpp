@@ -10,6 +10,8 @@
 #endif
 // Dir 0 = LEFT | 1 = RIGHT
 int direction = 1;
+int ticks = 0;
+
 Player *p1 = new Player();
 
 void GameBrain::createWindow(const char* title, int xPos, int yPos, int width, int height, bool fullscreen) {
@@ -289,8 +291,8 @@ void GameBrain::init() {
 		enemy5.push_back(enemy_5);
 	}
 }
-/*
 void GameBrain::checkCollision() {
+	// Vector 1
 	for (int i = 0; i < p1->getBullets().size(); i++) {
 		for (int j = 0; j < enemy1.size(); j++) {
 		if (p1->getBullets()[i]->getY() >= enemy1[j].getY() &&
@@ -298,26 +300,89 @@ void GameBrain::checkCollision() {
 			p1->getBullets()[i]->getX() >= enemy1[j].getX() &&
 			p1->getBullets()[i]->getX() <= (enemy1[j].getX() + 47))
 			{
-				p1->getBullets()[i]->setX(1200);
-				enemy1[j].setX(1000);
+				p1->getBullets()[i]->setY(-1200);
+				enemy1[j].setY(-1000);
 				std::cout << "HIT BLYAT" << std::endl;
 				
 			}
 		}
 	}
-	
+
+	// Vector 2
+	for (int i = 0; i < p1->getBullets().size(); i++) {
+		for (int j = 0; j < enemy2.size(); j++) {
+			if (p1->getBullets()[i]->getY() >= enemy2[j].getY() &&
+				p1->getBullets()[i]->getY() <= (enemy2[j].getY() + 47) &&
+				p1->getBullets()[i]->getX() >= enemy2[j].getX() &&
+				p1->getBullets()[i]->getX() <= (enemy2[j].getX() + 47))
+			{
+				p1->getBullets()[i]->setY(-1200);
+				enemy2[j].setY(-1000);
+				std::cout << "HIT BLYAT" << std::endl;
+
+			}
+		}
+	}
+
+	// Vector 3
+	for (int i = 0; i < p1->getBullets().size(); i++) {
+		for (int j = 0; j < enemy3.size(); j++) {
+			if (p1->getBullets()[i]->getY() >= enemy3[j].getY() &&
+				p1->getBullets()[i]->getY() <= (enemy3[j].getY() + 47) &&
+				p1->getBullets()[i]->getX() >= enemy3[j].getX() &&
+				p1->getBullets()[i]->getX() <= (enemy3[j].getX() + 47))
+			{
+				p1->getBullets()[i]->setY(-1200);
+				enemy3[j].setY(-1000);
+				std::cout << "HIT BLYAT" << std::endl;
+
+			}
+		}
+	}
+
+	// Vector 4
+	for (int i = 0; i < p1->getBullets().size(); i++) {
+		for (int j = 0; j < enemy4.size(); j++) {
+			if (p1->getBullets()[i]->getY() >= enemy4[j].getY() &&
+				p1->getBullets()[i]->getY() <= (enemy4[j].getY() + 47) &&
+				p1->getBullets()[i]->getX() >= enemy4[j].getX() &&
+				p1->getBullets()[i]->getX() <= (enemy4[j].getX() + 47))
+			{
+				p1->getBullets()[i]->setY(-1200);
+				enemy4[j].setY(-1000);
+				std::cout << "HIT BLYAT" << std::endl;
+
+			}
+		}
+	}
+
+	// Vector 5
+	for (int i = 0; i < p1->getBullets().size(); i++) {
+		for (int j = 0; j < enemy5.size(); j++) {
+			if (p1->getBullets()[i]->getY() >= enemy5[j].getY() &&
+				p1->getBullets()[i]->getY() <= (enemy5[j].getY() + 47) &&
+				p1->getBullets()[i]->getX() >= enemy5[j].getX() &&
+				p1->getBullets()[i]->getX() <= (enemy5[j].getX() + 47))
+			{
+				p1->getBullets()[i]->setY(-1200);
+				enemy5[j].setY(-1000);
+				std::cout << "HIT BLYAT" << std::endl;
+
+			}
+		}
+	}
 }
-*/
+/*
 void GameBrain::checkCollision(std::vector<Enemy> enemy) {
 	for (int i = 0; i < p1->getBullets().size(); i++) {
-		for (int j = 0; j < enemy1.size(); j++) {
-			if (p1->getBullets()[i]->getY() >= enemy1[j].getY() &&
-				p1->getBullets()[i]->getY() <= (enemy1[j].getY() + 47) &&
-				p1->getBullets()[i]->getX() >= enemy1[j].getX() &&
-				p1->getBullets()[i]->getX() <= (enemy1[j].getX() + 47))
+		for (int j = 0; j < enemy.size(); j++) {
+			if (p1->getBullets()[i]->getY() >= enemy[j].getY() &&
+				p1->getBullets()[i]->getY() <= (enemy[j].getY() + 47) &&
+				p1->getBullets()[i]->getX() >= enemy[j].getX() &&
+				p1->getBullets()[i]->getX() <= (enemy[j].getX() + 47))
 			{
 				p1->getBullets()[i]->setX(1200);
-				enemy1[j].setX(1000);
+				enemy[j].setX(1000);
 				std::cout << "HIT BLYAT" << std::endl;
 
 			}
@@ -325,7 +390,7 @@ void GameBrain::checkCollision(std::vector<Enemy> enemy) {
 	}
 
 }
-
+*/
 void GameBrain::updateCursor() {
 	if (m_menuChoice == 0) {
 		m_cursor_coords.x = 190;
@@ -458,6 +523,12 @@ void GameBrain::render() {
 			SDL_RenderCopy(m_gameRenderer, m_enemy4_drawable, nullptr, &m_arr_enemy4_coords[i]);
 			SDL_RenderCopy(m_gameRenderer, m_enemy5_drawable, nullptr, &m_arr_enemy5_coords[i]);
 			*/
+		}
+		if (ticks < 60) {
+			ticks++;
+		}
+		else {
+			ticks = 0;
 		}
 
 		// Try projectiles
