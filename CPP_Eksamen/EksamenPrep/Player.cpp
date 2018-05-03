@@ -1,20 +1,15 @@
-#include "stdafx.h"
 #include "Player.h"
 #include <iostream>
 #include <SDL.h>
 
-#ifndef SCREEN_SIZE
 #define SCREEN_SIZE 800
-#endif
 
 
-std::vector<Projectile*> *getBullets() {
-	std::vector<Projectile*> tempBullets;
-	for (int i = 0; i < bullets.size(); i++) {
-	}
-	return &tempBullets;
+std::vector<Projectile*> Player::getBullets() {
+	return bullets;
 }
-void addBullets(Projectile p) {
+
+void Player::addBullets(Projectile *p) {
 	bullets.push_back(p);
 }
 

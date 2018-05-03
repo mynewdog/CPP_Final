@@ -12,8 +12,8 @@ public:
 	void movePlayer();
 	void spawnPlayer(SDL_Renderer* render);
 	void updatePos(int direction);
-	std::vector<Projectile*> *getBullets();
-	void addBullets();
+	std::vector<Projectile*> getBullets();
+	void addBullets(Projectile *p);
 	SDL_Texture* getDrawable();
 	SDL_Rect* getCoords();
 

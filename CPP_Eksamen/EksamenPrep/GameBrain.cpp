@@ -235,8 +235,8 @@ void GameBrain::handleEvents() {
 	if (event.type == SDL_KEYDOWN) {
 			if (event.key.keysym.sym == SDLK_SPACE && m_screen == 2) {
 				Projectile *p = new Projectile();
-				p->spawn(m_gameRenderer, m_player_coords.x, m_player_coords.y);
-				p1->bullets.push_back(p);
+				p->spawn(m_gameRenderer, p1->getCoords().x, p1->getCoords().y);
+				p1->addBullets(p);
 			}
 			if (event.key.keysym.sym == SDLK_ESCAPE && m_screen == 2) {
 				m_screen = 0;
@@ -329,10 +329,10 @@ void GameBrain::render() {
 		updateEnemyVectors(m_arr_enemy5_coords);
 
 		// Try projectiles
-		if (bullets.size() > 0) {
-			for (int i = 0; i < bullets.size(); i++) {
-				SDL_RenderCopy(m_gameRenderer, bullets[i]->getDrawable(), nullptr, bullets[i]->getCoords());
-				bullets[i]->move();
+		if (p1->getBullets().size() > 0) {
+			for (int i = 0; i < p1->getBullets().size(); i++) {
+				SDL_RenderCopy(m_gameRenderer, p1->getBullets()[i]->getDrawable(), nullptr, p1->getBullets()[i]->getCoords());
+				p1->getBullets()[i]->move();
 				std::cout << i << std::endl;
 			}
 		}
