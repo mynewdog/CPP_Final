@@ -9,7 +9,7 @@
 #define SCREEN_SIZE 800
 #endif
 // Dir 0 = LEFT | 1 = RIGHT
-int direction = 0;
+int direction = 1;
 Player *p1 = new Player();
 
 void GameBrain::createWindow(const char* title, int xPos, int yPos, int width, int height, bool fullscreen) {
@@ -31,7 +31,8 @@ void GameBrain::createWindow(const char* title, int xPos, int yPos, int width, i
 		isRunning = false;
 	}
 }
-void GameBrain::updateEnemyVectors(std::vector<Enemy> arr) {
+/*
+void GameBrain::updateEnemyVectors(std::vector<SDL_Rect> arr) {
 	// Check right
 	if (arr.back().x >= (SCREEN_SIZE - 48)) {
 		if (arr[0].y <= 660) {
@@ -63,6 +64,148 @@ void GameBrain::updateEnemyVectors(std::vector<Enemy> arr) {
 		}
 	}
 	
+}
+*/
+void GameBrain::updateEnemyVectors() {
+	
+	// Vector 1
+	if (enemy1.front().getX() <= 0) {
+		if (enemy1[0].getY() <= 600) {
+			for (int i = 0; i < enemy1.size(); i++) {
+				enemy1[i].moveDown();
+			}
+		}
+		direction = 1;
+	}
+	else if (enemy1.back().getX() >= (SCREEN_SIZE - 48)) {
+			for (int i = 0; i < enemy1.size(); i++) {
+				enemy1[i].moveDown();
+			}
+		direction = 0;
+	}
+
+	if (direction == 0) {
+		for (int i = 0; i < enemy1.size(); i++) {
+			enemy1[i].moveX(0);
+		}
+	}
+
+	if (direction == 1) {
+		for (int i = 0; i < enemy1.size(); i++) {
+			enemy1[i].moveX(1);
+		}
+	}
+	// Vector 2
+	if (enemy2.front().getX() <= 0) {
+		if (enemy2[0].getY() <= 600) {
+			for (int i = 0; i < enemy2.size(); i++) {
+				enemy2[i].moveDown();
+			}
+		}
+		direction = 1;
+	}
+	else if (enemy2.back().getX() >= (SCREEN_SIZE - 48)) {
+		for (int i = 0; i < enemy2.size(); i++) {
+			enemy2[i].moveDown();
+		}
+		direction = 0;
+	}
+
+	if (direction == 0) {
+		for (int i = 0; i < enemy2.size(); i++) {
+			enemy2[i].moveX(0);
+		}
+	}
+
+	if (direction == 1) {
+		for (int i = 0; i < enemy2.size(); i++) {
+			enemy2[i].moveX(1);
+		}
+	}
+
+	// Vector 3
+	if (enemy3.front().getX() <= 0) {
+		if (enemy3[0].getY() <= 600) {
+			for (int i = 0; i < enemy3.size(); i++) {
+				enemy3[i].moveDown();
+			}
+		}
+		direction = 1;
+	}
+	else if (enemy3.back().getX() >= (SCREEN_SIZE - 48)) {
+		for (int i = 0; i < enemy3.size(); i++) {
+			enemy3[i].moveDown();
+		}
+		direction = 0;
+	}
+
+	if (direction == 0) {
+		for (int i = 0; i < enemy3.size(); i++) {
+			enemy3[i].moveX(0);
+		}
+	}
+
+	if (direction == 1) {
+		for (int i = 0; i < enemy3.size(); i++) {
+			enemy3[i].moveX(1);
+		}
+	}
+
+	// Vector 4
+	if (enemy4.front().getX() <= 0) {
+		if (enemy4[0].getY() <= 600) {
+			for (int i = 0; i < enemy4.size(); i++) {
+				enemy4[i].moveDown();
+			}
+		}
+		direction = 1;
+	}
+	else if (enemy4.back().getX() >= (SCREEN_SIZE - 48)) {
+		for (int i = 0; i < enemy4.size(); i++) {
+			enemy4[i].moveDown();
+		}
+		direction = 0;
+	}
+
+	if (direction == 0) {
+		for (int i = 0; i < enemy4.size(); i++) {
+			enemy4[i].moveX(0);
+		}
+	}
+
+	if (direction == 1) {
+		for (int i = 0; i < enemy4.size(); i++) {
+			enemy4[i].moveX(1);
+		}
+	}
+
+	// Vector 5
+	if (enemy5.front().getX() <= 0) {
+		if (enemy5[0].getY() <= 600) {
+			for (int i = 0; i < enemy5.size(); i++) {
+				enemy5[i].moveDown();
+			}
+		}
+		direction = 1;
+	}
+	else if (enemy5.back().getX() >= (SCREEN_SIZE - 48)) {
+		for (int i = 0; i < enemy5.size(); i++) {
+			enemy5[i].moveDown();
+		}
+		direction = 0;
+	}
+
+	if (direction == 0) {
+		for (int i = 0; i < enemy5.size(); i++) {
+			enemy5[i].moveX(0);
+		}
+	}
+
+	if (direction == 1) {
+		for (int i = 0; i < enemy5.size(); i++) {
+			enemy5[i].moveX(1);
+		}
+	}
 }
 
 void GameBrain::init() {
@@ -146,35 +289,23 @@ void GameBrain::init() {
 		enemy5.push_back(enemy_5);
 	}
 }
-	/*
-int GameBrain::checkCollision() {
-	for (int i = 0; i < p1->getBullets().size(); i++) {
-		for (int j = 0; j < m_arr_enemy1_coords.size(); j++) {
-			if (p1->getBullets()[i]->getY() == m_arr_enemy1_coords[j].y) {
-				if (p1->getBullets()[i]->getX()+1 >= m_arr_enemy1_coords[j].x &&
-					p1->getBullets()[i]->getX()+1 <= (m_arr_enemy1_coords[j].x + 47 )) {
-					std::cout << "Player: " << p1->getBullets()[i]->getX() << std::endl;
-					std::cout << "HIT TARGET: " << j << std::endl;
-				}
-			}
-		}
-	}
 
+void GameBrain::checkCollision() {
 	for (int i = 0; i < p1->getBullets().size(); i++) {
-		for (int j = 0; j < m_arr_enemy2_coords.size(); j++) {
-			if (p1->getBullets()[i]->getY() == m_arr_enemy2_coords[j].y) {
-				if (p1->getBullets()[i]->getX() + 1 >= m_arr_enemy2_coords[j].x &&
-					p1->getBullets()[i]->getX() + 1 <= (m_arr_enemy2_coords[j].x + 47)) {
-					std::cout << "Player: " << p1->getBullets()[i]->getX() << std::endl;
-					std::cout << "HIT TARGET: " << j << std::endl;
+		for (int j = 0; j < enemy1.size(); j++) {
+			if (p1->getBullets()[i]->getY() >= enemy1[j].getY() &&
+				p1->getBullets()[i]->getY() <= (enemy1[j].getY() + 47) && 
+				p1->getBullets()[i]->getX() >= enemy1[j].getX() &&
+				p1->getBullets()[i]->getX() <= (enemy1[j].getX() + 47))
+				{
+						//p1->getBullets()[i]
+						std::cout << "HIT BLYAT" << std::endl;
 				}
-			}
 		}
 	}
-		
-	return 1;
+	
 }
-*/
+
 void GameBrain::updateCursor() {
 	if (m_menuChoice == 0) {
 		m_cursor_coords.x = 190;
@@ -291,7 +422,9 @@ void GameBrain::render() {
 	else if (m_screen == 2) {
 		drawGameScreen();
 		SDL_RenderCopy(m_gameRenderer, p1->getDrawable(), nullptr, p1->getCoords());
-		
+		updateEnemyVectors();
+		checkCollision();
+
 		for (int i = 0; i < 11; i++) {
 			SDL_RenderCopy(m_gameRenderer, enemy1[i].getDrawable(), nullptr, enemy1[i].getCoords());
 			SDL_RenderCopy(m_gameRenderer, enemy2[i].getDrawable(), nullptr, enemy2[i].getCoords());
@@ -306,12 +439,6 @@ void GameBrain::render() {
 			SDL_RenderCopy(m_gameRenderer, m_enemy5_drawable, nullptr, &m_arr_enemy5_coords[i]);
 			*/
 		}
-		//checkCollision();
-		updateEnemyVectors(enemy1);
-		updateEnemyVectors(enemy2);
-		updateEnemyVectors(enemy3);
-		updateEnemyVectors(enemy4);
-		updateEnemyVectors(enemy5);
 
 		// Try projectiles
 		if (p1->getBullets().size() > 0) {

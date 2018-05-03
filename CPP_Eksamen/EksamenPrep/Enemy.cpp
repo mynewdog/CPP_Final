@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include <string.h>
+#include <iostream>
 
 SDL_Texture * Enemy::getDrawable() {
 	return m_enemy_drawable;
@@ -15,6 +16,27 @@ int Enemy::getX() {
 
 int Enemy::getY() {
 	return m_enemy_coords.y;
+}
+
+void Enemy::setX(int x) {
+	m_enemy_coords.x = x;
+}
+
+void Enemy::setY(int y) {
+	m_enemy_coords.y = y;
+}
+
+void Enemy::moveX(int direction) {
+	if (direction == 0) {
+		m_enemy_coords.x -= 1;
+	}
+	else {
+		m_enemy_coords.x += 1;
+	}
+}
+
+void Enemy::moveDown() {
+	m_enemy_coords.y += 12;
 }
 
 Enemy::Enemy()

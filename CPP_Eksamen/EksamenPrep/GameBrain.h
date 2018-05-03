@@ -13,7 +13,7 @@ public:
 	~GameBrain();
 	
 	void createWindow(const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
-	void updateEnemyVectors(std::vector<SDL_Rect> arr);
+	void updateEnemyVectors();
 	void render();
 	void handleEvents();
 	void clean();
@@ -21,7 +21,7 @@ public:
 	void init();
 	void drawGameScreen();
 
-	int checkCollision();
+	void checkCollision();
 
 	void updateCursor();
 	bool running();

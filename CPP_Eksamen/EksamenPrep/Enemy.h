@@ -14,6 +14,12 @@ public:
 	int getX();
 	int getY();
 
+	void moveX(int direction);
+	void moveDown();
+
+	void setX(int x);
+	void setY(int y);
+
 private:
 	SDL_Surface * m_enemy_BMP;
 	SDL_Texture * m_enemy_drawable;
