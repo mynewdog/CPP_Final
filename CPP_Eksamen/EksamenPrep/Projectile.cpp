@@ -3,7 +3,7 @@
 #include <iostream>
 #include <SDL.h>
 
-void Projectile::spawn(SDL_Renderer* render, int& spawnX, int &spawnY) {
+void Projectile::spawn(SDL_Renderer* render, int spawnX, int spawnY) {
 	projectile_BMP = SDL_LoadBMP("Img/playergun.bmp");
 	projectile_drawable = SDL_CreateTextureFromSurface(render, projectile_BMP);
 	projectile_coords.h = projectile_BMP->h;

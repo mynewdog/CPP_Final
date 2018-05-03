@@ -17,6 +17,9 @@ public:
 	SDL_Texture* getDrawable();
 	SDL_Rect* getCoords();
 
+	int getX();
+	int getY();
+
 private:
 	int m_playerX;
 	int m_playerY;

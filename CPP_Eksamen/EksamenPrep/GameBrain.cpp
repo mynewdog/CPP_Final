@@ -235,7 +235,7 @@ void GameBrain::handleEvents() {
 	if (event.type == SDL_KEYDOWN) {
 			if (event.key.keysym.sym == SDLK_SPACE && m_screen == 2) {
 				Projectile *p = new Projectile();
-				p->spawn(m_gameRenderer, p1->getCoords().x, p1->getCoords().y);
+				p->spawn(m_gameRenderer, p1->getX(), p1->getY());
 				p1->addBullets(p);
 			}
 			if (event.key.keysym.sym == SDLK_ESCAPE && m_screen == 2) {

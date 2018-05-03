@@ -5,6 +5,7 @@
 #define SCREEN_SIZE 800
 
 
+
 std::vector<Projectile*> Player::getBullets() {
 	return bullets;
 }
@@ -40,6 +41,13 @@ void Player::updatePos(int direction) {
 }
 SDL_Rect* Player::getCoords() {
 	return &player_coords;
+}
+
+int Player::getX() {
+	return player_coords.x + 25;
+}
+int Player::getY() {
+	return player_coords.y;
 }
 
 SDL_Texture* Player::getDrawable() {
