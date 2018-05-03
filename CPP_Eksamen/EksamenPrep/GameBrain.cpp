@@ -146,7 +146,7 @@ void GameBrain::initImages() {
 	SDL_FreeSurface(m_enemy2_BMP);
 
 	// Enemy type 3
-	m_enemy3_BMP = SDL_LoadBMP("Img/enemy_2.bmp");
+	m_enemy3_BMP = SDL_LoadBMP("Img/enemy_3.bmp");
 	m_enemy3_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_enemy3_BMP);
 	m_enemy3_coords.h = m_enemy3_BMP->h;
 	m_enemy3_coords.w = m_enemy3_BMP->w;
@@ -163,7 +163,7 @@ void GameBrain::initImages() {
 	SDL_FreeSurface(m_enemy3_BMP);
 
 	// Enemy type 4
-	m_enemy4_BMP = SDL_LoadBMP("Img/enemy_2.bmp");
+	m_enemy4_BMP = SDL_LoadBMP("Img/enemy_4.bmp");
 	m_enemy4_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_enemy4_BMP);
 	m_enemy4_coords.h = m_enemy4_BMP->h;
 	m_enemy4_coords.w = m_enemy4_BMP->w;
@@ -180,7 +180,7 @@ void GameBrain::initImages() {
 	SDL_FreeSurface(m_enemy4_BMP);
 
 	// Enemy type 5
-	m_enemy5_BMP = SDL_LoadBMP("Img/enemy_2.bmp");
+	m_enemy5_BMP = SDL_LoadBMP("Img/enemy_5.bmp");
 	m_enemy5_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_enemy5_BMP);
 	m_enemy5_coords.h = m_enemy5_BMP->h;
 	m_enemy5_coords.w = m_enemy5_BMP->w;
