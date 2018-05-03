@@ -10,6 +10,7 @@
 #endif
 // Dir 0 = LEFT | 1 = RIGHT
 int direction = 0;
+Projectile p;
 
 void GameBrain::createWindow(const char* title, int xPos, int yPos, int width, int height, bool fullscreen) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
@@ -246,8 +247,8 @@ void GameBrain::handleEvents() {
 	// Check main menu cursor select
 	if (event.type == SDL_KEYDOWN) {
 			if (event.key.keysym.sym == SDLK_SPACE && m_screen == 2) {
-				Projectile p;
-				p.spawn(m_player_coords.x, m_player_coords.y);
+				p.spawn(m_gameRenderer, m_player_coords.x, m_player_coords.y);
+				std::cout << "Projectile spawned" << std::endl;
 			}
 			if (event.key.keysym.sym == SDLK_ESCAPE && m_screen == 2) {
 				m_screen = 0;
@@ -338,6 +339,9 @@ void GameBrain::render() {
 		updateEnemyVectors(m_arr_enemy3_coords);
 		updateEnemyVectors(m_arr_enemy4_coords);
 		updateEnemyVectors(m_arr_enemy5_coords);
+
+		// Try projectiles
+		SDL_RenderCopy(m_gameRenderer, p.getDrawable(), nullptr, p.getCoords());
 		
 	}
 	// Update this frame

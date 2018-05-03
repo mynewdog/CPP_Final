@@ -1,26 +1,25 @@
 #include "stdafx.h"
 #include "Player.h"
-#include <iostream>
+#include <SDL.h>
 
-SDL_Texture* Player::getPlayerTexture() {
-	return m_player_drawable;
+#ifndef SCREEN_SIZE
+#define SCREEN_SIZE 800
+
+// Direction 0 = LEFT | 1 = RIGHT
+void Player::updatePos(SDL_Rect coords, int direction) {
+	if (coords.x > 0 && coords.x < (800 - 64)) {
+		// Update
+		if (direction == 0) {
+			coords.x = (coords.x - 10);
+		}
+		else if (direction == 1) {
+			coords.x = (coords.x + 10);
+		}
+	}
+
+	if (coords.x < 0) { coords.x = 0; }
+	if (coords.x > (SCREEN_SIZE - 64)) { coords.x = (SCREEN_SIZE - 64); }
 }
-int Player::getPlayerCoords(){
-	return m_player_coords.x;
-}
-
-void Player::initPlayer() {
-	// Spaceship(Player)
-	m_playerBMP = SDL_LoadBMP("Img/player.bmp");
-
-	m_player_coords.h = m_playerBMP->h;
-	m_player_coords.w = m_playerBMP->w;
-	m_player_coords.x = 190;
-	m_player_coords.y =	PLAYERPOSY;
-}
-
-
-
 
 Player::Player()
 {

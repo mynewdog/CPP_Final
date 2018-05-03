@@ -1,2 +1,3 @@
-﻿  Main.cpp
-  EksamenPrep.vcxproj -> C:\Users\dell xps\source\repos\EksamenPrep\Debug\EksamenPrep.exe
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(387,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (EksamenPrep.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Projectile.cpp
+  EksamenPrep.vcxproj -> C:\Users\dell xps\Desktop\CPP_Final\CPP_Eksamen\Debug\CPP_Eksamen.exe
