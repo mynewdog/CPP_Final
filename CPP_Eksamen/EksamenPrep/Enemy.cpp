@@ -28,10 +28,10 @@ void Enemy::setY(int y) {
 
 void Enemy::moveX(int direction) {
 	if (direction == 0) {
-		m_enemy_coords.x -= 1;
+		m_enemy_coords.x -= 2;
 	}
 	else {
-		m_enemy_coords.x += 1;
+		m_enemy_coords.x += 2;
 	}
 }
 

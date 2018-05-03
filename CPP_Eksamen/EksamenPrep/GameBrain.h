@@ -20,6 +20,7 @@ public:
 	void update();
 	void init();
 	void drawGameScreen();
+	void checkWin();
 
 	void checkCollision();
 
@@ -29,6 +30,7 @@ public:
 private:
 	int m_menuChoice = 0;
 	int m_screen = 0;
+	//char[5][11] winCheckArray;
 
 	SDL_Window * m_gameWindow;
 	SDL_Renderer * m_gameRenderer;
@@ -69,6 +71,8 @@ private:
 	std::vector<Enemy> enemy3;
 	std::vector<Enemy> enemy4;
 	std::vector<Enemy> enemy5;
+
+	int m_killCounter;
 
 	/*
 	// Enemy type 1

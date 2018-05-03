@@ -293,83 +293,116 @@ void GameBrain::init() {
 		enemy5.push_back(enemy_5);
 	}
 }
+
+void GameBrain::checkWin() {
+	std::cout << m_killCounter << std::endl;
+	if (m_killCounter == 55) {
+		std::cout << "You won" << std::endl;
+	}
+}
+
 void GameBrain::checkCollision() {
+	for (int i = 0; i < p1->getBullets().size(); i++) {
+		if (p1->getBullets()[i]->getX() < 0) {
+			p1->removeBullet(i);
+		}
+	}
 	// Vector 1
 	for (int i = 0; i < p1->getBullets().size(); i++) {
-		for (int j = 0; j < enemy1.size(); j++) {
-		if (p1->getBullets()[i]->getY() >= enemy1[j].getY() &&
-			p1->getBullets()[i]->getY() <= (enemy1[j].getY() + 47) && 
-			p1->getBullets()[i]->getX() >= enemy1[j].getX() &&
-			p1->getBullets()[i]->getX() <= (enemy1[j].getX() + 47))
-			{
-				p1->getBullets()[i]->setY(-1200);
-				enemy1[j].setY(-1000);
-				std::cout << "HIT BLYAT" << std::endl;
-				
+		if (!(p1->getBullets()[i]->getY() < 0)) {
+			for (int j = 0; j < enemy1.size(); j++) {
+				if (p1->getBullets()[i]->getY() >= enemy1[j].getY() &&
+					p1->getBullets()[i]->getY() <= (enemy1[j].getY() + 47) &&
+					p1->getBullets()[i]->getX() >= enemy1[j].getX() &&
+					p1->getBullets()[i]->getX() <= (enemy1[j].getX() + 47))
+				{
+					p1->getBullets()[i]->setY(-1200);
+					enemy1[j].setY(-1000);
+					m_killCounter++;
+					checkWin();
+					std::cout << "HIT BLYAT" << std::endl;
+
+				}
 			}
 		}
 	}
 
 	// Vector 2
 	for (int i = 0; i < p1->getBullets().size(); i++) {
-		for (int j = 0; j < enemy2.size(); j++) {
-			if (p1->getBullets()[i]->getY() >= enemy2[j].getY() &&
-				p1->getBullets()[i]->getY() <= (enemy2[j].getY() + 47) &&
-				p1->getBullets()[i]->getX() >= enemy2[j].getX() &&
-				p1->getBullets()[i]->getX() <= (enemy2[j].getX() + 47))
-			{
-				p1->getBullets()[i]->setY(-1200);
-				enemy2[j].setY(-1000);
-				std::cout << "HIT BLYAT" << std::endl;
+		if (!(p1->getBullets()[i]->getY() < 0)) {
+			for (int j = 0; j < enemy2.size(); j++) {
+				if (p1->getBullets()[i]->getY() >= enemy2[j].getY() &&
+					p1->getBullets()[i]->getY() <= (enemy2[j].getY() + 47) &&
+					p1->getBullets()[i]->getX() >= enemy2[j].getX() &&
+					p1->getBullets()[i]->getX() <= (enemy2[j].getX() + 47))
+				{
+					p1->getBullets()[i]->setY(-1200);
+					enemy2[j].setY(-1000);
+					m_killCounter++;
+					checkWin();
+					std::cout << "HIT BLYAT" << std::endl;
 
+				}
 			}
 		}
 	}
 
 	// Vector 3
 	for (int i = 0; i < p1->getBullets().size(); i++) {
-		for (int j = 0; j < enemy3.size(); j++) {
-			if (p1->getBullets()[i]->getY() >= enemy3[j].getY() &&
-				p1->getBullets()[i]->getY() <= (enemy3[j].getY() + 47) &&
-				p1->getBullets()[i]->getX() >= enemy3[j].getX() &&
-				p1->getBullets()[i]->getX() <= (enemy3[j].getX() + 47))
-			{
-				p1->getBullets()[i]->setY(-1200);
-				enemy3[j].setY(-1000);
-				std::cout << "HIT BLYAT" << std::endl;
+		if (!(p1->getBullets()[i]->getY() < 0)) {
+			for (int j = 0; j < enemy3.size(); j++) {
+				if (p1->getBullets()[i]->getY() >= enemy3[j].getY() &&
+					p1->getBullets()[i]->getY() <= (enemy3[j].getY() + 47) &&
+					p1->getBullets()[i]->getX() >= enemy3[j].getX() &&
+					p1->getBullets()[i]->getX() <= (enemy3[j].getX() + 47))
+				{
+					p1->getBullets()[i]->setY(-1200);
+					enemy3[j].setY(-1000);
+					m_killCounter++;
+					checkWin();
+					std::cout << "HIT BLYAT" << std::endl;
 
+				}
 			}
 		}
 	}
 
 	// Vector 4
 	for (int i = 0; i < p1->getBullets().size(); i++) {
-		for (int j = 0; j < enemy4.size(); j++) {
-			if (p1->getBullets()[i]->getY() >= enemy4[j].getY() &&
-				p1->getBullets()[i]->getY() <= (enemy4[j].getY() + 47) &&
-				p1->getBullets()[i]->getX() >= enemy4[j].getX() &&
-				p1->getBullets()[i]->getX() <= (enemy4[j].getX() + 47))
-			{
-				p1->getBullets()[i]->setY(-1200);
-				enemy4[j].setY(-1000);
-				std::cout << "HIT BLYAT" << std::endl;
+		if (!(p1->getBullets()[i]->getY() < 0)) {
+			for (int j = 0; j < enemy4.size(); j++) {
+				if (p1->getBullets()[i]->getY() >= enemy4[j].getY() &&
+					p1->getBullets()[i]->getY() <= (enemy4[j].getY() + 47) &&
+					p1->getBullets()[i]->getX() >= enemy4[j].getX() &&
+					p1->getBullets()[i]->getX() <= (enemy4[j].getX() + 47))
+				{
+					p1->getBullets()[i]->setY(-1200);
+					enemy4[j].setY(-1000);
+					m_killCounter++;
+					checkWin();
+					std::cout << "HIT BLYAT" << std::endl;
 
+				}
 			}
 		}
 	}
 
 	// Vector 5
 	for (int i = 0; i < p1->getBullets().size(); i++) {
-		for (int j = 0; j < enemy5.size(); j++) {
-			if (p1->getBullets()[i]->getY() >= enemy5[j].getY() &&
-				p1->getBullets()[i]->getY() <= (enemy5[j].getY() + 47) &&
-				p1->getBullets()[i]->getX() >= enemy5[j].getX() &&
-				p1->getBullets()[i]->getX() <= (enemy5[j].getX() + 47))
-			{
-				p1->getBullets()[i]->setY(-1200);
-				enemy5[j].setY(-1000);
-				std::cout << "HIT BLYAT" << std::endl;
+		if (!(p1->getBullets()[i]->getY() < 0)) {
+			for (int j = 0; j < enemy5.size(); j++) {
+				if (p1->getBullets()[i]->getY() >= enemy5[j].getY() &&
+					p1->getBullets()[i]->getY() <= (enemy5[j].getY() + 47) &&
+					p1->getBullets()[i]->getX() >= enemy5[j].getX() &&
+					p1->getBullets()[i]->getX() <= (enemy5[j].getX() + 47))
+				{
+					p1->getBullets()[i]->setY(-1200);
+					enemy5[j].setY(-1000);
+					m_killCounter++;
+					checkWin();
+					std::cout << "HIT BLYAT" << std::endl;
 
+				}
 			}
 		}
 	}
@@ -429,13 +462,12 @@ void GameBrain::handleEvents() {
 	
 		// Check space and left
 		if (keystate[SDL_SCANCODE_SPACE] && keystate[SDL_SCANCODE_LEFT]) {
-			std::cout << "Left and space" << std::endl;
 			p1->updatePos(0);
 			int currentTime = SDL_GetTicks();
-			// Only shoot every 0.5s
 			if (currentTime > oldTime + 500) {
 				oldTime = currentTime;
 				Projectile *p = new Projectile();
+				std::cout << "Projectile created" << std::endl;
 				p->spawn(m_gameRenderer, p1->getX(), p1->getY());
 				p1->addBullets(p);
 			}
@@ -448,6 +480,7 @@ void GameBrain::handleEvents() {
 			// Only shoot every 0.5s
 			if (currentTime > oldTime + 500) {
 				oldTime = currentTime;
+				std::cout << "Projectile created" << std::endl;
 				Projectile *p = new Projectile();
 				p->spawn(m_gameRenderer, p1->getX(), p1->getY());
 				p1->addBullets(p);
@@ -469,6 +502,7 @@ void GameBrain::handleEvents() {
 			if (currentTime > oldTime + 500) {
 				oldTime = currentTime;
 				Projectile *p = new Projectile();
+				std::cout << "Projectile created" << std::endl;
 				p->spawn(m_gameRenderer, p1->getX(), p1->getY());
 				p1->addBullets(p);
 			}
@@ -526,6 +560,7 @@ void GameBrain::drawGameScreen() {
 void GameBrain::render() {
 	// Clear last frame
 	SDL_RenderClear(m_gameRenderer);
+	SDL_FillRect(NULL, NULL, 0x000000);
 
 	// Update if on main menu
 	if (m_screen == 0) {

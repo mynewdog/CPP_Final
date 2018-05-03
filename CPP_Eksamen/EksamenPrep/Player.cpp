@@ -14,6 +14,11 @@ void Player::addBullets(Projectile *p) {
 	bullets.push_back(p);
 }
 
+void Player::removeBullet(int i) {
+	bullets.erase(bullets.begin() + i);
+	bullets.shrink_to_fit();
+}
+
 void Player::spawnPlayer(SDL_Renderer* render) {
 	player_BMP = SDL_LoadBMP("Img/player.bmp");
 	player_drawable = SDL_CreateTextureFromSurface(render, player_BMP);
@@ -27,10 +32,10 @@ void Player::spawnPlayer(SDL_Renderer* render) {
 void Player::updatePos(int direction) {
 	if (player_coords.x >= 0 && player_coords.x <= (800 - 54)) {
 		if (direction == 0) {
-			player_coords.x = (player_coords.x - 6);
+			player_coords.x = (player_coords.x - 10);
 		}
 		else if (direction == 1) {
-			player_coords.x = (player_coords.x + 6);
+			player_coords.x = (player_coords.x + 10);
 		}
 	}
 

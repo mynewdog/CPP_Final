@@ -14,6 +14,7 @@ public:
 	void updatePos(int direction);
 	std::vector<Projectile*> getBullets();
 	void addBullets(Projectile *p);
+	void removeBullet(int i);
 	SDL_Texture* getDrawable();
 	SDL_Rect* getCoords();
 
