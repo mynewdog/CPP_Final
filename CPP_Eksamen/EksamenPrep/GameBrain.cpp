@@ -11,6 +11,7 @@
 // Dir 0 = LEFT | 1 = RIGHT
 int direction = 1;
 int ticks = 0;
+int oldTime = 0;
 
 Player *p1 = new Player();
 
@@ -258,6 +259,7 @@ void GameBrain::init() {
 	m_gameBG_coords.x = 0;
 	m_gameBG_coords.y = 0;
 	SDL_FreeSurface(m_gameBG_BMP);
+
 	Enemy e1(m_gameRenderer, 1, 45, 400);
 	Enemy e2(m_gameRenderer, 2, 45, 340);
 	Enemy e3(m_gameRenderer, 3, 45, 280);
@@ -421,25 +423,59 @@ void GameBrain::handleEvents() {
 			break;
 
 	}
-
-	// Check main menu cursor select
+	const Uint8 *keystate = SDL_GetKeyboardState(NULL);
+	
 	if (event.type == SDL_KEYDOWN) {
-			if (event.key.keysym.sym == SDLK_SPACE && m_screen == 2) {
+	
+		// Check space and left
+		if (keystate[SDL_SCANCODE_SPACE] && keystate[SDL_SCANCODE_LEFT]) {
+			std::cout << "Left and space" << std::endl;
+			p1->updatePos(0);
+			int currentTime = SDL_GetTicks();
+			// Only shoot every 0.5s
+			if (currentTime > oldTime + 500) {
+				oldTime = currentTime;
 				Projectile *p = new Projectile();
 				p->spawn(m_gameRenderer, p1->getX(), p1->getY());
 				p1->addBullets(p);
-				
 			}
+		}
+
+		// Check space and right
+		else if (keystate[SDL_SCANCODE_SPACE] && keystate[SDL_SCANCODE_RIGHT]) {
+			p1->updatePos(1);
+			int currentTime = SDL_GetTicks();
+			// Only shoot every 0.5s
+			if (currentTime > oldTime + 500) {
+				oldTime = currentTime;
+				Projectile *p = new Projectile();
+				p->spawn(m_gameRenderer, p1->getX(), p1->getY());
+				p1->addBullets(p);
+			}
+		}
+
+		// Check only left and right
+		else if (keystate[SDL_SCANCODE_LEFT] && !keystate[SDL_SCANCODE_SPACE]) {
+			p1->updatePos(0);
+		}
+		else if (keystate[SDL_SCANCODE_RIGHT] && !keystate[SDL_SCANCODE_SPACE]) {
+			p1->updatePos(1);
+		}
+
+		//Check only space
+		else if (keystate[SDL_SCANCODE_SPACE] && !keystate[SDL_SCANCODE_LEFT] && !keystate[SDL_SCANCODE_RIGHT]) {
+			int currentTime = SDL_GetTicks();
+			// Only shoot every 0.5s
+			if (currentTime > oldTime + 500) {
+				oldTime = currentTime;
+				Projectile *p = new Projectile();
+				p->spawn(m_gameRenderer, p1->getX(), p1->getY());
+				p1->addBullets(p);
+			}
+		}
 			if (event.key.keysym.sym == SDLK_ESCAPE && m_screen == 2) {
 				m_screen = 0;
 			}
-			if (event.key.keysym.sym == SDLK_LEFT && m_screen == 2) {
-				p1->updatePos(0);
-			}
-			else if (event.key.keysym.sym == SDLK_RIGHT && m_screen == 2) {
-				p1->updatePos(1);
-			}
-
 			// Pressed down arrow
 			if (event.key.keysym.sym == SDLK_DOWN) {
 				m_menuChoice++;
