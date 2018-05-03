@@ -10,6 +10,7 @@
 #endif
 // Dir 0 = LEFT | 1 = RIGHT
 int direction = 0;
+Player *p1 = new Player();
 
 void GameBrain::createWindow(const char* title, int xPos, int yPos, int width, int height, bool fullscreen) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
@@ -103,13 +104,14 @@ void GameBrain::initImages() {
 	SDL_FreeSurface(m_gameBG_BMP);
 
 	// Spaceship(Player)
-	m_playerBMP = SDL_LoadBMP("Img/player.bmp");
+	/*m_playerBMP = SDL_LoadBMP("Img/player.bmp");
 	m_player_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_playerBMP);
 	m_player_coords.h = m_playerBMP->h;
 	m_player_coords.w = m_playerBMP->w;
 	m_player_coords.x = (SCREEN_SIZE - 54) / 2;
 	m_player_coords.y = (SCREEN_SIZE - 100);
-	SDL_FreeSurface(m_playerBMP);
+	SDL_FreeSurface(m_playerBMP);*/
+	p1->spawnPlayer(m_gameRenderer);
 
 	// Enemy type 1
 	m_enemy1_BMP = SDL_LoadBMP("Img/enemy_1.bmp");
@@ -216,21 +218,7 @@ void GameBrain::updateCursor() {
 void GameBrain::update() {
 
 }
-void GameBrain::updatePos(int direction) {
-	if (m_player_coords.x >= 0 && m_player_coords.x <= (800 - 54)) {
-		if (direction == 0) {
-			m_player_coords.x = (m_player_coords.x - 6);
-		}
-		else if (direction == 1) {
-			m_player_coords.x = (m_player_coords.x + 6);
-		}
-	}
 
-	if (m_player_coords.x < 0) { m_player_coords.x = 0; }
-	if (m_player_coords.x > (SCREEN_SIZE - 54)) {
-		m_player_coords.x = (SCREEN_SIZE - 54);
-	}
-}
 void GameBrain::handleEvents() {
 	SDL_Event event;
 	SDL_PollEvent(&event);
@@ -248,16 +236,16 @@ void GameBrain::handleEvents() {
 			if (event.key.keysym.sym == SDLK_SPACE && m_screen == 2) {
 				Projectile *p = new Projectile();
 				p->spawn(m_gameRenderer, m_player_coords.x, m_player_coords.y);
-				bullets.push_back(p);
+				p1->bullets.push_back(p);
 			}
 			if (event.key.keysym.sym == SDLK_ESCAPE && m_screen == 2) {
 				m_screen = 0;
 			}
 			if (event.key.keysym.sym == SDLK_LEFT && m_screen == 2) {
-				updatePos(0);
+				p1->updatePos(0);
 			}
 			else if (event.key.keysym.sym == SDLK_RIGHT && m_screen == 2) {
-				updatePos(1);
+				p1->updatePos(1);
 			}
 
 			// Pressed down arrow
@@ -325,7 +313,7 @@ void GameBrain::render() {
 	// Update if playing game
 	else if (m_screen == 2) {
 		drawGameScreen();
-		SDL_RenderCopy(m_gameRenderer, m_player_drawable, nullptr, &m_player_coords);
+		SDL_RenderCopy(m_gameRenderer, p1->getDrawable(), nullptr, p1->getCoords());
 		
 		for (int i = 0; i < 11; i++) {
 			SDL_RenderCopy(m_gameRenderer, m_enemy1_drawable, nullptr, &m_arr_enemy1_coords[i]);

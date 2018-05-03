@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Projectile.h"
-#include "GameBrain.h"
 #include <iostream>
 #include <SDL.h>
 

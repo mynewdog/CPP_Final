@@ -11,7 +11,6 @@ public:
 	
 	void createWindow(const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
 	void updateEnemyVectors(std::vector<SDL_Rect> &arr);
-	void updatePos(int direction);
 	void render();
 	void handleEvents();
 	void clean();
@@ -25,7 +24,6 @@ public:
 private:
 	int m_menuChoice = 0;
 	int m_screen = 0;
-	std::vector<Projectile*> bullets;
 
 	SDL_Window * m_gameWindow;
 	SDL_Renderer * m_gameRenderer;
