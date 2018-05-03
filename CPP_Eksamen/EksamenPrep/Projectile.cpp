@@ -36,6 +36,14 @@ int Projectile::getY() {
 	return getCoords()->y;
 }
 
+void Projectile::setX(int x) {
+	projectile_coords.x = x;
+}
+
+void Projectile::setY(int y) {
+	projectile_coords.y = y;
+}
+
 Projectile::Projectile()
 {
 }

@@ -21,7 +21,7 @@ public:
 	void init();
 	void drawGameScreen();
 
-	void checkCollision();
+	void checkCollision(std::vector<Enemy> enemy);
 
 	void updateCursor();
 	bool running();

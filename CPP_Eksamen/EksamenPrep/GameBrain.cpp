@@ -289,21 +289,41 @@ void GameBrain::init() {
 		enemy5.push_back(enemy_5);
 	}
 }
-
+/*
 void GameBrain::checkCollision() {
 	for (int i = 0; i < p1->getBullets().size(); i++) {
 		for (int j = 0; j < enemy1.size(); j++) {
-			if (p1->getBullets()[i]->getY() >= enemy1[j].getY() &&
-				p1->getBullets()[i]->getY() <= (enemy1[j].getY() + 47) && 
-				p1->getBullets()[i]->getX() >= enemy1[j].getX() &&
-				p1->getBullets()[i]->getX() <= (enemy1[j].getX() + 47))
-				{
-						//p1->getBullets()[i]
-						std::cout << "HIT BLYAT" << std::endl;
-				}
+		if (p1->getBullets()[i]->getY() >= enemy1[j].getY() &&
+			p1->getBullets()[i]->getY() <= (enemy1[j].getY() + 47) && 
+			p1->getBullets()[i]->getX() >= enemy1[j].getX() &&
+			p1->getBullets()[i]->getX() <= (enemy1[j].getX() + 47))
+			{
+				p1->getBullets()[i]->setX(1200);
+				enemy1[j].setX(1000);
+				std::cout << "HIT BLYAT" << std::endl;
+				
+			}
 		}
 	}
 	
+}
+*/
+void GameBrain::checkCollision(std::vector<Enemy> enemy) {
+	for (int i = 0; i < p1->getBullets().size(); i++) {
+		for (int j = 0; j < enemy1.size(); j++) {
+			if (p1->getBullets()[i]->getY() >= enemy1[j].getY() &&
+				p1->getBullets()[i]->getY() <= (enemy1[j].getY() + 47) &&
+				p1->getBullets()[i]->getX() >= enemy1[j].getX() &&
+				p1->getBullets()[i]->getX() <= (enemy1[j].getX() + 47))
+			{
+				p1->getBullets()[i]->setX(1200);
+				enemy1[j].setX(1000);
+				std::cout << "HIT BLYAT" << std::endl;
+
+			}
+		}
+	}
+
 }
 
 void GameBrain::updateCursor() {

@@ -9,6 +9,8 @@ public:
 	void spawn(SDL_Renderer* render, int spawnX, int spawnY);
 	SDL_Texture* getDrawable();
 	SDL_Rect* getCoords();
+	void setX(int x);
+	void setY(int y);
 
 	int getX();
 	int getY();
