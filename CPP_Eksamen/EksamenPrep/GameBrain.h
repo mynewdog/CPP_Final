@@ -3,6 +3,7 @@
 #include "Projectile.h"
 #include <vector>
 #include "Enemy.h"
+#include "Obstacle.h"
 
 #define PLAYERPOSY 750
 
@@ -19,6 +20,7 @@ public:
 	void clean();
 	void update();
 	void init();
+	void initObstacles();
 	void drawGameScreen();
 	void checkWin();
 	void redrawEnemies();
@@ -125,6 +127,9 @@ private:
 	SDL_Texture * m_highscore5_drawable;
 	SDL_Rect m_highscore5_coords;
 
+	std::vector<Obstacle> leftObst;
+	std::vector<Obstacle> middleObst;
+	std::vector<Obstacle> rightObst;
 
 	int m_killCounter;
 	int m_currentScore;

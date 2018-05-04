@@ -5,9 +5,10 @@
 class Obstacle
 {
 public:
+	Obstacle(SDL_Renderer* renderer, int placement, int type, int x, int y);
 	Obstacle();
 	~Obstacle();
-	void init(SDL_Renderer * renderer, int placement, int x, int y);
+	void init(SDL_Renderer * renderer, int placement, int type, int x, int y);
 	SDL_Texture* getDrawable();
 	SDL_Rect* getCoords();
 

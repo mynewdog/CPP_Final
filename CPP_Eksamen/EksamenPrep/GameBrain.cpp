@@ -16,7 +16,7 @@ int ticks = 0;
 int oldTime = 0;
 
 Player *p1 = new Player();
-Obstacle *obs1 = new Obstacle();
+
 
 void GameBrain::createWindow(const char* title, int xPos, int yPos, int width, int height, bool fullscreen) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
@@ -170,10 +170,104 @@ void GameBrain::updateEnemyVectors() {
 	}
 }
 
+void GameBrain::initObstacles() {
+	// Left
+	Obstacle obs1(m_gameRenderer, 0, 0, 100, 600);
+	Obstacle obs2(m_gameRenderer, 0, 1, 122, 600);
+	Obstacle obs3(m_gameRenderer, 0, 1, 144, 600);
+	Obstacle obs4(m_gameRenderer, 0, 2, 166, 600);
+	Obstacle obs5(m_gameRenderer, 0, 1, 100, 622);
+	Obstacle obs6(m_gameRenderer, 0, 1, 122, 622);
+	Obstacle obs7(m_gameRenderer, 0, 1, 144, 622);
+	Obstacle obs8(m_gameRenderer, 0, 1, 166, 622);
+	Obstacle obs9(m_gameRenderer, 0, 1, 100, 644);
+	Obstacle obs10(m_gameRenderer, 0, 1, 122, 644);
+	Obstacle obs11(m_gameRenderer, 0, 1, 144, 644);
+	Obstacle obs12(m_gameRenderer, 0, 1, 166, 644);
+	Obstacle obs13(m_gameRenderer, 0, 4, 100, 666);
+	Obstacle obs14(m_gameRenderer, 0, 3, 166, 666);
+	leftObst.push_back(obs1);
+	leftObst.push_back(obs2);
+	leftObst.push_back(obs3);
+	leftObst.push_back(obs4);
+	leftObst.push_back(obs5);
+	leftObst.push_back(obs6);
+	leftObst.push_back(obs7);
+	leftObst.push_back(obs8);
+	leftObst.push_back(obs9);
+	leftObst.push_back(obs10);
+	leftObst.push_back(obs11);
+	leftObst.push_back(obs12);
+	leftObst.push_back(obs13);
+	leftObst.push_back(obs14);
+
+	// Middle
+	Obstacle obs15(m_gameRenderer, 0, 0, 356, 600);
+	Obstacle obs16(m_gameRenderer, 0, 1, 378, 600);
+	Obstacle obs17(m_gameRenderer, 0, 1, 400, 600);
+	Obstacle obs18(m_gameRenderer, 0, 2, 422, 600);
+	Obstacle obs19(m_gameRenderer, 0, 1, 356, 622);
+	Obstacle obs20(m_gameRenderer, 0, 1, 378, 622);
+	Obstacle obs21(m_gameRenderer, 0, 1, 400, 622);
+	Obstacle obs22(m_gameRenderer, 0, 1, 422, 622);
+	Obstacle obs23(m_gameRenderer, 0, 1, 356, 644);
+	Obstacle obs24(m_gameRenderer, 0, 1, 378, 644);
+	Obstacle obs25(m_gameRenderer, 0, 1, 400, 644);
+	Obstacle obs26(m_gameRenderer, 0, 1, 422, 644);
+	Obstacle obs27(m_gameRenderer, 0, 4, 356, 666);
+	Obstacle obs28(m_gameRenderer, 0, 3, 422, 666);
+	middleObst.push_back(obs15);
+	middleObst.push_back(obs16);
+	middleObst.push_back(obs17);
+	middleObst.push_back(obs18);
+	middleObst.push_back(obs19);
+	middleObst.push_back(obs20);
+	middleObst.push_back(obs21);
+	middleObst.push_back(obs22);
+	middleObst.push_back(obs23);
+	middleObst.push_back(obs24);
+	middleObst.push_back(obs25);
+	middleObst.push_back(obs26);
+	middleObst.push_back(obs27);
+	middleObst.push_back(obs28);
+
+	// Right
+	Obstacle obs29(m_gameRenderer, 0, 0, 612, 600);
+	Obstacle obs30(m_gameRenderer, 0, 1, 634, 600);
+	Obstacle obs31(m_gameRenderer, 0, 1, 656, 600);
+	Obstacle obs32(m_gameRenderer, 0, 2, 678, 600);
+	Obstacle obs33(m_gameRenderer, 0, 1, 612, 622);
+	Obstacle obs34(m_gameRenderer, 0, 1, 634, 622);
+	Obstacle obs35(m_gameRenderer, 0, 1, 656, 622);
+	Obstacle obs36(m_gameRenderer, 0, 1, 678, 622);
+	Obstacle obs37(m_gameRenderer, 0, 1, 612, 644);
+	Obstacle obs38(m_gameRenderer, 0, 1, 634, 644);
+	Obstacle obs39(m_gameRenderer, 0, 1, 656, 644);
+	Obstacle obs40(m_gameRenderer, 0, 1, 678, 644);
+	Obstacle obs41(m_gameRenderer, 0, 4, 612, 666);
+	Obstacle obs42(m_gameRenderer, 0, 3, 678, 666);
+	rightObst.push_back(obs29);
+	rightObst.push_back(obs30);
+	rightObst.push_back(obs31);
+	rightObst.push_back(obs32);
+	rightObst.push_back(obs33);
+	rightObst.push_back(obs34);
+	rightObst.push_back(obs35);
+	rightObst.push_back(obs36);
+	rightObst.push_back(obs37);
+	rightObst.push_back(obs38);
+	rightObst.push_back(obs39);
+	rightObst.push_back(obs40);
+	rightObst.push_back(obs41);
+	rightObst.push_back(obs42);
+}
+
 void GameBrain::init() {
 	p1->spawnPlayer(m_gameRenderer);
-	obs1->init(m_gameRenderer, 0, 0, 0);
 	m_currentScore = 0;
+
+	// Obstacles
+	initObstacles();
 
 	// Main Menu Background
 	m_mainMenuBMP = SDL_LoadBMP("Img/mainmenu.bmp");
@@ -936,9 +1030,22 @@ void GameBrain::render() {
 	else if (m_screen == 2) {
 		drawGameScreen();
 		SDL_RenderCopy(m_gameRenderer, p1->getDrawable(), nullptr, p1->getCoords());
-		SDL_RenderCopy(m_gameRenderer, obs1->getDrawable(), nullptr, obs1->getCoords());
 		updateEnemyVectors();
 		checkCollision();
+
+		// Obstacles
+		// Left
+		for (int i = 0; i < leftObst.size(); i++) {
+			SDL_RenderCopy(m_gameRenderer, leftObst[i].getDrawable(), nullptr, leftObst[i].getCoords());
+		}
+		// Middle
+		for (int i = 0; i < middleObst.size(); i++) {
+			SDL_RenderCopy(m_gameRenderer, middleObst[i].getDrawable(), nullptr, middleObst[i].getCoords());
+		}
+		// Right
+		for (int i = 0; i < rightObst.size(); i++) {
+			SDL_RenderCopy(m_gameRenderer, rightObst[i].getDrawable(), nullptr, rightObst[i].getCoords());
+		}
 
 		// Render all enemies
 		for (int i = 0; i < 11; i++) {
