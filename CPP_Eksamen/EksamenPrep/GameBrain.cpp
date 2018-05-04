@@ -551,7 +551,7 @@ void GameBrain::restart(int difficulty) {
 	}
 	for (int j = 0; j < enemyProjectiles.size(); j++)
 	{
-		enemyProjectiles[j].setY(-1500);
+		enemyProjectiles[j].setY(1500);
 	}
 
 	// If level set to level 1
