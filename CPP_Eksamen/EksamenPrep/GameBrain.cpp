@@ -8,8 +8,6 @@
 #include "Obstacle.h"
 #include "ScoreHandler.h"
 #include "EnemyProjectile.h"
-#include <ctime>    // For time()
-#include <cstdlib>  // For srand() and rand()
 
 #ifndef SCREEN_SIZE
 #define SCREEN_SIZE 800
