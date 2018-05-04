@@ -480,6 +480,7 @@ void GameBrain::restart() {
 	updateScore();
 
 	// Reset enemies, killcounter and update screen
+	redrawObstacles();
 	redrawEnemies();
 	m_killCounter = 0;
 	m_screen = 3;
@@ -735,6 +736,36 @@ void GameBrain::redrawEnemies() {
 	}
 }
 
+void GameBrain::redrawObstacles() {
+	leftObst[0].setY(400);
+	middleObst[0].setY(340);
+	rightObst[0].setY(280);
+
+	for (int j = 0; j < 4; j++) {
+		leftObst[j].setY(600);
+		middleObst[j].setY(600);
+		rightObst[j].setY(600);
+	}
+
+	for (int k = 4; k < 8; k++) {
+		leftObst[k].setY(622);
+		middleObst[k].setY(622);
+		rightObst[k].setY(622);
+	}
+
+	for (int l = 8; l < 12; l++) {
+		leftObst[l].setY(644);
+		middleObst[l].setY(644);
+		rightObst[l].setY(644);
+	}
+
+	for (int m = 12; m < 14; m++) {
+		leftObst[m].setY(666);
+		middleObst[m].setY(666);
+		rightObst[m].setY(666);
+	}
+}
+
 void GameBrain::checkCollision() {
 	for (int i = 0; i < p1->getBullets().size(); i++) {
 		if (p1->getBullets()[i]->getX() < 0) {
@@ -743,7 +774,55 @@ void GameBrain::checkCollision() {
 	}
 
 	// Check if hit obstacle 1
-	//for (auto& p1->getBullets() )
+	for (int i = 0; i < p1->getBullets().size(); i++) {
+		if (p1->getBullets()[i]->getY() > 500) {
+
+			// Check if hit obstacle
+			for (int j = 0; j < leftObst.size(); j++) {
+				if (p1->getBullets()[i]->getX()+1 >= leftObst[j].getX() &&
+					p1->getBullets()[i]->getX()+1 <= (leftObst[j].getX() + 21) &&
+					p1->getBullets()[i]->getY() >= leftObst[j].getY() &&
+					p1->getBullets()[i]->getY() <= (leftObst[j].getY() + 21)) {
+						p1->getBullets()[i]->setY(-1500);
+						leftObst[j].setY(-850);
+				}
+			}
+		}
+	}
+
+	// Check if hit obstacle 2
+	for (int i = 0; i < p1->getBullets().size(); i++) {
+		if (p1->getBullets()[i]->getY() > 500) {
+
+			// Check if hit obstacle
+			for (int j = 0; j < middleObst.size(); j++) {
+				if (p1->getBullets()[i]->getX() + 1 >= middleObst[j].getX() &&
+					p1->getBullets()[i]->getX() + 1 <= (middleObst[j].getX() + 21) &&
+					p1->getBullets()[i]->getY() >= middleObst[j].getY() &&
+					p1->getBullets()[i]->getY() <= (middleObst[j].getY() + 21)) {
+					p1->getBullets()[i]->setY(-1500);
+					middleObst[j].setY(-850);
+				}
+			}
+		}
+	}
+
+	// Check if hit obstacle 3
+	for (int i = 0; i < p1->getBullets().size(); i++) {
+		if (p1->getBullets()[i]->getY() > 500) {
+
+			// Check if hit obstacle
+			for (int j = 0; j < rightObst.size(); j++) {
+				if (p1->getBullets()[i]->getX() + 1 >= rightObst[j].getX() &&
+					p1->getBullets()[i]->getX() + 1 <= (rightObst[j].getX() + 21) &&
+					p1->getBullets()[i]->getY() >= rightObst[j].getY() &&
+					p1->getBullets()[i]->getY() <= (rightObst[j].getY() + 21)) {
+					p1->getBullets()[i]->setY(-1500);
+					rightObst[j].setY(-850);
+				}
+			}
+		}
+	}
 
 	// Check if alien touches player
 	for (int i = 0; i < 11; i++) {
@@ -910,7 +989,7 @@ void GameBrain::handleEvents() {
 		if (keystate[SDL_SCANCODE_SPACE] && keystate[SDL_SCANCODE_LEFT]) {
 			p1->updatePos(0);
 			int currentTime = SDL_GetTicks();
-			if (currentTime > oldTime + 500) {
+			if (currentTime > oldTime + 300) {
 				oldTime = currentTime;
 				Projectile *p = new Projectile();
 				std::cout << "Projectile created" << std::endl;
@@ -924,7 +1003,7 @@ void GameBrain::handleEvents() {
 			p1->updatePos(1);
 			int currentTime = SDL_GetTicks();
 			// Only shoot every 0.5s
-			if (currentTime > oldTime + 500) {
+			if (currentTime > oldTime + 300) {
 				oldTime = currentTime;
 				std::cout << "Projectile created" << std::endl;
 				Projectile *p = new Projectile();
@@ -942,10 +1021,10 @@ void GameBrain::handleEvents() {
 		}
 
 		//Check only space
-		else if (keystate[SDL_SCANCODE_SPACE] && !keystate[SDL_SCANCODE_LEFT] && !keystate[SDL_SCANCODE_RIGHT]) {
+		else if (keystate[SDL_SCANCODE_SPACE] && !keystate[SDL_SCANCODE_LEFT] && !keystate[SDL_SCANCODE_RIGHT] && m_screen == 2) {
 			int currentTime = SDL_GetTicks();
 			// Only shoot every 0.5s
-			if (currentTime > oldTime + 500) {
+			if (currentTime > oldTime + 300) {
 				oldTime = currentTime;
 				Projectile *p = new Projectile();
 				std::cout << "Projectile created" << std::endl;
@@ -1038,6 +1117,15 @@ void GameBrain::render() {
 		updateEnemyVectors();
 		checkCollision();
 
+		// Render all enemies
+		for (int i = 0; i < 11; i++) {
+			SDL_RenderCopy(m_gameRenderer, enemy1[i].getDrawable(), nullptr, enemy1[i].getCoords());
+			SDL_RenderCopy(m_gameRenderer, enemy2[i].getDrawable(), nullptr, enemy2[i].getCoords());
+			SDL_RenderCopy(m_gameRenderer, enemy3[i].getDrawable(), nullptr, enemy3[i].getCoords());
+			SDL_RenderCopy(m_gameRenderer, enemy4[i].getDrawable(), nullptr, enemy4[i].getCoords());
+			SDL_RenderCopy(m_gameRenderer, enemy5[i].getDrawable(), nullptr, enemy5[i].getCoords());
+		}
+
 		// Obstacles
 		// Left
 		for (int i = 0; i < leftObst.size(); i++) {
@@ -1050,15 +1138,6 @@ void GameBrain::render() {
 		// Right
 		for (int i = 0; i < rightObst.size(); i++) {
 			SDL_RenderCopy(m_gameRenderer, rightObst[i].getDrawable(), nullptr, rightObst[i].getCoords());
-		}
-
-		// Render all enemies
-		for (int i = 0; i < 11; i++) {
-			SDL_RenderCopy(m_gameRenderer, enemy1[i].getDrawable(), nullptr, enemy1[i].getCoords());
-			SDL_RenderCopy(m_gameRenderer, enemy2[i].getDrawable(), nullptr, enemy2[i].getCoords());
-			SDL_RenderCopy(m_gameRenderer, enemy3[i].getDrawable(), nullptr, enemy3[i].getCoords());
-			SDL_RenderCopy(m_gameRenderer, enemy4[i].getDrawable(), nullptr, enemy4[i].getCoords());
-			SDL_RenderCopy(m_gameRenderer, enemy5[i].getDrawable(), nullptr, enemy5[i].getCoords());
 		}
 		
 		// Render score

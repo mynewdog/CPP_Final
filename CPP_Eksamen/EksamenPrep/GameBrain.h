@@ -29,6 +29,7 @@ public:
 	void updateScore();
 	void updateHighScore();
 	void updateCursor();
+	void redrawObstacles();
 
 	bool running();
 
