@@ -4,6 +4,7 @@
 class EnemyProjectile
 {
 public:
+	EnemyProjectile(SDL_Renderer* render, int spawnX, int spawnY);
 	EnemyProjectile();
 	~EnemyProjectile();
 	void move();

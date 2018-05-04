@@ -15,8 +15,8 @@ void EnemyProjectile::spawn(SDL_Renderer* render, int spawnX, int spawnY) {
 }
 
 void EnemyProjectile::move() {
-	if (enemyprojectile_coords.y <= -810) {
-		enemyprojectile_coords.y += 10;
+	if (enemyprojectile_coords.y <800) {
+		enemyprojectile_coords.y += 2;
 	}
 }
 
@@ -44,6 +44,10 @@ void EnemyProjectile::setY(int y) {
 	enemyprojectile_coords.y = y;
 }
 
+
+EnemyProjectile::EnemyProjectile(SDL_Renderer* render, int spawnX, int spawnY)
+{
+}
 EnemyProjectile::EnemyProjectile()
 {
 }

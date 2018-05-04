@@ -4,6 +4,7 @@
 #include <vector>
 #include "Enemy.h"
 #include "Obstacle.h"
+#include "EnemyProjectile.h"
 
 #define PLAYERPOSY 750
 
@@ -15,6 +16,7 @@ public:
 	
 	void createWindow(const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
 	void updateEnemyVectors();
+	void enemyAI();
 	void render();
 	void handleEvents();
 	void clean();
@@ -76,6 +78,8 @@ private:
 	std::vector<Enemy> enemy3;
 	std::vector<Enemy> enemy4;
 	std::vector<Enemy> enemy5;
+
+	std::vector<EnemyProjectile> enemyProjectiles;
 
 	//Game over screen
 	SDL_Surface * m_gameOverBMP;

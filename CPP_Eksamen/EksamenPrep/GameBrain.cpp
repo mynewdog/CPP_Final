@@ -7,6 +7,7 @@
 #include <string>
 #include "Obstacle.h"
 #include "ScoreHandler.h"
+#include "EnemyProjectile.h"
 
 #ifndef SCREEN_SIZE
 #define SCREEN_SIZE 800
@@ -16,8 +17,10 @@ int direction = 1;
 int ticks = 0;
 int oldTime = 0;
 int before = 0;
+int randomCount = 3;
 
 Player *p1 = new Player();
+EnemyProjectile *ep = new EnemyProjectile();
 ScoreHandler *score = new ScoreHandler();
 
 void GameBrain::createWindow(const char* title, int xPos, int yPos, int width, int height, bool fullscreen) {
@@ -172,6 +175,16 @@ void GameBrain::updateEnemyVectors() {
 	
 }
 
+void GameBrain::enemyAI() {
+	for (int i = 0; i < enemyProjectiles.size(); i++) {
+		if (enemy1[i].getY() > 0 && randomCount > 0) {
+			EnemyProjectile ep1(m_gameRenderer, enemy1[i].getX() + 23, enemy1[i].getY() + 47);
+			enemyProjectiles.push_back(ep1);
+			randomCount--;
+		}
+	}
+}
+
 void GameBrain::initObstacles() {
 	// Left
 	Obstacle obs1(m_gameRenderer, 0, 0, 100, 600);
@@ -266,6 +279,7 @@ void GameBrain::initObstacles() {
 
 void GameBrain::init() {
 	p1->spawnPlayer(m_gameRenderer);
+	ep->spawn(m_gameRenderer, 400, 0);
 	m_currentScore = 0;
 
 	// Obstacles
@@ -1008,7 +1022,9 @@ void GameBrain::updateCursor() {
 }
 
 void GameBrain::update() {
-
+	for (int i = 0; i < enemyProjectiles.size(); i++) {
+		enemyProjectiles[i].move();
+	}
 }
 
 void GameBrain::handleEvents() {
@@ -1155,6 +1171,10 @@ void GameBrain::render() {
 	else if (m_screen == 2) {
 		drawGameScreen();
 		SDL_RenderCopy(m_gameRenderer, p1->getDrawable(), nullptr, p1->getCoords());
+		ep->move();
+		for (int i = 0; i < enemyProjectiles.size(); i++) {
+			SDL_RenderCopy(m_gameRenderer, enemyProjectiles[i].getDrawable(), nullptr, enemyProjectiles[i].getCoords());
+		}
 		updateEnemyVectors();
 		checkCollision();
 

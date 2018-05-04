@@ -11,7 +11,6 @@ void Projectile::spawn(SDL_Renderer* render, int spawnX, int spawnY) {
 	projectile_coords.x = spawnX;
 	projectile_coords.y = spawnY;
 	SDL_FreeSurface(projectile_BMP);
-	move();
 }
 
 SDL_Rect* Projectile::getCoords() {
