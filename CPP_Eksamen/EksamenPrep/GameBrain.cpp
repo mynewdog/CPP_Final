@@ -194,11 +194,24 @@ void GameBrain::enemyAI() {
 		beforeEnemyProjectile = now;
 		for (int i = 0; i < enemy1.size(); i++) {
 			if (enemy1[i].getX() > p1->getX() &&
-				enemy1[i].getX() < p1->getX() + 48) {
+				enemy1[i].getX() < p1->getX() + 48 &&
+				enemy1[i].getY() > 0) {
 				std::cout << "Enemy[" << i << "]" << std::endl;
 				EnemyProjectile ep1(m_gameRenderer, enemy1[i].getX() + 23, enemy1[i].getY() + 47);
 				enemyProjectiles.push_back(ep1);
 			}
+		}
+	}
+}
+
+void GameBrain::enemyProjectileCollision() {
+	for (int i = 0; i < enemyProjectiles.size(); i++) {
+		if (enemyProjectiles[i].getX() > p1->getX() &&
+			enemyProjectiles[i].getX() < p1->getX() + 54 &&
+			enemyProjectiles[i].getY() > p1->getY() &&
+			enemyProjectiles[i].getY() < p1->getY() + 48) {
+				std::cout << "Hit player" << std::endl;
+				enemyProjectiles.erase(enemyProjectiles.begin() + i);
 		}
 	}
 }
@@ -914,9 +927,7 @@ void GameBrain::checkCollision() {
 							m_killCounter++;
 							m_currentScore += 10;
 							updateScore();
-							p1->printBulletSize();
 							p1->removeBullet(i);
-							p1->printBulletSize();
 							checkWin();
 							return;
 						}
@@ -938,9 +949,7 @@ void GameBrain::checkCollision() {
 							m_killCounter++;
 							m_currentScore += 20;
 							updateScore();
-							p1->printBulletSize();
 							p1->removeBullet(i);
-							p1->printBulletSize();
 							checkWin();
 							return;
 
@@ -963,9 +972,7 @@ void GameBrain::checkCollision() {
 							m_killCounter++;
 							m_currentScore += 30;
 							updateScore();
-							p1->printBulletSize();
 							p1->removeBullet(i);
-							p1->printBulletSize();
 							checkWin();
 							return;
 						}
@@ -987,9 +994,7 @@ void GameBrain::checkCollision() {
 							m_killCounter++;
 							m_currentScore += 40;
 							updateScore();
-							p1->printBulletSize();
 							p1->removeBullet(i);
-							p1->printBulletSize();
 							checkWin();
 							return;
 						}
@@ -1011,9 +1016,7 @@ void GameBrain::checkCollision() {
 							m_killCounter++;
 							m_currentScore += 50;
 							updateScore();
-							p1->printBulletSize();
 							p1->removeBullet(i);
-							p1->printBulletSize();
 							checkWin();
 							return;
 						}
@@ -1195,6 +1198,7 @@ void GameBrain::render() {
 		}
 		updateEnemyVectors();
 		checkCollision();
+		enemyProjectileCollision();
 
 		// Render all enemies
 		for (int i = 0; i < 11; i++) {

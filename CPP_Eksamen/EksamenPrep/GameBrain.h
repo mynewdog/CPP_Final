@@ -27,6 +27,7 @@ public:
 	void checkWin();
 	void redrawEnemies();
 	void checkCollision();
+	void enemyProjectileCollision();
 	void restart(int difficulty);
 	void updateScore();
 	void updateHighScore();

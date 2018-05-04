@@ -14,10 +14,6 @@ std::vector<Projectile*> Player::getBullets() {
 	return bullets;
 }
 
-void Player::printBulletSize() {
-	std::cout << "Size: " << bullets.size() << std::endl;
-}
-
 void Player::addBullets(Projectile *p) {
 	bullets.push_back(p);
 }
