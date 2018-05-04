@@ -6,6 +6,7 @@
 #include "Player.h"
 #include <string>
 #include "Obstacle.h"
+#include "ScoreHandler.h"
 
 #ifndef SCREEN_SIZE
 #define SCREEN_SIZE 800
@@ -16,7 +17,7 @@ int ticks = 0;
 int oldTime = 0;
 
 Player *p1 = new Player();
-
+ScoreHandler *score = new ScoreHandler();
 
 void GameBrain::createWindow(const char* title, int xPos, int yPos, int width, int height, bool fullscreen) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
@@ -460,9 +461,10 @@ void GameBrain::checkWin() {
 }
 
 void GameBrain::restart() {
-	if (m_currentScore > m_highScore) {
-		m_highScore = m_currentScore;
-		std::cout << m_highScore;
+	if (m_currentScore > score->readFile()) {
+		std::string temp = std::to_string(m_currentScore);
+		const char * converted = temp.c_str();
+		score->writeFile(converted);
 	}
 	// Remove all bullets from screen
 	for (int i = 0; i < p1->getBullets().size(); i++) {
@@ -592,7 +594,7 @@ void GameBrain::updateScore() {
 }
 void GameBrain::updateHighScore() {
 	int tempScore[5];
-	int tempScoreCalc = m_highScore;
+	int tempScoreCalc = score->readFile();
 	int calc = 0;
 
 	// 10000
