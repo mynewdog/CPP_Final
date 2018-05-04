@@ -4,7 +4,7 @@
 #include <SDL.h>
 #undef main
 
-GameBrain *test = nullptr;
+GameBrain *game = nullptr;
 int main(void) {
 	const int FPS = 30;
 	const int frameDelay = 1000 / FPS;
@@ -13,23 +13,23 @@ int main(void) {
 	int frameTime;
 
 
-	test = new GameBrain();
-	test->createWindow("Space Invaders", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 800, false);
-	test->init();
+	game = new GameBrain();
+	game->createWindow("Space Invaders", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 800, false);
+	game->init();
 
-	while (test->running()) {
+	while (game->running()) {
 		frameStart = SDL_GetTicks();
 
-		test->handleEvents();
-		test->update();
-		test->render();
+		game->handleEvents();
+		game->update();
+		game->render();
 
 		frameTime = SDL_GetTicks() - frameStart;
 		if (frameDelay > frameTime) {
 			SDL_Delay(frameDelay - frameTime);
 		}
 	}
-	test->clean();
+	game->clean();
 	return 0;
 }
 
