@@ -44,6 +44,8 @@ void GameBrain::createWindow(const char* title, int xPos, int yPos, int width, i
 }
 
 void GameBrain::updateEnemyVectors() {
+	
+
 		// Vector 1
 		if (enemy1.front().getX() <= 0) {
 			for (int i = 0; i < enemy1.size(); i++) {
@@ -176,10 +178,11 @@ void GameBrain::updateEnemyVectors() {
 }
 
 void GameBrain::enemyAI() {
-	for (int i = 0; i < enemyProjectiles.size(); i++) {
+	for (int i = 0; i < enemy1.size(); i++) {
 		if (enemy1[i].getY() > 0 && randomCount > 0) {
 			EnemyProjectile ep1(m_gameRenderer, enemy1[i].getX() + 23, enemy1[i].getY() + 47);
 			enemyProjectiles.push_back(ep1);
+			std::cout << "Vi er her, skyt" << std::endl;
 			randomCount--;
 		}
 	}
@@ -1151,6 +1154,7 @@ void GameBrain::drawGameScreen() {
 
 
 void GameBrain::render() {
+	enemyAI();
 	// Clear last frame
 	SDL_RenderClear(m_gameRenderer);
 	SDL_FillRect(NULL, NULL, 0x000000);
@@ -1171,7 +1175,6 @@ void GameBrain::render() {
 	else if (m_screen == 2) {
 		drawGameScreen();
 		SDL_RenderCopy(m_gameRenderer, p1->getDrawable(), nullptr, p1->getCoords());
-		ep->move();
 		for (int i = 0; i < enemyProjectiles.size(); i++) {
 			SDL_RenderCopy(m_gameRenderer, enemyProjectiles[i].getDrawable(), nullptr, enemyProjectiles[i].getCoords());
 		}

@@ -47,6 +47,13 @@ void EnemyProjectile::setY(int y) {
 
 EnemyProjectile::EnemyProjectile(SDL_Renderer* render, int spawnX, int spawnY)
 {
+	enemyprojectile_BMP = SDL_LoadBMP("Img/playergun.bmp");
+	enemyprojectile_drawable = SDL_CreateTextureFromSurface(render, enemyprojectile_BMP);
+	enemyprojectile_coords.h = enemyprojectile_BMP->h;
+	enemyprojectile_coords.w = enemyprojectile_BMP->w;
+	enemyprojectile_coords.x = spawnX;
+	enemyprojectile_coords.y = spawnY;
+	SDL_FreeSurface(enemyprojectile_BMP);
 }
 EnemyProjectile::EnemyProjectile()
 {
