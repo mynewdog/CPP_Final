@@ -19,6 +19,10 @@ void Player::removeBullet(int i) {
 	bullets.shrink_to_fit();
 }
 
+void Player::reset() {
+	//bullets.clear();
+}
+
 void Player::spawnPlayer(SDL_Renderer* render) {
 	player_BMP = SDL_LoadBMP("Img/player.bmp");
 	player_drawable = SDL_CreateTextureFromSurface(render, player_BMP);

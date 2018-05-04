@@ -21,16 +21,18 @@ public:
 	void init();
 	void drawGameScreen();
 	void checkWin();
-
+	void redrawEnemies();
 	void checkCollision();
-
+	void restart();
+	void updateScore();
+	void updateHighScore();
 	void updateCursor();
+
 	bool running();
 
 private:
 	int m_menuChoice = 0;
 	int m_screen = 0;
-	//char[5][11] winCheckArray;
 
 	SDL_Window * m_gameWindow;
 	SDL_Renderer * m_gameRenderer;
@@ -72,38 +74,61 @@ private:
 	std::vector<Enemy> enemy4;
 	std::vector<Enemy> enemy5;
 
+	//Game over screen
+	SDL_Surface * m_gameOverBMP;
+	SDL_Texture * m_gameOver_drawable;
+	SDL_Rect m_gameOver_coords;
+
+	//Score on play screen
+	SDL_Surface * m_score1;
+	SDL_Texture * m_score1_drawable;
+	SDL_Rect m_score1_coords;
+
+	SDL_Surface * m_score2;
+	SDL_Texture * m_score2_drawable;
+	SDL_Rect m_score2_coords;
+
+	SDL_Surface * m_score3;
+	SDL_Texture * m_score3_drawable;
+	SDL_Rect m_score3_coords;
+
+	SDL_Surface * m_score4;
+	SDL_Texture * m_score4_drawable;
+	SDL_Rect m_score4_coords;
+
+	SDL_Surface * m_score5;
+	SDL_Texture * m_score5_drawable;
+	SDL_Rect m_score5_coords;
+
+	//////////////////////////
+	//////////////////////////
+	//////////////////////////
+
+	//Highscore
+	SDL_Surface * m_highscore1;
+	SDL_Texture * m_highscore1_drawable;
+	SDL_Rect m_highscore1_coords;
+
+	SDL_Surface * m_highscore2;
+	SDL_Texture * m_highscore2_drawable;
+	SDL_Rect m_highscore2_coords;
+
+	SDL_Surface * m_highscore3;
+	SDL_Texture * m_highscore3_drawable;
+	SDL_Rect m_highscore3_coords;
+
+	SDL_Surface * m_highscore4;
+	SDL_Texture * m_highscore4_drawable;
+	SDL_Rect m_highscore4_coords;
+
+	SDL_Surface * m_highscore5;
+	SDL_Texture * m_highscore5_drawable;
+	SDL_Rect m_highscore5_coords;
+
+
 	int m_killCounter;
+	int m_currentScore;
+	int m_highScore;
 
-	/*
-	// Enemy type 1
-	SDL_Surface * m_enemy1_BMP;
-	SDL_Texture * m_enemy1_drawable;
-	SDL_Rect m_enemy1_coords;
-	std::vector<SDL_Rect> m_arr_enemy1_coords;
-
-	// Enemy type 2
-	SDL_Surface * m_enemy2_BMP;
-	SDL_Texture * m_enemy2_drawable;
-	SDL_Rect m_enemy2_coords;
-	std::vector<SDL_Rect> m_arr_enemy2_coords;
-
-	// Enemy type 3
-	SDL_Surface * m_enemy3_BMP;
-	SDL_Texture * m_enemy3_drawable;
-	SDL_Rect m_enemy3_coords;
-	std::vector<SDL_Rect> m_arr_enemy3_coords;
-
-	// Enemy type 4
-	SDL_Surface * m_enemy4_BMP;
-	SDL_Texture * m_enemy4_drawable;
-	SDL_Rect m_enemy4_coords;
-	std::vector<SDL_Rect> m_arr_enemy4_coords;
-
-	// Enemy type 5
-	SDL_Surface * m_enemy5_BMP;
-	SDL_Texture * m_enemy5_drawable;
-	SDL_Rect m_enemy5_coords;
-	std::vector<SDL_Rect> m_arr_enemy5_coords;
-	*/
 	bool isRunning;
 };

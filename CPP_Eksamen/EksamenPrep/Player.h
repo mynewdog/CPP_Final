@@ -18,6 +18,7 @@ public:
 	SDL_Texture* getDrawable();
 	SDL_Rect* getCoords();
 
+	void reset();
 	int getX();
 	int getY();
 

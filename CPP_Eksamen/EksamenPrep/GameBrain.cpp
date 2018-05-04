@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include "Projectile.h"
 #include "Player.h"
+#include <string>
 
 #ifndef SCREEN_SIZE
 #define SCREEN_SIZE 800
@@ -34,49 +35,13 @@ void GameBrain::createWindow(const char* title, int xPos, int yPos, int width, i
 		isRunning = false;
 	}
 }
-/*
-void GameBrain::updateEnemyVectors(std::vector<SDL_Rect> arr) {
-	// Check right
-	if (arr.back().x >= (SCREEN_SIZE - 48)) {
-		if (arr[0].y <= 660) {
-			for (int i = 0; i < arr.size(); i++) {
-				arr[i].y += 48;
-			}
-		}
-		
-		direction = 0;
-	}
-	else if (arr.front().x <= 0) {
-		if (arr[0].y <= 660) {
-			for (int i = 0; i < arr.size(); i++) {
-				arr[i].y += 48;
-			}
-		}
-		direction = 1;
 
-	}
-
-	if (direction == 1) {
-		for (int i = 0; i < arr.size(); i++) {
-			arr[i].x += 1;
-		}
-	}
-	else if (direction == 0) {
-		for (int i = 0; i < arr.size(); i++) {
-			arr[i].x -= 1;
-		}
-	}
-	
-}
-*/
 void GameBrain::updateEnemyVectors() {
 	
 	// Vector 1
 	if (enemy1.front().getX() <= 0) {
-		if (enemy1[0].getY() <= 600) {
-			for (int i = 0; i < enemy1.size(); i++) {
-				enemy1[i].moveDown();
-			}
+		for (int i = 0; i < enemy1.size(); i++) {
+			enemy1[i].moveDown();
 		}
 		direction = 1;
 	}
@@ -100,10 +65,8 @@ void GameBrain::updateEnemyVectors() {
 	}
 	// Vector 2
 	if (enemy2.front().getX() <= 0) {
-		if (enemy2[0].getY() <= 600) {
-			for (int i = 0; i < enemy2.size(); i++) {
-				enemy2[i].moveDown();
-			}
+		for (int i = 0; i < enemy2.size(); i++) {
+			enemy2[i].moveDown();
 		}
 		direction = 1;
 	}
@@ -128,10 +91,8 @@ void GameBrain::updateEnemyVectors() {
 
 	// Vector 3
 	if (enemy3.front().getX() <= 0) {
-		if (enemy3[0].getY() <= 600) {
-			for (int i = 0; i < enemy3.size(); i++) {
-				enemy3[i].moveDown();
-			}
+		for (int i = 0; i < enemy3.size(); i++) {
+			enemy3[i].moveDown();
 		}
 		direction = 1;
 	}
@@ -156,10 +117,8 @@ void GameBrain::updateEnemyVectors() {
 
 	// Vector 4
 	if (enemy4.front().getX() <= 0) {
-		if (enemy4[0].getY() <= 600) {
-			for (int i = 0; i < enemy4.size(); i++) {
-				enemy4[i].moveDown();
-			}
+		for (int i = 0; i < enemy4.size(); i++) {
+			enemy4[i].moveDown();
 		}
 		direction = 1;
 	}
@@ -184,10 +143,8 @@ void GameBrain::updateEnemyVectors() {
 
 	// Vector 5
 	if (enemy5.front().getX() <= 0) {
-		if (enemy5[0].getY() <= 600) {
-			for (int i = 0; i < enemy5.size(); i++) {
-				enemy5[i].moveDown();
-			}
+		for (int i = 0; i < enemy5.size(); i++) {
+			enemy5[i].moveDown();
 		}
 		direction = 1;
 	}
@@ -213,6 +170,7 @@ void GameBrain::updateEnemyVectors() {
 
 void GameBrain::init() {
 	p1->spawnPlayer(m_gameRenderer);
+	m_currentScore = 0;
 
 	// Main Menu Background
 	m_mainMenuBMP = SDL_LoadBMP("Img/mainmenu.bmp");
@@ -250,6 +208,109 @@ void GameBrain::init() {
 	m_back_coords.x = 225;
 	m_back_coords.y = 700;
 	SDL_FreeSurface(m_backBMP);
+
+	// Score - 10k spot
+	m_score1 = SDL_LoadBMP("Img/score/0.bmp");
+	m_score1_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_score1);
+	m_score1_coords.h = 25;
+	m_score1_coords.w = 26;
+	m_score1_coords.x = 24;
+	m_score1_coords.y = 62;
+	SDL_FreeSurface(m_score1);
+
+	// Score - 1k spot
+	m_score2 = SDL_LoadBMP("Img/score/0.bmp");
+	m_score2_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_score2);
+	m_score2_coords.h = 25;
+	m_score2_coords.w = 26;
+	m_score2_coords.x = 50;
+	m_score2_coords.y = 62;
+	SDL_FreeSurface(m_score2);
+
+	// Score - 100 spot
+	m_score3 = SDL_LoadBMP("Img/score/0.bmp");
+	m_score3_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_score3);
+	m_score3_coords.h = 25;
+	m_score3_coords.w = 26;
+	m_score3_coords.x = 76;
+	m_score3_coords.y = 62;
+	SDL_FreeSurface(m_score3);
+
+	// Score - 10 spot
+	m_score4 = SDL_LoadBMP("Img/score/0.bmp");
+	m_score4_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_score4);
+	m_score4_coords.h = 25;
+	m_score4_coords.w = 26;
+	m_score4_coords.x = 102;
+	m_score4_coords.y = 62;
+	SDL_FreeSurface(m_score4);
+
+	// Score - 1 spot
+	m_score5 = SDL_LoadBMP("Img/score/0.bmp");
+	m_score5_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_score5);
+	m_score5_coords.h = 25;
+	m_score5_coords.w = 26;
+	m_score5_coords.x = 128;
+	m_score5_coords.y = 62;
+	SDL_FreeSurface(m_score5);
+
+	//////////////////////////
+	/////////////////////////
+
+	// HighScore - 10k spot
+	m_highscore1 = SDL_LoadBMP("Img/score/0.bmp");
+	m_highscore1_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_highscore1);
+	m_highscore1_coords.h = 25;
+	m_highscore1_coords.w = 26;
+	m_highscore1_coords.x = 307;
+	m_highscore1_coords.y = 62;
+	SDL_FreeSurface(m_highscore1);
+
+	// HighScore - 1k spot
+	m_highscore2 = SDL_LoadBMP("Img/score/0.bmp");
+	m_highscore2_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_highscore2);
+	m_highscore2_coords.h = 25;
+	m_highscore2_coords.w = 26;
+	m_highscore2_coords.x = 333;
+	m_highscore2_coords.y = 62;
+	SDL_FreeSurface(m_highscore2);
+
+	// HighScore - 100 spot
+	m_highscore3 = SDL_LoadBMP("Img/score/0.bmp");
+	m_highscore3_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_highscore3);
+	m_highscore3_coords.h = 25;
+	m_highscore3_coords.w = 26;
+	m_highscore3_coords.x = 359;
+	m_highscore3_coords.y = 62;
+	SDL_FreeSurface(m_highscore3);
+
+	// HighScore - 10 spot
+	m_highscore4 = SDL_LoadBMP("Img/score/0.bmp");
+	m_highscore4_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_highscore4);
+	m_highscore4_coords.h = 25;
+	m_highscore4_coords.w = 26;
+	m_highscore4_coords.x = 385;
+	m_highscore4_coords.y = 62;
+	SDL_FreeSurface(m_highscore4);
+
+	// HighScore - 1 spot
+	m_highscore5 = SDL_LoadBMP("Img/score/0.bmp");
+	m_highscore5_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_highscore5);
+	m_highscore5_coords.h = 25;
+	m_highscore5_coords.w = 26;
+	m_highscore5_coords.x = 411;
+	m_highscore5_coords.y = 62;
+	SDL_FreeSurface(m_highscore5);
+
+	// Game over screen
+	m_gameOverBMP = SDL_LoadBMP("Img/gameoverBG.bmp");
+
+	m_gameOver_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_gameOverBMP);
+	m_gameOver_coords.h = m_gameOverBMP->h;
+	m_gameOver_coords.w = m_gameOverBMP->w;
+	m_gameOver_coords.x = 0;
+	m_gameOver_coords.y = 0;
+	SDL_FreeSurface(m_gameOverBMP);
 
 	// Game background
 	m_gameBG_BMP = SDL_LoadBMP("Img/gameBG.bmp");
@@ -295,9 +356,273 @@ void GameBrain::init() {
 }
 
 void GameBrain::checkWin() {
-	std::cout << m_killCounter << std::endl;
-	if (m_killCounter == 55) {
+	if (m_killCounter == 5) {
 		std::cout << "You won" << std::endl;
+		restart();
+	}
+}
+
+void GameBrain::restart() {
+	p1->reset();
+	if (m_currentScore > m_highScore) {
+		m_highScore = m_currentScore;
+		std::cout << m_highScore;
+	}
+	updateHighScore();
+	m_currentScore = 0;
+	updateScore();
+	redrawEnemies();
+	m_killCounter = 0;
+	m_screen = 3;
+}
+
+void GameBrain::updateScore() {
+	int tempScore[5];
+	int tempScoreCalc = m_currentScore;
+	int calc = 0;
+
+	// 10000
+	calc = tempScoreCalc / 10000;
+	tempScoreCalc -= (calc * 10000);
+	tempScore[0] = calc;
+
+	// 1000
+	calc = tempScoreCalc / 1000;
+	tempScoreCalc -= (calc * 1000);
+	tempScore[1] = calc;
+
+	// 100
+	calc = tempScoreCalc / 100;
+	tempScoreCalc -= (calc * 100);
+	tempScore[2] = calc;
+
+	// 10
+	calc = tempScoreCalc / 10;
+	tempScoreCalc -= (calc * 10);
+	tempScore[3] = calc;
+
+
+	std::string pathName = "Img/score/";
+	std::string pathNum = "4";
+	std::string pathFile = ".bmp";
+	std::string finalString = pathName + pathNum + pathFile;
+	
+	// Check 10 spot
+	if (tempScore[3] < 10) {
+		if (tempScore[3] == 0) { pathNum = "0"; }
+		else if (tempScore[3] == 1) { pathNum = "1"; }
+		else if (tempScore[3] == 2) { pathNum = "2"; }
+		else if (tempScore[3] == 3) { pathNum = "3"; }
+		else if (tempScore[3] == 4) { pathNum = "4"; }
+		else if (tempScore[3] == 5) { pathNum = "5"; }
+		else if (tempScore[3] == 6) { pathNum = "6"; }
+		else if (tempScore[3] == 7) { pathNum = "7"; }
+		else if (tempScore[3] == 8) { pathNum = "8"; }
+		else if (tempScore[3] == 9) { pathNum = "9"; }
+
+		std::string finalString = pathName + pathNum + pathFile;
+		m_score4 = SDL_LoadBMP(finalString.c_str());
+		m_score4_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_score4);
+		SDL_FreeSurface(m_score4);
+	}
+
+	// Check 100 spot
+	if (tempScore[2] < 10) {
+		if (tempScore[2] == 0) { pathNum = "0"; }
+		else if (tempScore[2] == 1) { pathNum = "1"; }
+		else if (tempScore[2] == 2) { pathNum = "2"; }
+		else if (tempScore[2] == 3) { pathNum = "3"; }
+		else if (tempScore[2] == 4) { pathNum = "4"; }
+		else if (tempScore[2] == 5) { pathNum = "5"; }
+		else if (tempScore[2] == 6) { pathNum = "6"; }
+		else if (tempScore[2] == 7) { pathNum = "7"; }
+		else if (tempScore[2] == 8) { pathNum = "8"; }
+		else if (tempScore[2] == 9) { pathNum = "9"; }
+
+		std::string finalString = pathName + pathNum + pathFile;
+		m_score3 = SDL_LoadBMP(finalString.c_str());
+		m_score3_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_score3);
+		SDL_FreeSurface(m_score3);
+	}
+
+	// Check 1000 spot
+	if (tempScore[1] < 10) {
+		if (tempScore[1] == 0) { pathNum = "0"; }
+		else if (tempScore[1] == 1) { pathNum = "1"; }
+		else if (tempScore[1] == 2) { pathNum = "2"; }
+		else if (tempScore[1] == 3) { pathNum = "3"; }
+		else if (tempScore[1] == 4) { pathNum = "4"; }
+		else if (tempScore[1] == 5) { pathNum = "5"; }
+		else if (tempScore[1] == 6) { pathNum = "6"; }
+		else if (tempScore[1] == 7) { pathNum = "7"; }
+		else if (tempScore[1] == 8) { pathNum = "8"; }
+		else if (tempScore[1] == 9) { pathNum = "9"; }
+
+		std::string finalString = pathName + pathNum + pathFile;
+		m_score2 = SDL_LoadBMP(finalString.c_str());
+		m_score2_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_score2);
+		SDL_FreeSurface(m_score2);
+	}
+
+	// Check 10k spot
+	if (tempScore[0] < 10) {
+		if (tempScore[0] == 0) { pathNum = "0"; }
+		else if (tempScore[0] == 1) { pathNum = "1"; }
+		else if (tempScore[0] == 2) { pathNum = "2"; }
+		else if (tempScore[0] == 3) { pathNum = "3"; }
+		else if (tempScore[0] == 4) { pathNum = "4"; }
+		else if (tempScore[0] == 5) { pathNum = "5"; }
+		else if (tempScore[0] == 6) { pathNum = "6"; }
+		else if (tempScore[0] == 7) { pathNum = "7"; }
+		else if (tempScore[0] == 8) { pathNum = "8"; }
+		else if (tempScore[0] == 9) { pathNum = "9"; }
+
+		std::string finalString = pathName + pathNum + pathFile;
+		m_score1 = SDL_LoadBMP(finalString.c_str());
+		m_score1_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_score1);
+		SDL_FreeSurface(m_score1);
+	}
+}
+void GameBrain::updateHighScore() {
+	int tempScore[5];
+	int tempScoreCalc = m_highScore;
+	int calc = 0;
+
+	// 10000
+	calc = tempScoreCalc / 10000;
+	tempScoreCalc -= (calc * 10000);
+	tempScore[0] = calc;
+
+	// 1000
+	calc = tempScoreCalc / 1000;
+	tempScoreCalc -= (calc * 1000);
+	tempScore[1] = calc;
+
+	// 100
+	calc = tempScoreCalc / 100;
+	tempScoreCalc -= (calc * 100);
+	tempScore[2] = calc;
+
+	// 10
+	calc = tempScoreCalc / 10;
+	tempScoreCalc -= (calc * 10);
+	tempScore[3] = calc;
+
+
+	std::string pathName = "Img/score/";
+	std::string pathNum = "4";
+	std::string pathFile = ".bmp";
+	std::string finalString = pathName + pathNum + pathFile;
+
+	// Check 10 spot
+	if (tempScore[3] < 10) {
+		if (tempScore[3] == 0) { pathNum = "0"; }
+		else if (tempScore[3] == 1) { pathNum = "1"; }
+		else if (tempScore[3] == 2) { pathNum = "2"; }
+		else if (tempScore[3] == 3) { pathNum = "3"; }
+		else if (tempScore[3] == 4) { pathNum = "4"; }
+		else if (tempScore[3] == 5) { pathNum = "5"; }
+		else if (tempScore[3] == 6) { pathNum = "6"; }
+		else if (tempScore[3] == 7) { pathNum = "7"; }
+		else if (tempScore[3] == 8) { pathNum = "8"; }
+		else if (tempScore[3] == 9) { pathNum = "9"; }
+
+		std::string finalString = pathName + pathNum + pathFile;
+		m_highscore4 = SDL_LoadBMP(finalString.c_str());
+		m_highscore4_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_highscore4);
+		SDL_FreeSurface(m_highscore4);
+	}
+
+	// Check 100 spot
+	if (tempScore[2] < 10) {
+		if (tempScore[2] == 0) { pathNum = "0"; }
+		else if (tempScore[2] == 1) { pathNum = "1"; }
+		else if (tempScore[2] == 2) { pathNum = "2"; }
+		else if (tempScore[2] == 3) { pathNum = "3"; }
+		else if (tempScore[2] == 4) { pathNum = "4"; }
+		else if (tempScore[2] == 5) { pathNum = "5"; }
+		else if (tempScore[2] == 6) { pathNum = "6"; }
+		else if (tempScore[2] == 7) { pathNum = "7"; }
+		else if (tempScore[2] == 8) { pathNum = "8"; }
+		else if (tempScore[2] == 9) { pathNum = "9"; }
+
+		std::string finalString = pathName + pathNum + pathFile;
+		m_highscore3 = SDL_LoadBMP(finalString.c_str());
+		m_highscore3_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_highscore3);
+		SDL_FreeSurface(m_highscore3);
+	}
+
+	// Check 1000 spot
+	if (tempScore[1] < 10) {
+		if (tempScore[1] == 0) { pathNum = "0"; }
+		else if (tempScore[1] == 1) { pathNum = "1"; }
+		else if (tempScore[1] == 2) { pathNum = "2"; }
+		else if (tempScore[1] == 3) { pathNum = "3"; }
+		else if (tempScore[1] == 4) { pathNum = "4"; }
+		else if (tempScore[1] == 5) { pathNum = "5"; }
+		else if (tempScore[1] == 6) { pathNum = "6"; }
+		else if (tempScore[1] == 7) { pathNum = "7"; }
+		else if (tempScore[1] == 8) { pathNum = "8"; }
+		else if (tempScore[1] == 9) { pathNum = "9"; }
+
+		std::string finalString = pathName + pathNum + pathFile;
+		m_highscore2 = SDL_LoadBMP(finalString.c_str());
+		m_highscore2_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_highscore2);
+		SDL_FreeSurface(m_highscore2);
+	}
+
+	// Check 10k spot
+	if (tempScore[0] < 10) {
+		if (tempScore[0] == 0) { pathNum = "0"; }
+		else if (tempScore[0] == 1) { pathNum = "1"; }
+		else if (tempScore[0] == 2) { pathNum = "2"; }
+		else if (tempScore[0] == 3) { pathNum = "3"; }
+		else if (tempScore[0] == 4) { pathNum = "4"; }
+		else if (tempScore[0] == 5) { pathNum = "5"; }
+		else if (tempScore[0] == 6) { pathNum = "6"; }
+		else if (tempScore[0] == 7) { pathNum = "7"; }
+		else if (tempScore[0] == 8) { pathNum = "8"; }
+		else if (tempScore[0] == 9) { pathNum = "9"; }
+
+		std::string finalString = pathName + pathNum + pathFile;
+		m_highscore1 = SDL_LoadBMP(finalString.c_str());
+		m_highscore1_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_highscore1);
+		SDL_FreeSurface(m_highscore1);
+	}
+}
+
+void GameBrain::redrawEnemies() {
+	enemy1[0].setX(45);
+	enemy1[0].setY(400);
+	
+	enemy2[0].setX(45);
+	enemy2[0].setY(340);
+	
+	enemy3[0].setX(45);
+	enemy3[0].setY(280);
+	
+	enemy4[0].setX(45);
+	enemy4[0].setY(220);
+	
+	enemy5[0].setX(45);
+	enemy5[0].setY(160);
+	int i = 1;
+	while ((i > 0) && (i < 11)) {
+		enemy1[i].setX(enemy1[i-1].getX() + 60);
+		enemy1[i].setY(400);
+
+		enemy2[i].setX(enemy2[i - 1].getX() + 60);
+		enemy2[i].setY(340);
+
+		enemy3[i].setX(enemy3[i - 1].getX() + 60);
+		enemy3[i].setY(280);
+
+		enemy4[i].setX(enemy4[i - 1].getX() + 60);
+		enemy4[i].setY(220);
+
+		enemy5[i].setX(enemy5[i - 1].getX() + 60);
+		enemy5[i].setY(160);
+		i++;
 	}
 }
 
@@ -307,125 +632,134 @@ void GameBrain::checkCollision() {
 			p1->removeBullet(i);
 		}
 	}
-	// Vector 1
-	for (int i = 0; i < p1->getBullets().size(); i++) {
-		if (!(p1->getBullets()[i]->getY() < 0)) {
-			for (int j = 0; j < enemy1.size(); j++) {
-				if (p1->getBullets()[i]->getY() >= enemy1[j].getY() &&
-					p1->getBullets()[i]->getY() <= (enemy1[j].getY() + 47) &&
-					p1->getBullets()[i]->getX() >= enemy1[j].getX() &&
-					p1->getBullets()[i]->getX() <= (enemy1[j].getX() + 47))
-				{
-					p1->getBullets()[i]->setY(-1200);
-					enemy1[j].setY(-1000);
-					m_killCounter++;
-					checkWin();
-					std::cout << "HIT BLYAT" << std::endl;
 
-				}
-			}
+	// Check if alien touches player
+	for (int i = 0; i < 11; i++) {
+		if ((enemy1[i].getY() + 47) >= p1->getY() ||
+			(enemy2[i].getY() + 47) >= p1->getY() ||
+			(enemy3[i].getY() + 47) >= p1->getY() ||
+			(enemy4[i].getY() + 47) >= p1->getY() ||
+			(enemy5[i].getY() + 47) >= p1->getY()) {
+				restart();	
+				
+				updateScore();
 		}
 	}
 
-	// Vector 2
-	for (int i = 0; i < p1->getBullets().size(); i++) {
-		if (!(p1->getBullets()[i]->getY() < 0)) {
-			for (int j = 0; j < enemy2.size(); j++) {
-				if (p1->getBullets()[i]->getY() >= enemy2[j].getY() &&
-					p1->getBullets()[i]->getY() <= (enemy2[j].getY() + 47) &&
-					p1->getBullets()[i]->getX() >= enemy2[j].getX() &&
-					p1->getBullets()[i]->getX() <= (enemy2[j].getX() + 47))
-				{
-					p1->getBullets()[i]->setY(-1200);
-					enemy2[j].setY(-1000);
-					m_killCounter++;
-					checkWin();
-					std::cout << "HIT BLYAT" << std::endl;
-
+	if (p1->getBullets().size() > 0) {
+		// Vector 1
+		for (int i = 0; i < p1->getBullets().size(); i++) {
+			if (!(p1->getBullets()[i]->getY() < 0)) {
+				for (int j = 0; j < enemy1.size(); j++) {
+					if (p1->getBullets()[i]->getY() >= enemy1[j].getY() &&
+						p1->getBullets()[i]->getY() <= (enemy1[j].getY() + 47) &&
+						p1->getBullets()[i]->getX() >= enemy1[j].getX() &&
+						p1->getBullets()[i]->getX() <= (enemy1[j].getX() + 47))
+					{
+						p1->getBullets()[i]->setY(-1200);
+						enemy1[j].setY(-1000);
+						m_killCounter++;
+						m_currentScore += 10;
+						updateScore();
+						std::cout << m_currentScore << std::endl;
+						checkWin();
+						
+					}
 				}
 			}
 		}
-	}
 
-	// Vector 3
-	for (int i = 0; i < p1->getBullets().size(); i++) {
-		if (!(p1->getBullets()[i]->getY() < 0)) {
-			for (int j = 0; j < enemy3.size(); j++) {
-				if (p1->getBullets()[i]->getY() >= enemy3[j].getY() &&
-					p1->getBullets()[i]->getY() <= (enemy3[j].getY() + 47) &&
-					p1->getBullets()[i]->getX() >= enemy3[j].getX() &&
-					p1->getBullets()[i]->getX() <= (enemy3[j].getX() + 47))
-				{
-					p1->getBullets()[i]->setY(-1200);
-					enemy3[j].setY(-1000);
-					m_killCounter++;
-					checkWin();
-					std::cout << "HIT BLYAT" << std::endl;
-
+		// Vector 2
+		for (int i = 0; i < p1->getBullets().size(); i++) {
+			if (!(p1->getBullets()[i]->getY() < 0)) {
+				for (int j = 0; j < enemy2.size(); j++) {
+					if (p1->getBullets()[i]->getY() >= enemy2[j].getY() &&
+						p1->getBullets()[i]->getY() <= (enemy2[j].getY() + 47) &&
+						p1->getBullets()[i]->getX() >= enemy2[j].getX() &&
+						p1->getBullets()[i]->getX() <= (enemy2[j].getX() + 47))
+					{
+						p1->getBullets()[i]->setY(-1200);
+						enemy2[j].setY(-1000);
+						m_killCounter++;
+						m_currentScore += 20;
+						updateScore();
+						std::cout << m_currentScore << std::endl;
+						checkWin();
+						
+					}
 				}
 			}
 		}
-	}
 
-	// Vector 4
-	for (int i = 0; i < p1->getBullets().size(); i++) {
-		if (!(p1->getBullets()[i]->getY() < 0)) {
-			for (int j = 0; j < enemy4.size(); j++) {
-				if (p1->getBullets()[i]->getY() >= enemy4[j].getY() &&
-					p1->getBullets()[i]->getY() <= (enemy4[j].getY() + 47) &&
-					p1->getBullets()[i]->getX() >= enemy4[j].getX() &&
-					p1->getBullets()[i]->getX() <= (enemy4[j].getX() + 47))
-				{
-					p1->getBullets()[i]->setY(-1200);
-					enemy4[j].setY(-1000);
-					m_killCounter++;
-					checkWin();
-					std::cout << "HIT BLYAT" << std::endl;
-
+		// Vector 3
+		for (int i = 0; i < p1->getBullets().size(); i++) {
+			if (!(p1->getBullets()[i]->getY() < 0)) {
+				for (int j = 0; j < enemy3.size(); j++) {
+					if (p1->getBullets()[i]->getY() >= enemy3[j].getY() &&
+						p1->getBullets()[i]->getY() <= (enemy3[j].getY() + 47) &&
+						p1->getBullets()[i]->getX() >= enemy3[j].getX() &&
+						p1->getBullets()[i]->getX() <= (enemy3[j].getX() + 47))
+					{
+						p1->getBullets()[i]->setY(-1200);
+						enemy3[j].setY(-1000);
+						m_killCounter++;
+						m_currentScore += 30;
+						updateScore();
+						std::cout << m_currentScore << std::endl;
+						checkWin();
+						
+					}
 				}
 			}
 		}
-	}
 
-	// Vector 5
-	for (int i = 0; i < p1->getBullets().size(); i++) {
-		if (!(p1->getBullets()[i]->getY() < 0)) {
-			for (int j = 0; j < enemy5.size(); j++) {
-				if (p1->getBullets()[i]->getY() >= enemy5[j].getY() &&
-					p1->getBullets()[i]->getY() <= (enemy5[j].getY() + 47) &&
-					p1->getBullets()[i]->getX() >= enemy5[j].getX() &&
-					p1->getBullets()[i]->getX() <= (enemy5[j].getX() + 47))
-				{
-					p1->getBullets()[i]->setY(-1200);
-					enemy5[j].setY(-1000);
-					m_killCounter++;
-					checkWin();
-					std::cout << "HIT BLYAT" << std::endl;
+		// Vector 4
+		for (int i = 0; i < p1->getBullets().size(); i++) {
+			if (!(p1->getBullets()[i]->getY() < 0)) {
+				for (int j = 0; j < enemy4.size(); j++) {
+					if (p1->getBullets()[i]->getY() >= enemy4[j].getY() &&
+						p1->getBullets()[i]->getY() <= (enemy4[j].getY() + 47) &&
+						p1->getBullets()[i]->getX() >= enemy4[j].getX() &&
+						p1->getBullets()[i]->getX() <= (enemy4[j].getX() + 47))
+					{
+						p1->getBullets()[i]->setY(-1200);
+						enemy4[j].setY(-1000);
+						m_killCounter++;
+						m_currentScore += 40;
+						updateScore();
+						std::cout << m_currentScore << std::endl;
+						checkWin();
+						
+					}
+				}
+			}
+		}
 
+		// Vector 5
+		for (int i = 0; i < p1->getBullets().size(); i++) {
+			if (!(p1->getBullets()[i]->getY() < 0)) {
+				for (int j = 0; j < enemy5.size(); j++) {
+					if (p1->getBullets()[i]->getY() >= enemy5[j].getY() &&
+						p1->getBullets()[i]->getY() <= (enemy5[j].getY() + 47) &&
+						p1->getBullets()[i]->getX() >= enemy5[j].getX() &&
+						p1->getBullets()[i]->getX() <= (enemy5[j].getX() + 47))
+					{
+						p1->getBullets()[i]->setY(-1200);
+						enemy5[j].setY(-1000);
+						m_killCounter++;
+						m_currentScore += 50;
+						updateScore();
+						std::cout << m_currentScore << std::endl;
+						checkWin();
+						
+
+					}
 				}
 			}
 		}
 	}
 }
-/*
-void GameBrain::checkCollision(std::vector<Enemy> enemy) {
-	for (int i = 0; i < p1->getBullets().size(); i++) {
-		for (int j = 0; j < enemy.size(); j++) {
-			if (p1->getBullets()[i]->getY() >= enemy[j].getY() &&
-				p1->getBullets()[i]->getY() <= (enemy[j].getY() + 47) &&
-				p1->getBullets()[i]->getX() >= enemy[j].getX() &&
-				p1->getBullets()[i]->getX() <= (enemy[j].getX() + 47))
-			{
-				p1->getBullets()[i]->setX(1200);
-				enemy[j].setX(1000);
-				std::cout << "HIT BLYAT" << std::endl;
 
-			}
-		}
-	}
-
-}
-*/
 void GameBrain::updateCursor() {
 	if (m_menuChoice == 0) {
 		m_cursor_coords.x = 190;
@@ -507,47 +841,57 @@ void GameBrain::handleEvents() {
 				p1->addBullets(p);
 			}
 		}
-			if (event.key.keysym.sym == SDLK_ESCAPE && m_screen == 2) {
+		if (event.key.keysym.sym == SDLK_ESCAPE && m_screen == 2) {
+			m_screen = 0;
+		}
+		// Pressed down arrow
+		if (event.key.keysym.sym == SDLK_DOWN) {
+			m_menuChoice++;
+			if (m_menuChoice == 3) { m_menuChoice = 0;  }
+			updateCursor();
+			std::cout << "Pressed down " << m_menuChoice << std::endl;
+		}
+
+		// Pressed up arrow
+		if (event.key.keysym.sym == SDLK_UP) {
+			m_menuChoice--;
+			if (m_menuChoice == -1) { m_menuChoice = 2;  }
+			updateCursor();
+			std::cout << "Pressed up " << m_menuChoice << std::endl;
+		}
+
+		// Pressed enter
+		if (event.key.keysym.sym == SDLK_RETURN) {
+			std::cout << "Enter: " << m_menuChoice << std::endl;
+			// Change to game screen
+			if (m_menuChoice == 0 && m_screen == 0) {
+				m_screen = 2;
+			}
+
+
+			// Change to how to screen
+			if (m_menuChoice == 1 && m_screen == 0) {
+				m_screen = 1;
+			}
+			else if (m_screen == 1) {
 				m_screen = 0;
 			}
-			// Pressed down arrow
-			if (event.key.keysym.sym == SDLK_DOWN) {
-				m_menuChoice++;
-				if (m_menuChoice == 3) { m_menuChoice = 0;  }
-				updateCursor();
-				std::cout << "Pressed down " << m_menuChoice << std::endl;
-			}
 
-			// Pressed up arrow
-			if (event.key.keysym.sym == SDLK_UP) {
-				m_menuChoice--;
-				if (m_menuChoice == -1) { m_menuChoice = 2;  }
-				updateCursor();
-				std::cout << "Pressed up " << m_menuChoice << std::endl;
-			}
+			// Exit 
+			else if (m_menuChoice == 2) {
+				isRunning = false;
+				exit(EXIT_SUCCESS);
+			}	
+		}
 
-			// Pressed enter
-			if (event.key.keysym.sym == SDLK_RETURN) {
-				std::cout << "Enter: " << m_menuChoice << std::endl;
-				// Change to game screen
-				if (m_menuChoice == 0 && m_screen == 0) {
-					m_screen = 2;
-				}
+		// Restart game (both space and enter button)
+		if ((event.key.keysym.sym == SDLK_RETURN || event.key.keysym.sym == SDLK_SPACE) && m_screen == 3) {
+			m_screen = 2;
+		}
 
-
-				// Change to how to screen
-				if (m_menuChoice == 1 && m_screen == 0) {
-					m_screen = 1;
-				}
-				else if (m_screen == 1) {
-					m_screen = 0;
-				}
-
-				// Exit 
-				else if (m_menuChoice == 2) {
-					isRunning = false;
-					exit(EXIT_SUCCESS);
-				}	
+		// Go to main menu from game over screen
+		if (event.key.keysym.sym == SDLK_ESCAPE && m_screen == 3) {
+			m_screen = 0;
 		}
 	}
 
@@ -581,20 +925,29 @@ void GameBrain::render() {
 		updateEnemyVectors();
 		checkCollision();
 
+		// Render all enemies
 		for (int i = 0; i < 11; i++) {
 			SDL_RenderCopy(m_gameRenderer, enemy1[i].getDrawable(), nullptr, enemy1[i].getCoords());
 			SDL_RenderCopy(m_gameRenderer, enemy2[i].getDrawable(), nullptr, enemy2[i].getCoords());
 			SDL_RenderCopy(m_gameRenderer, enemy3[i].getDrawable(), nullptr, enemy3[i].getCoords());
 			SDL_RenderCopy(m_gameRenderer, enemy4[i].getDrawable(), nullptr, enemy4[i].getCoords());
 			SDL_RenderCopy(m_gameRenderer, enemy5[i].getDrawable(), nullptr, enemy5[i].getCoords());
-			/*
-			SDL_RenderCopy(m_gameRenderer, m_enemy1_drawable, nullptr, &m_arr_enemy1_coords[i]);
-			SDL_RenderCopy(m_gameRenderer, m_enemy2_drawable, nullptr, &m_arr_enemy2_coords[i]);
-			SDL_RenderCopy(m_gameRenderer, m_enemy3_drawable, nullptr, &m_arr_enemy3_coords[i]);
-			SDL_RenderCopy(m_gameRenderer, m_enemy4_drawable, nullptr, &m_arr_enemy4_coords[i]);
-			SDL_RenderCopy(m_gameRenderer, m_enemy5_drawable, nullptr, &m_arr_enemy5_coords[i]);
-			*/
 		}
+		
+		// Render score
+		SDL_RenderCopy(m_gameRenderer, m_score1_drawable, nullptr, &m_score1_coords);
+		SDL_RenderCopy(m_gameRenderer, m_score2_drawable, nullptr, &m_score2_coords);
+		SDL_RenderCopy(m_gameRenderer, m_score3_drawable, nullptr, &m_score3_coords);
+		SDL_RenderCopy(m_gameRenderer, m_score4_drawable, nullptr, &m_score4_coords);
+		SDL_RenderCopy(m_gameRenderer, m_score5_drawable, nullptr, &m_score5_coords);
+
+		// Render highscore
+		SDL_RenderCopy(m_gameRenderer, m_highscore1_drawable, nullptr, &m_highscore1_coords);
+		SDL_RenderCopy(m_gameRenderer, m_highscore2_drawable, nullptr, &m_highscore2_coords);
+		SDL_RenderCopy(m_gameRenderer, m_highscore3_drawable, nullptr, &m_highscore3_coords);
+		SDL_RenderCopy(m_gameRenderer, m_highscore4_drawable, nullptr, &m_highscore4_coords);
+		SDL_RenderCopy(m_gameRenderer, m_highscore5_drawable, nullptr, &m_highscore5_coords);
+
 		if (ticks < 60) {
 			ticks++;
 		}
@@ -613,6 +966,12 @@ void GameBrain::render() {
 		
 		
 	}
+
+	// Game over screen
+	else if (m_screen == 3) {
+		SDL_RenderCopy(m_gameRenderer, m_gameOver_drawable, nullptr, &m_gameOver_coords);
+	}
+
 	// Update this frame
 	SDL_RenderPresent(m_gameRenderer);
 }
