@@ -1,5 +1,4 @@
 #include "Player.h"
-#include <iostream>
 #include <SDL.h>
 
 #ifndef SCREEN_SIZE
@@ -10,7 +9,7 @@ Projectile* Player::getProjectile(int i) {
 	return bullets[i];
 }
 
-std::vector<Projectile*> Player::getBullets() {
+std::vector<Projectile*> Player::getBullets(){
 	return bullets;
 }
 
@@ -56,7 +55,7 @@ SDL_Rect* Player::getCoords() {
 	return &player_coords;
 }
 
-int Player::getX() {
+int Player::getX(){
 	return player_coords.x + 25;
 }
 int Player::getY() {

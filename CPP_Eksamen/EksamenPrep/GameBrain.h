@@ -14,7 +14,7 @@ public:
 	GameBrain();
 	~GameBrain();
 	
-	void createWindow(const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
+	void create_window(const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
 	void updateEnemyVectors();
 	void enemyAI();
 	void render();
@@ -33,8 +33,6 @@ public:
 	void updateHighScore();
 	void updateCursor();
 	void redrawObstacles();
-
-	int getRandom();
 	bool running();
 
 private:

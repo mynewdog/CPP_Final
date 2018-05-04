@@ -1,7 +1,6 @@
 #include "Obstacle.h"
-#include <iostream>
 
-SDL_Texture * Obstacle::getDrawable() {
+SDL_Texture * Obstacle::getDrawable(){
 	return m_obstacle_drawable;
 }
 
@@ -9,11 +8,11 @@ SDL_Rect* Obstacle::getCoords() {
 	return &m_obstacle_coords;
 }
 
-int Obstacle::getX() {
+int Obstacle::getX() const{
 	return m_obstacle_coords.x;
 }
 
-int Obstacle::getY() {
+int Obstacle::getY() const{
 	return m_obstacle_coords.y;
 }
 

@@ -17,7 +17,6 @@ public:
 	void addBullets(Projectile *p);
 	void removeBullet(int i);
 	void setX(int x);
-	void printBulletSize();
 	
 	int getX();
 	int getY();

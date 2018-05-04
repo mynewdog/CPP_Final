@@ -27,7 +27,7 @@ Player *p1 = new Player();
 EnemyProjectile *ep = new EnemyProjectile();
 ScoreHandler *score = new ScoreHandler();
 
-void GameBrain::createWindow(const char* title, int xPos, int yPos, int width, int height, bool fullscreen) {
+void GameBrain::create_window(const char* title, int xPos, int yPos, int width, int height, bool fullscreen) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
 		m_gameWindow = SDL_CreateWindow(title, xPos, yPos, width, height, fullscreen);
 		if (m_gameWindow) {
@@ -181,15 +181,9 @@ void GameBrain::updateEnemyVectors() {
 	
 }
 
-int GameBrain::getRandom() {
-	srand(time(NULL));
-	int random = rand() % 11;
-	return random;
-}
 
 void GameBrain::enemyAI() {	
-	int now = SDL_GetTicks();
-	int before = 0;
+	const int now = SDL_GetTicks();
 	if (now > beforeEnemyProjectile + 3000) {
 		beforeEnemyProjectile = now;
 		for (int i = 0; i < enemy1.size(); i++) {
@@ -197,7 +191,7 @@ void GameBrain::enemyAI() {
 				enemy1[i].getX() < p1->getX() + 48 &&
 				enemy1[i].getY() > 0) {
 				std::cout << "Enemy[" << i << "]" << std::endl;
-				EnemyProjectile ep1(m_gameRenderer, enemy1[i].getX() + 23, enemy1[i].getY() + 47);
+				EnemyProjectile const ep1(m_gameRenderer, enemy1[i].getX() + 23, enemy1[i].getY() + 47);
 				enemyProjectiles.push_back(ep1);
 			}
 		}
@@ -206,32 +200,80 @@ void GameBrain::enemyAI() {
 
 void GameBrain::enemyProjectileCollision() {
 	for (int i = 0; i < enemyProjectiles.size(); i++) {
-		if (enemyProjectiles[i].getX() > p1->getX() &&
-			enemyProjectiles[i].getX() < p1->getX() + 54 &&
+		if (enemyProjectiles[i].getX() > p1->getX() -27 &&
+			enemyProjectiles[i].getX() < p1->getX() + 27 &&
 			enemyProjectiles[i].getY() > p1->getY() &&
 			enemyProjectiles[i].getY() < p1->getY() + 48) {
 				std::cout << "Hit player" << std::endl;
+				enemyProjectiles[i].setY(-2000);
 				enemyProjectiles.erase(enemyProjectiles.begin() + i);
+				restart(1);
+				return;
+		}
+
+		if (enemyProjectiles[i].getY() > 500) {
+
+			// Check if hit obstacle 1
+			for (int j = 0; j < leftObst.size(); j++) {
+				if (enemyProjectiles[i].getX() + 1 >= leftObst[j].getX() &&
+					enemyProjectiles[i].getX() + 1 <= (leftObst[j].getX() + 21) &&
+					enemyProjectiles[i].getY() >= leftObst[j].getY() &&
+					enemyProjectiles[i].getY() <= (leftObst[j].getY() + 21)) {
+					enemyProjectiles[i].setY(-2000);
+					leftObst[j].setY(-850);
+					enemyProjectiles.erase(enemyProjectiles.begin() + i);
+					restart(1);
+					return;
+				}
+			}
+
+			// Check if hit obstacle 2
+			for (int k = 0; k < middleObst.size(); k++) {
+				if (enemyProjectiles[i].getX() + 1 >= middleObst[k].getX() &&
+					enemyProjectiles[i].getX() + 1 <= (middleObst[k].getX() + 21) &&
+					enemyProjectiles[i].getY() >= middleObst[k].getY() &&
+					enemyProjectiles[i].getY() <= (middleObst[k].getY() + 21)) {
+					enemyProjectiles[i].setY(-2000);
+					middleObst[k].setY(-850);
+					enemyProjectiles.erase(enemyProjectiles.begin() + i);
+					restart(1);
+					return;
+				}
+			}
+
+			// Check if hit obstacle 3
+			for (int l = 0; l < rightObst.size(); l++) {
+				if (enemyProjectiles[i].getX() + 1 >= rightObst[l].getX() &&
+					enemyProjectiles[i].getX() + 1 <= (rightObst[l].getX() + 21) &&
+					enemyProjectiles[i].getY() >= rightObst[l].getY() &&
+					enemyProjectiles[i].getY() <= (rightObst[l].getY() + 21)) {
+					enemyProjectiles[i].setY(-2000);
+					rightObst[l].setY(-850);
+					enemyProjectiles.erase(enemyProjectiles.begin() + i);
+					restart(1);
+					return;
+				}
+			}
 		}
 	}
 }
 
 void GameBrain::initObstacles() {
 	// Left
-	Obstacle obs1(m_gameRenderer, 0, 0, 100, 600);
-	Obstacle obs2(m_gameRenderer, 0, 1, 122, 600);
-	Obstacle obs3(m_gameRenderer, 0, 1, 144, 600);
-	Obstacle obs4(m_gameRenderer, 0, 2, 166, 600);
-	Obstacle obs5(m_gameRenderer, 0, 1, 100, 622);
-	Obstacle obs6(m_gameRenderer, 0, 1, 122, 622);
-	Obstacle obs7(m_gameRenderer, 0, 1, 144, 622);
-	Obstacle obs8(m_gameRenderer, 0, 1, 166, 622);
-	Obstacle obs9(m_gameRenderer, 0, 1, 100, 644);
-	Obstacle obs10(m_gameRenderer, 0, 1, 122, 644);
-	Obstacle obs11(m_gameRenderer, 0, 1, 144, 644);
-	Obstacle obs12(m_gameRenderer, 0, 1, 166, 644);
-	Obstacle obs13(m_gameRenderer, 0, 4, 100, 666);
-	Obstacle obs14(m_gameRenderer, 0, 3, 166, 666);
+	Obstacle const obs1(m_gameRenderer, 0, 0, 100, 600);
+	Obstacle const obs2(m_gameRenderer, 0, 1, 122, 600);
+	Obstacle const obs3(m_gameRenderer, 0, 1, 144, 600);
+	Obstacle const obs4(m_gameRenderer, 0, 2, 166, 600);
+	Obstacle const obs5(m_gameRenderer, 0, 1, 100, 622);
+	Obstacle const obs6(m_gameRenderer, 0, 1, 122, 622);
+	Obstacle const obs7(m_gameRenderer, 0, 1, 144, 622);
+	Obstacle const obs8(m_gameRenderer, 0, 1, 166, 622);
+	Obstacle const obs9(m_gameRenderer, 0, 1, 100, 644);
+	Obstacle const obs10(m_gameRenderer, 0, 1, 122, 644);
+	Obstacle const obs11(m_gameRenderer, 0, 1, 144, 644);
+	Obstacle const obs12(m_gameRenderer, 0, 1, 166, 644);
+	Obstacle const obs13(m_gameRenderer, 0, 4, 100, 666);
+	Obstacle const obs14(m_gameRenderer, 0, 3, 166, 666);
 	leftObst.push_back(obs1);
 	leftObst.push_back(obs2);
 	leftObst.push_back(obs3);
@@ -248,20 +290,20 @@ void GameBrain::initObstacles() {
 	leftObst.push_back(obs14);
 
 	// Middle
-	Obstacle obs15(m_gameRenderer, 0, 0, 356, 600);
-	Obstacle obs16(m_gameRenderer, 0, 1, 378, 600);
-	Obstacle obs17(m_gameRenderer, 0, 1, 400, 600);
-	Obstacle obs18(m_gameRenderer, 0, 2, 422, 600);
-	Obstacle obs19(m_gameRenderer, 0, 1, 356, 622);
-	Obstacle obs20(m_gameRenderer, 0, 1, 378, 622);
-	Obstacle obs21(m_gameRenderer, 0, 1, 400, 622);
-	Obstacle obs22(m_gameRenderer, 0, 1, 422, 622);
-	Obstacle obs23(m_gameRenderer, 0, 1, 356, 644);
-	Obstacle obs24(m_gameRenderer, 0, 1, 378, 644);
-	Obstacle obs25(m_gameRenderer, 0, 1, 400, 644);
-	Obstacle obs26(m_gameRenderer, 0, 1, 422, 644);
-	Obstacle obs27(m_gameRenderer, 0, 4, 356, 666);
-	Obstacle obs28(m_gameRenderer, 0, 3, 422, 666);
+	Obstacle const obs15(m_gameRenderer, 0, 0, 356, 600);
+	Obstacle const obs16(m_gameRenderer, 0, 1, 378, 600);
+	Obstacle const obs17(m_gameRenderer, 0, 1, 400, 600);
+	Obstacle const obs18(m_gameRenderer, 0, 2, 422, 600);
+	Obstacle const obs19(m_gameRenderer, 0, 1, 356, 622);
+	Obstacle const obs20(m_gameRenderer, 0, 1, 378, 622);
+	Obstacle const obs21(m_gameRenderer, 0, 1, 400, 622);
+	Obstacle const obs22(m_gameRenderer, 0, 1, 422, 622);
+	Obstacle const obs23(m_gameRenderer, 0, 1, 356, 644);
+	Obstacle const obs24(m_gameRenderer, 0, 1, 378, 644);
+	Obstacle const obs25(m_gameRenderer, 0, 1, 400, 644);
+	Obstacle const obs26(m_gameRenderer, 0, 1, 422, 644);
+	Obstacle const obs27(m_gameRenderer, 0, 4, 356, 666);
+	Obstacle const obs28(m_gameRenderer, 0, 3, 422, 666);
 	middleObst.push_back(obs15);
 	middleObst.push_back(obs16);
 	middleObst.push_back(obs17);
@@ -278,20 +320,20 @@ void GameBrain::initObstacles() {
 	middleObst.push_back(obs28);
 
 	// Right
-	Obstacle obs29(m_gameRenderer, 0, 0, 612, 600);
-	Obstacle obs30(m_gameRenderer, 0, 1, 634, 600);
-	Obstacle obs31(m_gameRenderer, 0, 1, 656, 600);
-	Obstacle obs32(m_gameRenderer, 0, 2, 678, 600);
-	Obstacle obs33(m_gameRenderer, 0, 1, 612, 622);
-	Obstacle obs34(m_gameRenderer, 0, 1, 634, 622);
-	Obstacle obs35(m_gameRenderer, 0, 1, 656, 622);
-	Obstacle obs36(m_gameRenderer, 0, 1, 678, 622);
-	Obstacle obs37(m_gameRenderer, 0, 1, 612, 644);
-	Obstacle obs38(m_gameRenderer, 0, 1, 634, 644);
-	Obstacle obs39(m_gameRenderer, 0, 1, 656, 644);
-	Obstacle obs40(m_gameRenderer, 0, 1, 678, 644);
-	Obstacle obs41(m_gameRenderer, 0, 4, 612, 666);
-	Obstacle obs42(m_gameRenderer, 0, 3, 678, 666);
+	Obstacle const obs29(m_gameRenderer, 0, 0, 612, 600);
+	Obstacle const obs30(m_gameRenderer, 0, 1, 634, 600);
+	Obstacle const obs31(m_gameRenderer, 0, 1, 656, 600);
+	Obstacle const obs32(m_gameRenderer, 0, 2, 678, 600);
+	Obstacle const obs33(m_gameRenderer, 0, 1, 612, 622);
+	Obstacle const obs34(m_gameRenderer, 0, 1, 634, 622);
+	Obstacle const obs35(m_gameRenderer, 0, 1, 656, 622);
+	Obstacle const obs36(m_gameRenderer, 0, 1, 678, 622);
+	Obstacle const obs37(m_gameRenderer, 0, 1, 612, 644);
+	Obstacle const obs38(m_gameRenderer, 0, 1, 634, 644);
+	Obstacle const obs39(m_gameRenderer, 0, 1, 656, 644);
+	Obstacle const obs40(m_gameRenderer, 0, 1, 678, 644);
+	Obstacle const obs41(m_gameRenderer, 0, 4, 612, 666);
+	Obstacle const obs42(m_gameRenderer, 0, 3, 678, 666);
 	rightObst.push_back(obs29);
 	rightObst.push_back(obs30);
 	rightObst.push_back(obs31);
@@ -465,11 +507,11 @@ void GameBrain::init() {
 	m_gameBG_coords.y = 0;
 	SDL_FreeSurface(m_gameBG_BMP);
 
-	Enemy e1(m_gameRenderer, 1, 45, 400);
-	Enemy e2(m_gameRenderer, 2, 45, 340);
-	Enemy e3(m_gameRenderer, 3, 45, 280);
-	Enemy e4(m_gameRenderer, 4, 45, 220);
-	Enemy e5(m_gameRenderer, 5, 45, 160);
+	Enemy const e1(m_gameRenderer, 1, 45, 400);
+	Enemy const e2(m_gameRenderer, 2, 45, 340);
+	Enemy const e3(m_gameRenderer, 3, 45, 280);
+	Enemy const e4(m_gameRenderer, 4, 45, 220);
+	Enemy const e5(m_gameRenderer, 5, 45, 160);
 
 	enemy1.push_back(e1);
 	enemy2.push_back(e2);
@@ -478,23 +520,23 @@ void GameBrain::init() {
 	enemy5.push_back(e5);
 
 	for (int i = 1; i < 11; i++) {
-		Enemy enemy_1(m_gameRenderer, 1, enemy1[i-1].getX()+60, 400);
+		Enemy const enemy_1(m_gameRenderer, 1, enemy1[i-1].getX()+60, 400);
 		enemy1.push_back(enemy_1);
 	}
 	for (int i = 1; i < 11; i++) {
-		Enemy enemy_2(m_gameRenderer, 2, enemy2[i - 1].getX() + 60, 340);
+		Enemy const enemy_2(m_gameRenderer, 2, enemy2[i - 1].getX() + 60, 340);
 		enemy2.push_back(enemy_2);
 	}
 	for (int i = 1; i < 11; i++) {
-		Enemy enemy_3(m_gameRenderer, 3, enemy3[i - 1].getX() + 60, 280);
+		Enemy const enemy_3(m_gameRenderer, 3, enemy3[i - 1].getX() + 60, 280);
 		enemy3.push_back(enemy_3);
 	}
 	for (int i = 1; i < 11; i++) {
-		Enemy enemy_4(m_gameRenderer, 4, enemy4[i - 1].getX() + 60, 220);
+		Enemy const enemy_4(m_gameRenderer, 4, enemy4[i - 1].getX() + 60, 220);
 		enemy4.push_back(enemy_4);
 	}
 	for (int i = 1; i < 11; i++) {
-		Enemy enemy_5(m_gameRenderer, 5, enemy5[i - 1].getX() + 60, 160);
+		Enemy const enemy_5(m_gameRenderer, 5, enemy5[i - 1].getX() + 60, 160);
 		enemy5.push_back(enemy_5);
 	}
 }
@@ -515,6 +557,10 @@ void GameBrain::restart(int difficulty) {
 	// Remove all bullets from screen
 	for (int i = 0; i < p1->getBullets().size(); i++) {
 		p1->getBullets()[i]->setY(-1500);
+	}
+	for (int j = 0; j < enemyProjectiles.size(); j++)
+	{
+		enemyProjectiles[j].setY(-1500);
 	}
 
 	// If level set to level 1
@@ -554,7 +600,7 @@ void GameBrain::restart(int difficulty) {
 void GameBrain::updateScore() {
 	int tempScore[5];
 	int tempScoreCalc = m_currentScore;
-	int calc = 0;
+	int calc;
 
 	// 10000
 	calc = tempScoreCalc / 10000;
@@ -577,9 +623,9 @@ void GameBrain::updateScore() {
 	tempScore[3] = calc;
 
 
-	std::string pathName = "Img/score/";
+	std::string const pathName = "Img/score/";
 	std::string pathNum = "4";
-	std::string pathFile = ".bmp";
+	std::string const pathFile = ".bmp";
 	std::string finalString = pathName + pathNum + pathFile;
 	
 	// Check 10 spot
@@ -595,7 +641,7 @@ void GameBrain::updateScore() {
 		else if (tempScore[3] == 8) { pathNum = "8"; }
 		else if (tempScore[3] == 9) { pathNum = "9"; }
 
-		std::string finalString = pathName + pathNum + pathFile;
+		finalString = pathName + pathNum + pathFile;
 		m_score4 = SDL_LoadBMP(finalString.c_str());
 		m_score4_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_score4);
 		SDL_FreeSurface(m_score4);
@@ -614,7 +660,7 @@ void GameBrain::updateScore() {
 		else if (tempScore[2] == 8) { pathNum = "8"; }
 		else if (tempScore[2] == 9) { pathNum = "9"; }
 
-		std::string finalString = pathName + pathNum + pathFile;
+		finalString = pathName + pathNum + pathFile;
 		m_score3 = SDL_LoadBMP(finalString.c_str());
 		m_score3_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_score3);
 		SDL_FreeSurface(m_score3);
@@ -633,7 +679,7 @@ void GameBrain::updateScore() {
 		else if (tempScore[1] == 8) { pathNum = "8"; }
 		else if (tempScore[1] == 9) { pathNum = "9"; }
 
-		std::string finalString = pathName + pathNum + pathFile;
+		finalString = pathName + pathNum + pathFile;
 		m_score2 = SDL_LoadBMP(finalString.c_str());
 		m_score2_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_score2);
 		SDL_FreeSurface(m_score2);
@@ -652,7 +698,7 @@ void GameBrain::updateScore() {
 		else if (tempScore[0] == 8) { pathNum = "8"; }
 		else if (tempScore[0] == 9) { pathNum = "9"; }
 
-		std::string finalString = pathName + pathNum + pathFile;
+		finalString = pathName + pathNum + pathFile;
 		m_score1 = SDL_LoadBMP(finalString.c_str());
 		m_score1_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_score1);
 		SDL_FreeSurface(m_score1);
@@ -684,9 +730,9 @@ void GameBrain::updateHighScore() {
 	tempScore[3] = calc;
 
 
-	std::string pathName = "Img/score/";
+	std::string const pathName = "Img/score/";
 	std::string pathNum = "4";
-	std::string pathFile = ".bmp";
+	std::string const pathFile = ".bmp";
 	std::string finalString = pathName + pathNum + pathFile;
 
 	// Check 10 spot
@@ -702,7 +748,7 @@ void GameBrain::updateHighScore() {
 		else if (tempScore[3] == 8) { pathNum = "8"; }
 		else if (tempScore[3] == 9) { pathNum = "9"; }
 
-		std::string finalString = pathName + pathNum + pathFile;
+		finalString = pathName + pathNum + pathFile;
 		m_highscore4 = SDL_LoadBMP(finalString.c_str());
 		m_highscore4_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_highscore4);
 		SDL_FreeSurface(m_highscore4);
@@ -721,7 +767,7 @@ void GameBrain::updateHighScore() {
 		else if (tempScore[2] == 8) { pathNum = "8"; }
 		else if (tempScore[2] == 9) { pathNum = "9"; }
 
-		std::string finalString = pathName + pathNum + pathFile;
+		finalString = pathName + pathNum + pathFile;
 		m_highscore3 = SDL_LoadBMP(finalString.c_str());
 		m_highscore3_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_highscore3);
 		SDL_FreeSurface(m_highscore3);
@@ -740,7 +786,7 @@ void GameBrain::updateHighScore() {
 		else if (tempScore[1] == 8) { pathNum = "8"; }
 		else if (tempScore[1] == 9) { pathNum = "9"; }
 
-		std::string finalString = pathName + pathNum + pathFile;
+		finalString = pathName + pathNum + pathFile;
 		m_highscore2 = SDL_LoadBMP(finalString.c_str());
 		m_highscore2_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_highscore2);
 		SDL_FreeSurface(m_highscore2);
@@ -759,7 +805,7 @@ void GameBrain::updateHighScore() {
 		else if (tempScore[0] == 8) { pathNum = "8"; }
 		else if (tempScore[0] == 9) { pathNum = "9"; }
 
-		std::string finalString = pathName + pathNum + pathFile;
+		finalString = pathName + pathNum + pathFile;
 		m_highscore1 = SDL_LoadBMP(finalString.c_str());
 		m_highscore1_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_highscore1);
 		SDL_FreeSurface(m_highscore1);
@@ -832,7 +878,7 @@ void GameBrain::redrawObstacles() {
 }
 
 void GameBrain::checkCollision() {
-	int now = SDL_GetTicks();
+	int const now = SDL_GetTicks();
 	int before = 0;
 	if (now > before + 500) {
 		before = now;
@@ -1059,17 +1105,17 @@ void GameBrain::handleEvents() {
 			break;
 
 	}
-	const Uint8 *keystate = SDL_GetKeyboardState(NULL);
+	const Uint8 *keystate = SDL_GetKeyboardState(nullptr);
 	
 	if (event.type == SDL_KEYDOWN) {
 	
 		// Check space and left
 		if (keystate[SDL_SCANCODE_SPACE] && keystate[SDL_SCANCODE_LEFT]) {
 			p1->updatePos(0);
-			int currentTime = SDL_GetTicks();
+			int const currentTime = SDL_GetTicks();
 			if (currentTime > oldTime + 300) {
 				oldTime = currentTime;
-				Projectile *p = new Projectile();
+				auto *p = new Projectile();
 				std::cout << "Projectile created" << std::endl;
 				p->spawn(m_gameRenderer, p1->getX(), p1->getY());
 				p1->addBullets(p);
@@ -1079,12 +1125,12 @@ void GameBrain::handleEvents() {
 		// Check space and right
 		else if (keystate[SDL_SCANCODE_SPACE] && keystate[SDL_SCANCODE_RIGHT]) {
 			p1->updatePos(1);
-			int currentTime = SDL_GetTicks();
+			int const currentTime = SDL_GetTicks();
 			// Only shoot every 0.5s
 			if (currentTime > oldTime + 300) {
 				oldTime = currentTime;
 				std::cout << "Projectile created" << std::endl;
-				Projectile *p = new Projectile();
+				auto *p = new Projectile();
 				p->spawn(m_gameRenderer, p1->getX(), p1->getY());
 				p1->addBullets(p);
 			}
@@ -1100,11 +1146,11 @@ void GameBrain::handleEvents() {
 
 		//Check only space
 		else if (keystate[SDL_SCANCODE_SPACE] && !keystate[SDL_SCANCODE_LEFT] && !keystate[SDL_SCANCODE_RIGHT] && m_screen == 2) {
-			int currentTime = SDL_GetTicks();
+			int const currentTime = SDL_GetTicks();
 			// Only shoot every 0.5s
 			if (currentTime > oldTime + 300) {
 				oldTime = currentTime;
-				Projectile *p = new Projectile();
+				auto *p = new Projectile();
 				std::cout << "Projectile created" << std::endl;
 				p->spawn(m_gameRenderer, p1->getX(), p1->getY());
 				p1->addBullets(p);
@@ -1175,7 +1221,7 @@ void GameBrain::render() {
 	enemyAI();
 	// Clear last frame
 	SDL_RenderClear(m_gameRenderer);
-	SDL_FillRect(NULL, NULL, 0x000000);
+	SDL_FillRect(nullptr, nullptr, 0x000000);
 
 	// Update if on main menu
 	if (m_screen == 0) {
@@ -1280,5 +1326,17 @@ GameBrain::GameBrain() {
 }
 
 GameBrain::~GameBrain() {
+	/*
+	delete &enemy1;
+	delete &enemy2;
+	delete &enemy3;
+	delete &enemy4;
+	delete &enemy5;
 
+	delete &enemyProjectiles;
+
+	delete &leftObst;
+	delete &middleObst;
+	delete &rightObst;
+	*/
 }

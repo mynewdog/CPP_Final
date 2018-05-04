@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "EnemyProjectile.h"
-#include <iostream>
 #include <SDL.h>
 
 void EnemyProjectile::spawn(SDL_Renderer* render, int spawnX, int spawnY) {
@@ -24,7 +23,7 @@ SDL_Rect* EnemyProjectile::getCoords() {
 	return &enemyprojectile_coords;
 }
 
-SDL_Texture* EnemyProjectile::getDrawable() {
+SDL_Texture* EnemyProjectile::getDrawable(){
 	return enemyprojectile_drawable;
 }
 

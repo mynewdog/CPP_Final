@@ -1,10 +1,9 @@
 #include "ScoreHandler.h"
 #include <string>
 
-int ScoreHandler::readFile() {
+int ScoreHandler::readFile() const{
 	std::string line;
 	std::string score;
-	int converted;
 
 	std::ifstream file("highscore.txt");
 	if (file.is_open()) {
@@ -17,7 +16,7 @@ int ScoreHandler::readFile() {
 		std::cout << "Can't open file" << std::endl;
 	}
 
-	converted = atoi(score.c_str());
+	int converted = atoi(score.c_str());
 	return converted;
 }
 

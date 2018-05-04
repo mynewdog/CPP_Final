@@ -1,20 +1,18 @@
 #include "Enemy.h"
-#include <string.h>
-#include <iostream>
 
-SDL_Texture * Enemy::getDrawable() {
+SDL_Texture * Enemy::getDrawable(){
 	return m_enemy_drawable;
 }
 
-SDL_Rect* Enemy::getCoords() {
+SDL_Rect* Enemy::getCoords(){
 	return &m_enemy_coords;
 }
 
-int Enemy::getX() {
+int Enemy::getX(){
 	return m_enemy_coords.x;
 }
 
-int Enemy::getY() {
+int Enemy::getY(){
 	return m_enemy_coords.y;
 }
 

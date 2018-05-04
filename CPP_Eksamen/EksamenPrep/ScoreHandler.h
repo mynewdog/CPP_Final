@@ -7,7 +7,7 @@ public:
 	ScoreHandler();
 	~ScoreHandler();
 
-	int readFile();
+	int readFile() const;
 	void writeFile(const char* score);
 
 private:

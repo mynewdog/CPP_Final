@@ -149,8 +149,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyProjectile.h" />
     <ClInclude Include="GameBrain.h" />
-    <ClInclude Include="ImageHandler.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Player.h" />
@@ -161,8 +161,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyProjectile.cpp" />
     <ClCompile Include="GameBrain.cpp" />
-    <ClCompile Include="ImageHandler.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Player.cpp" />

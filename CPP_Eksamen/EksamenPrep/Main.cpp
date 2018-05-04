@@ -14,7 +14,7 @@ int main(void) {
 
 
 	game = new GameBrain();
-	game->createWindow("Space Invaders", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 800, false);
+	game->create_window("Space Invaders", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 800, false);
 	game->init();
 
 	while (game->running()) {
