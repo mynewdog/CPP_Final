@@ -5,10 +5,13 @@ class Projectile
 public:
 	Projectile();
 	~Projectile();
+
 	void move();
 	void spawn(SDL_Renderer* render, int spawnX, int spawnY);
+	
 	SDL_Texture* getDrawable();
 	SDL_Rect* getCoords();
+	
 	void setX(int x);
 	void setY(int y);
 

@@ -472,14 +472,13 @@ void GameBrain::restart(int difficulty) {
 		p1->getBullets()[i]->setY(-1500);
 	}
 
-	// Set player back to position
-	p1->setX((SCREEN_SIZE - 54) / 2);
-
-	// Update score
+	// If level set to level 1
+	// Aka you lost, reset score, screen and player position
 	if (difficulty == 1) {
 		m_currentScore = 0;
 		updateHighScore();
 		m_screen = 3;
+		p1->setX((SCREEN_SIZE - 54) / 2);
 	}
 	updateScore();
 
@@ -793,7 +792,7 @@ void GameBrain::checkCollision() {
 	if (now > before + 500) {
 		before = now;
 		for (int i = 0; i < p1->getBullets().size(); i++) {
-			if (p1->getBullets()[i]->getX() < 0) {
+			if (p1->getBullets()[i]->getY() < 0) {
 				p1->removeBullet(i);
 			}
 		}
@@ -810,6 +809,8 @@ void GameBrain::checkCollision() {
 						p1->getBullets()[i]->getY() <= (leftObst[j].getY() + 21)) {
 						p1->getBullets()[i]->setY(-1500);
 						leftObst[j].setY(-850);
+						p1->removeBullet(i);
+						return;
 					}
 				}
 			}
@@ -827,6 +828,8 @@ void GameBrain::checkCollision() {
 						p1->getBullets()[i]->getY() <= (middleObst[j].getY() + 21)) {
 						p1->getBullets()[i]->setY(-1500);
 						middleObst[j].setY(-850);
+						p1->removeBullet(i);
+						return;
 					}
 				}
 			}
@@ -844,6 +847,8 @@ void GameBrain::checkCollision() {
 						p1->getBullets()[i]->getY() <= (rightObst[j].getY() + 21)) {
 						p1->getBullets()[i]->setY(-1500);
 						rightObst[j].setY(-850);
+						p1->removeBullet(i);
+						return;
 					}
 				}
 			}
@@ -877,9 +882,11 @@ void GameBrain::checkCollision() {
 							m_killCounter++;
 							m_currentScore += 10;
 							updateScore();
-							std::cout << m_currentScore << std::endl;
+							p1->printBulletSize();
+							p1->removeBullet(i);
+							p1->printBulletSize();
 							checkWin();
-
+							return;
 						}
 					}
 				}
@@ -899,8 +906,11 @@ void GameBrain::checkCollision() {
 							m_killCounter++;
 							m_currentScore += 20;
 							updateScore();
-							std::cout << m_currentScore << std::endl;
+							p1->printBulletSize();
+							p1->removeBullet(i);
+							p1->printBulletSize();
 							checkWin();
+							return;
 
 						}
 					}
@@ -921,9 +931,11 @@ void GameBrain::checkCollision() {
 							m_killCounter++;
 							m_currentScore += 30;
 							updateScore();
-							std::cout << m_currentScore << std::endl;
+							p1->printBulletSize();
+							p1->removeBullet(i);
+							p1->printBulletSize();
 							checkWin();
-
+							return;
 						}
 					}
 				}
@@ -943,9 +955,11 @@ void GameBrain::checkCollision() {
 							m_killCounter++;
 							m_currentScore += 40;
 							updateScore();
-							std::cout << m_currentScore << std::endl;
+							p1->printBulletSize();
+							p1->removeBullet(i);
+							p1->printBulletSize();
 							checkWin();
-
+							return;
 						}
 					}
 				}
@@ -965,10 +979,11 @@ void GameBrain::checkCollision() {
 							m_killCounter++;
 							m_currentScore += 50;
 							updateScore();
-							std::cout << m_currentScore << std::endl;
+							p1->printBulletSize();
+							p1->removeBullet(i);
+							p1->printBulletSize();
 							checkWin();
-
-
+							return;
 						}
 					}
 				}

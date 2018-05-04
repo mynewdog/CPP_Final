@@ -24,7 +24,7 @@ SDL_Texture* Projectile::getDrawable() {
 
 void Projectile::move() {
 	if (projectile_coords.y >= -10) {
-		projectile_coords.y -= 5;
+		projectile_coords.y -= 10;
 	}
 }
 

@@ -6,9 +6,16 @@
 #define SCREEN_SIZE 800
 #endif
 
+Projectile* Player::getProjectile(int i) {
+	return bullets[i];
+}
 
 std::vector<Projectile*> Player::getBullets() {
 	return bullets;
+}
+
+void Player::printBulletSize() {
+	std::cout << "Size: " << bullets.size() << std::endl;
 }
 
 void Player::addBullets(Projectile *p) {
