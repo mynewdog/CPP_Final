@@ -18,7 +18,6 @@ int ticks = 0;
 int oldTime = 0;
 int before = 0;
 int beforeEnemyProjectile = 0;
-int randomEnemy[3];
 
 
 Player *p1 = new Player();
@@ -188,7 +187,6 @@ void GameBrain::enemyAI() {
 			if (enemy1[i].getX() > p1->getX() &&
 				enemy1[i].getX() < p1->getX() + 48 &&
 				enemy1[i].getY() > 0 && m_screen == 2) {
-				std::cout << "Enemy[" << i << "]" << std::endl;
 				EnemyProjectile const ep1(m_gameRenderer, enemy1[i].getX() + 23, enemy1[i].getY() + 47);
 				enemyProjectiles.push_back(ep1);
 			}
@@ -202,7 +200,6 @@ void GameBrain::enemyProjectileCollision() {
 			enemyProjectiles[i].getX() < p1->getX() + 27 &&
 			enemyProjectiles[i].getY() > p1->getY() &&
 			enemyProjectiles[i].getY() < p1->getY() + 48) {
-				std::cout << "Hit player" << std::endl;
 				enemyProjectiles[i].setY(-2000);
 				enemyProjectiles.erase(enemyProjectiles.begin() + i);
 				restart(1);
@@ -538,7 +535,6 @@ void GameBrain::init() {
 
 void GameBrain::checkWin() {
 	if (m_killCounter == 55) {
-		std::cout << "You won" << std::endl;
 		restart(enemy1[0].getDifficulty()+1);
 	}
 }
@@ -1111,7 +1107,6 @@ void GameBrain::handleEvents() {
 			if (currentTime > oldTime + 300) {
 				oldTime = currentTime;
 				auto *p = new Projectile();
-				std::cout << "Projectile created" << std::endl;
 				p->spawn(m_gameRenderer, p1->getX(), p1->getY());
 				p1->addBullets(p);
 			}
@@ -1124,7 +1119,6 @@ void GameBrain::handleEvents() {
 			// Only shoot every 0.5s
 			if (currentTime > oldTime + 300) {
 				oldTime = currentTime;
-				std::cout << "Projectile created" << std::endl;
 				auto *p = new Projectile();
 				p->spawn(m_gameRenderer, p1->getX(), p1->getY());
 				p1->addBullets(p);
@@ -1146,7 +1140,6 @@ void GameBrain::handleEvents() {
 			if (currentTime > oldTime + 300) {
 				oldTime = currentTime;
 				auto *p = new Projectile();
-				std::cout << "Projectile created" << std::endl;
 				p->spawn(m_gameRenderer, p1->getX(), p1->getY());
 				p1->addBullets(p);
 			}
@@ -1159,7 +1152,6 @@ void GameBrain::handleEvents() {
 			m_menuChoice++;
 			if (m_menuChoice == 3) { m_menuChoice = 0;  }
 			updateCursor();
-			std::cout << "Pressed down " << m_menuChoice << std::endl;
 		}
 
 		// Pressed up arrow
@@ -1167,12 +1159,10 @@ void GameBrain::handleEvents() {
 			m_menuChoice--;
 			if (m_menuChoice == -1) { m_menuChoice = 2;  }
 			updateCursor();
-			std::cout << "Pressed up " << m_menuChoice << std::endl;
 		}
 
 		// Pressed enter
 		if (event.key.keysym.sym == SDLK_RETURN) {
-			std::cout << "Enter: " << m_menuChoice << std::endl;
 			// Change to game screen
 			if (m_menuChoice == 0 && m_screen == 0) {
 				restart(1);
@@ -1321,7 +1311,7 @@ GameBrain::GameBrain() {
 }
 
 GameBrain::~GameBrain() {
-	/*
+	
 	delete &enemy1;
 	delete &enemy2;
 	delete &enemy3;
@@ -1333,5 +1323,5 @@ GameBrain::~GameBrain() {
 	delete &leftObst;
 	delete &middleObst;
 	delete &rightObst;
-	*/
+	
 }
