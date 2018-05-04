@@ -200,13 +200,13 @@ void GameBrain::init() {
 	SDL_FreeSurface(m_logoBMP);
 
 	// Back button
-	m_backBMP = SDL_LoadBMP("Img/goback.bmp");
+	m_backBMP = SDL_LoadBMP("Img/howto.bmp");
 
 	m_back_drawable = SDL_CreateTextureFromSurface(m_gameRenderer, m_backBMP);
 	m_back_coords.h = m_backBMP->h;
 	m_back_coords.w = m_backBMP->w;
-	m_back_coords.x = 225;
-	m_back_coords.y = 700;
+	m_back_coords.x = 0;
+	m_back_coords.y = 0;
 	SDL_FreeSurface(m_backBMP);
 
 	// Score - 10k spot
@@ -363,14 +363,24 @@ void GameBrain::checkWin() {
 }
 
 void GameBrain::restart() {
-	p1->reset();
 	if (m_currentScore > m_highScore) {
 		m_highScore = m_currentScore;
 		std::cout << m_highScore;
 	}
+	// Remove all bullets from screen
+	for (int i = 0; i < p1->getBullets().size(); i++) {
+		p1->getBullets()[i]->setY(-1500);
+	}
+
+	// Set player back to position
+	p1->setX((SCREEN_SIZE - 54) / 2);
+
+	// Update score
 	updateHighScore();
 	m_currentScore = 0;
 	updateScore();
+
+	// Reset enemies, killcounter and update screen
 	redrawEnemies();
 	m_killCounter = 0;
 	m_screen = 3;
@@ -865,6 +875,7 @@ void GameBrain::handleEvents() {
 			std::cout << "Enter: " << m_menuChoice << std::endl;
 			// Change to game screen
 			if (m_menuChoice == 0 && m_screen == 0) {
+				restart();
 				m_screen = 2;
 			}
 
@@ -884,8 +895,8 @@ void GameBrain::handleEvents() {
 			}	
 		}
 
-		// Restart game (both space and enter button)
-		if ((event.key.keysym.sym == SDLK_RETURN || event.key.keysym.sym == SDLK_SPACE) && m_screen == 3) {
+		// Restart game if enter button pressed)
+		if (event.key.keysym.sym == SDLK_RETURN && m_screen == 3) {
 			m_screen = 2;
 		}
 

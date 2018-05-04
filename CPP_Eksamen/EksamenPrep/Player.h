@@ -12,15 +12,17 @@ public:
 	void movePlayer();
 	void spawnPlayer(SDL_Renderer* render);
 	void updatePos(int direction);
-	std::vector<Projectile*> getBullets();
 	void addBullets(Projectile *p);
 	void removeBullet(int i);
+	void setX(int x);
+
+	int getX();
+	int getY();
+
 	SDL_Texture* getDrawable();
 	SDL_Rect* getCoords();
 
-	void reset();
-	int getX();
-	int getY();
+	std::vector<Projectile*> getBullets();
 
 private:
 	int m_playerX;

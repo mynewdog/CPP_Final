@@ -2,8 +2,9 @@
 #include <iostream>
 #include <SDL.h>
 
+#ifndef SCREEN_SIZE
 #define SCREEN_SIZE 800
-
+#endif
 
 
 std::vector<Projectile*> Player::getBullets() {
@@ -19,8 +20,8 @@ void Player::removeBullet(int i) {
 	bullets.shrink_to_fit();
 }
 
-void Player::reset() {
-	//bullets.clear();
+void Player::setX(int x) {
+	player_coords.x = x;
 }
 
 void Player::spawnPlayer(SDL_Renderer* render) {
@@ -36,10 +37,10 @@ void Player::spawnPlayer(SDL_Renderer* render) {
 void Player::updatePos(int direction) {
 	if (player_coords.x >= 0 && player_coords.x <= (800 - 54)) {
 		if (direction == 0) {
-			player_coords.x = (player_coords.x - 10);
+			player_coords.x = (player_coords.x - 12);
 		}
 		else if (direction == 1) {
-			player_coords.x = (player_coords.x + 10);
+			player_coords.x = (player_coords.x + 12);
 		}
 	}
 

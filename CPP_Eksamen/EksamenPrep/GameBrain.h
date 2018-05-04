@@ -48,7 +48,7 @@ private:
 	SDL_Texture * m_cursor_drawable;
 	SDL_Rect m_cursor_coords;
 
-	// Back Button
+	// Howto screen
 	SDL_Surface * m_backBMP;
 	SDL_Texture * m_back_drawable;
 	SDL_Rect m_back_coords;
