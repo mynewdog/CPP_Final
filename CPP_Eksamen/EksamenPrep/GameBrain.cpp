@@ -8,6 +8,8 @@
 #include "Obstacle.h"
 #include "ScoreHandler.h"
 #include "EnemyProjectile.h"
+#include <ctime>    // For time()
+#include <cstdlib>  // For srand() and rand()
 
 #ifndef SCREEN_SIZE
 #define SCREEN_SIZE 800
@@ -18,6 +20,8 @@ int ticks = 0;
 int oldTime = 0;
 int before = 0;
 int randomCount = 3;
+int randomEnemy[3];
+
 
 Player *p1 = new Player();
 EnemyProjectile *ep = new EnemyProjectile();
@@ -177,12 +181,25 @@ void GameBrain::updateEnemyVectors() {
 	
 }
 
+void GameBrain::setRandom() {
+	for (int i = 0; i < 3; i++) {
+		randomEnemy[i] = rand() % 11;
+	}
+}
+
+int GameBrain::getRandom() {
+	for (int i = 0; i < 3; i++) {
+		return randomEnemy[i];
+	}
+}
+
 void GameBrain::enemyAI() {
-	for (int i = 0; i < enemy1.size(); i++) {
+	for (int i = 0; i < enemy1.size(); i++) {		
 		if (enemy1[i].getY() > 0 && randomCount > 0) {
-			EnemyProjectile ep1(m_gameRenderer, enemy1[i].getX() + 23, enemy1[i].getY() + 47);
+			setRandom();
+			EnemyProjectile ep1(m_gameRenderer, enemy1[getRandom()].getX() + 23, enemy1[getRandom()].getY() + 47);
 			enemyProjectiles.push_back(ep1);
-			std::cout << "Vi er her, skyt" << std::endl;
+			std::cout << getRandom() << std::endl;
 			randomCount--;
 		}
 	}

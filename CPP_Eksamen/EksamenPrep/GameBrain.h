@@ -32,6 +32,8 @@ public:
 	void updateHighScore();
 	void updateCursor();
 	void redrawObstacles();
+	void setRandom();
+	int getRandom();
 
 	bool running();
 
