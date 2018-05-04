@@ -189,7 +189,7 @@ void GameBrain::enemyAI() {
 		for (int i = 0; i < enemy1.size(); i++) {
 			if (enemy1[i].getX() > p1->getX() &&
 				enemy1[i].getX() < p1->getX() + 48 &&
-				enemy1[i].getY() > 0) {
+				enemy1[i].getY() > 0 && m_screen == 2) {
 				std::cout << "Enemy[" << i << "]" << std::endl;
 				EnemyProjectile const ep1(m_gameRenderer, enemy1[i].getX() + 23, enemy1[i].getY() + 47);
 				enemyProjectiles.push_back(ep1);
@@ -222,7 +222,6 @@ void GameBrain::enemyProjectileCollision() {
 					enemyProjectiles[i].setY(-2000);
 					leftObst[j].setY(-850);
 					enemyProjectiles.erase(enemyProjectiles.begin() + i);
-					restart(1);
 					return;
 				}
 			}
@@ -236,7 +235,6 @@ void GameBrain::enemyProjectileCollision() {
 					enemyProjectiles[i].setY(-2000);
 					middleObst[k].setY(-850);
 					enemyProjectiles.erase(enemyProjectiles.begin() + i);
-					restart(1);
 					return;
 				}
 			}
@@ -250,7 +248,6 @@ void GameBrain::enemyProjectileCollision() {
 					enemyProjectiles[i].setY(-2000);
 					rightObst[l].setY(-850);
 					enemyProjectiles.erase(enemyProjectiles.begin() + i);
-					restart(1);
 					return;
 				}
 			}
