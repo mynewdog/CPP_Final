@@ -25,12 +25,9 @@ void Obstacle::setY(int y) {
 	m_obstacle_coords.y = y;
 }
 
-Obstacle::Obstacle(SDL_Renderer* renderer, int placement, int x, int y) 
+void Obstacle::init(SDL_Renderer* renderer, int placement, int x, int y) 
 {
-	const char * path;
-	path = "Img/enemy_1.bmp"; //placeholder!!!!
-
-	m_obstacle_BMP = SDL_LoadBMP(path);
+	m_obstacle_BMP = SDL_LoadBMP("Img/obstacle/1.bmp");
 	m_obstacle_drawable = SDL_CreateTextureFromSurface(renderer, m_obstacle_BMP);
 	m_obstacle_coords.h = m_obstacle_BMP->h;
 	m_obstacle_coords.w = m_obstacle_BMP->w;

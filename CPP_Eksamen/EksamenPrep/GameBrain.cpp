@@ -5,6 +5,7 @@
 #include "Projectile.h"
 #include "Player.h"
 #include <string>
+#include "Obstacle.h"
 
 #ifndef SCREEN_SIZE
 #define SCREEN_SIZE 800
@@ -15,6 +16,7 @@ int ticks = 0;
 int oldTime = 0;
 
 Player *p1 = new Player();
+Obstacle *obs1 = new Obstacle();
 
 void GameBrain::createWindow(const char* title, int xPos, int yPos, int width, int height, bool fullscreen) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
@@ -170,6 +172,7 @@ void GameBrain::updateEnemyVectors() {
 
 void GameBrain::init() {
 	p1->spawnPlayer(m_gameRenderer);
+	obs1->init(m_gameRenderer, 0, 0, 0);
 	m_currentScore = 0;
 
 	// Main Menu Background
@@ -933,6 +936,7 @@ void GameBrain::render() {
 	else if (m_screen == 2) {
 		drawGameScreen();
 		SDL_RenderCopy(m_gameRenderer, p1->getDrawable(), nullptr, p1->getCoords());
+		SDL_RenderCopy(m_gameRenderer, obs1->getDrawable(), nullptr, obs1->getCoords());
 		updateEnemyVectors();
 		checkCollision();
 
