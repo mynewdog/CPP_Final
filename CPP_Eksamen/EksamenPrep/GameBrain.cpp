@@ -742,6 +742,9 @@ void GameBrain::checkCollision() {
 		}
 	}
 
+	// Check if hit obstacle 1
+	//for (auto& p1->getBullets() )
+
 	// Check if alien touches player
 	for (int i = 0; i < 11; i++) {
 		if ((enemy1[i].getY() + 47) >= p1->getY() ||
