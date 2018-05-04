@@ -17,10 +17,14 @@ public:
 	void moveX(int direction);
 	void moveDown();
 
+	void setDifficulty(int dif);
+	int getDifficulty();
+
 	void setX(int x);
 	void setY(int y);
 
 private:
+	int difficulty = 1;
 	SDL_Surface * m_enemy_BMP;
 	SDL_Texture * m_enemy_drawable;
 	SDL_Rect m_enemy_coords;

@@ -15,6 +15,7 @@
 int direction = 1;
 int ticks = 0;
 int oldTime = 0;
+int before = 0;
 
 Player *p1 = new Player();
 ScoreHandler *score = new ScoreHandler();
@@ -40,135 +41,135 @@ void GameBrain::createWindow(const char* title, int xPos, int yPos, int width, i
 }
 
 void GameBrain::updateEnemyVectors() {
-	
-	// Vector 1
-	if (enemy1.front().getX() <= 0) {
-		for (int i = 0; i < enemy1.size(); i++) {
-			enemy1[i].moveDown();
-		}
-		direction = 1;
-	}
-	else if (enemy1.back().getX() >= (SCREEN_SIZE - 48)) {
+		// Vector 1
+		if (enemy1.front().getX() <= 0) {
 			for (int i = 0; i < enemy1.size(); i++) {
 				enemy1[i].moveDown();
 			}
-		direction = 0;
-	}
+			direction = 1;
+		}
+		else if (enemy1.back().getX() >= (SCREEN_SIZE - 48)) {
+			for (int i = 0; i < enemy1.size(); i++) {
+				enemy1[i].moveDown();
+			}
+			direction = 0;
+		}
 
-	if (direction == 0) {
-		for (int i = 0; i < enemy1.size(); i++) {
-			enemy1[i].moveX(0);
+		if (direction == 0) {
+			for (int i = 0; i < enemy1.size(); i++) {
+				enemy1[i].moveX(0);
+			}
 		}
-	}
 
-	if (direction == 1) {
-		for (int i = 0; i < enemy1.size(); i++) {
-			enemy1[i].moveX(1);
+		if (direction == 1) {
+			for (int i = 0; i < enemy1.size(); i++) {
+				enemy1[i].moveX(1);
+			}
 		}
-	}
-	// Vector 2
-	if (enemy2.front().getX() <= 0) {
-		for (int i = 0; i < enemy2.size(); i++) {
-			enemy2[i].moveDown();
+		// Vector 2
+		if (enemy2.front().getX() <= 0) {
+			for (int i = 0; i < enemy2.size(); i++) {
+				enemy2[i].moveDown();
+			}
+			direction = 1;
 		}
-		direction = 1;
-	}
-	else if (enemy2.back().getX() >= (SCREEN_SIZE - 48)) {
-		for (int i = 0; i < enemy2.size(); i++) {
-			enemy2[i].moveDown();
+		else if (enemy2.back().getX() >= (SCREEN_SIZE - 48)) {
+			for (int i = 0; i < enemy2.size(); i++) {
+				enemy2[i].moveDown();
+			}
+			direction = 0;
 		}
-		direction = 0;
-	}
 
-	if (direction == 0) {
-		for (int i = 0; i < enemy2.size(); i++) {
-			enemy2[i].moveX(0);
+		if (direction == 0) {
+			for (int i = 0; i < enemy2.size(); i++) {
+				enemy2[i].moveX(0);
+			}
 		}
-	}
 
-	if (direction == 1) {
-		for (int i = 0; i < enemy2.size(); i++) {
-			enemy2[i].moveX(1);
+		if (direction == 1) {
+			for (int i = 0; i < enemy2.size(); i++) {
+				enemy2[i].moveX(1);
+			}
 		}
-	}
 
-	// Vector 3
-	if (enemy3.front().getX() <= 0) {
-		for (int i = 0; i < enemy3.size(); i++) {
-			enemy3[i].moveDown();
+		// Vector 3
+		if (enemy3.front().getX() <= 0) {
+			for (int i = 0; i < enemy3.size(); i++) {
+				enemy3[i].moveDown();
+			}
+			direction = 1;
 		}
-		direction = 1;
-	}
-	else if (enemy3.back().getX() >= (SCREEN_SIZE - 48)) {
-		for (int i = 0; i < enemy3.size(); i++) {
-			enemy3[i].moveDown();
+		else if (enemy3.back().getX() >= (SCREEN_SIZE - 48)) {
+			for (int i = 0; i < enemy3.size(); i++) {
+				enemy3[i].moveDown();
+			}
+			direction = 0;
 		}
-		direction = 0;
-	}
 
-	if (direction == 0) {
-		for (int i = 0; i < enemy3.size(); i++) {
-			enemy3[i].moveX(0);
+		if (direction == 0) {
+			for (int i = 0; i < enemy3.size(); i++) {
+				enemy3[i].moveX(0);
+			}
 		}
-	}
 
-	if (direction == 1) {
-		for (int i = 0; i < enemy3.size(); i++) {
-			enemy3[i].moveX(1);
+		if (direction == 1) {
+			for (int i = 0; i < enemy3.size(); i++) {
+				enemy3[i].moveX(1);
+			}
 		}
-	}
 
-	// Vector 4
-	if (enemy4.front().getX() <= 0) {
-		for (int i = 0; i < enemy4.size(); i++) {
-			enemy4[i].moveDown();
+		// Vector 4
+		if (enemy4.front().getX() <= 0) {
+			for (int i = 0; i < enemy4.size(); i++) {
+				enemy4[i].moveDown();
+			}
+			direction = 1;
 		}
-		direction = 1;
-	}
-	else if (enemy4.back().getX() >= (SCREEN_SIZE - 48)) {
-		for (int i = 0; i < enemy4.size(); i++) {
-			enemy4[i].moveDown();
+		else if (enemy4.back().getX() >= (SCREEN_SIZE - 48)) {
+			for (int i = 0; i < enemy4.size(); i++) {
+				enemy4[i].moveDown();
+			}
+			direction = 0;
 		}
-		direction = 0;
-	}
 
-	if (direction == 0) {
-		for (int i = 0; i < enemy4.size(); i++) {
-			enemy4[i].moveX(0);
+		if (direction == 0) {
+			for (int i = 0; i < enemy4.size(); i++) {
+				enemy4[i].moveX(0);
+			}
 		}
-	}
 
-	if (direction == 1) {
-		for (int i = 0; i < enemy4.size(); i++) {
-			enemy4[i].moveX(1);
+		if (direction == 1) {
+			for (int i = 0; i < enemy4.size(); i++) {
+				enemy4[i].moveX(1);
+			}
 		}
-	}
 
-	// Vector 5
-	if (enemy5.front().getX() <= 0) {
-		for (int i = 0; i < enemy5.size(); i++) {
-			enemy5[i].moveDown();
+		// Vector 5
+		if (enemy5.front().getX() <= 0) {
+			for (int i = 0; i < enemy5.size(); i++) {
+				enemy5[i].moveDown();
+			}
+			direction = 1;
 		}
-		direction = 1;
-	}
-	else if (enemy5.back().getX() >= (SCREEN_SIZE - 48)) {
-		for (int i = 0; i < enemy5.size(); i++) {
-			enemy5[i].moveDown();
+		else if (enemy5.back().getX() >= (SCREEN_SIZE - 48)) {
+			for (int i = 0; i < enemy5.size(); i++) {
+				enemy5[i].moveDown();
+			}
+			direction = 0;
 		}
-		direction = 0;
-	}
 
-	if (direction == 0) {
-		for (int i = 0; i < enemy5.size(); i++) {
-			enemy5[i].moveX(0);
+		if (direction == 0) {
+			for (int i = 0; i < enemy5.size(); i++) {
+				enemy5[i].moveX(0);
+			}
 		}
-	}
 
-	if (direction == 1) {
-		for (int i = 0; i < enemy5.size(); i++) {
-			enemy5[i].moveX(1);
+		if (direction == 1) {
+			for (int i = 0; i < enemy5.size(); i++) {
+				enemy5[i].moveX(1);
+			}
 		}
-	}
+	
 }
 
 void GameBrain::initObstacles() {
@@ -454,13 +455,13 @@ void GameBrain::init() {
 }
 
 void GameBrain::checkWin() {
-	if (m_killCounter == 5) {
+	if (m_killCounter == 55) {
 		std::cout << "You won" << std::endl;
-		restart();
+		restart(enemy1[0].getDifficulty()+1);
 	}
 }
 
-void GameBrain::restart() {
+void GameBrain::restart(int difficulty) {
 	if (m_currentScore > score->readFile()) {
 		std::string temp = std::to_string(m_currentScore);
 		const char * converted = temp.c_str();
@@ -475,15 +476,35 @@ void GameBrain::restart() {
 	p1->setX((SCREEN_SIZE - 54) / 2);
 
 	// Update score
-	updateHighScore();
-	m_currentScore = 0;
+	if (difficulty == 1) {
+		m_currentScore = 0;
+		updateHighScore();
+		m_screen = 3;
+	}
 	updateScore();
 
 	// Reset enemies, killcounter and update screen
 	redrawObstacles();
 	redrawEnemies();
 	m_killCounter = 0;
-	m_screen = 3;
+	
+
+	// Set speed based on difficulty
+	for (int i = 0; i < enemy1.size(); i++) {
+		enemy1[i].setDifficulty(difficulty);
+	}
+	for (int i = 0; i < enemy1.size(); i++) {
+		enemy2[i].setDifficulty(difficulty);
+	}
+	for (int i = 0; i < enemy1.size(); i++) {
+		enemy3[i].setDifficulty(difficulty);
+	}
+	for (int i = 0; i < enemy1.size(); i++) {
+		enemy4[i].setDifficulty(difficulty);
+	}
+	for (int i = 0; i < enemy1.size(); i++) {
+		enemy5[i].setDifficulty(difficulty);
+	}
 }
 
 void GameBrain::updateScore() {
@@ -767,183 +788,188 @@ void GameBrain::redrawObstacles() {
 }
 
 void GameBrain::checkCollision() {
-	for (int i = 0; i < p1->getBullets().size(); i++) {
-		if (p1->getBullets()[i]->getX() < 0) {
-			p1->removeBullet(i);
+	int now = SDL_GetTicks();
+	int before = 0;
+	if (now > before + 500) {
+		before = now;
+		for (int i = 0; i < p1->getBullets().size(); i++) {
+			if (p1->getBullets()[i]->getX() < 0) {
+				p1->removeBullet(i);
+			}
 		}
-	}
 
-	// Check if hit obstacle 1
-	for (int i = 0; i < p1->getBullets().size(); i++) {
-		if (p1->getBullets()[i]->getY() > 500) {
+		// Check if hit obstacle 1
+		for (int i = 0; i < p1->getBullets().size(); i++) {
+			if (p1->getBullets()[i]->getY() > 500) {
 
-			// Check if hit obstacle
-			for (int j = 0; j < leftObst.size(); j++) {
-				if (p1->getBullets()[i]->getX()+1 >= leftObst[j].getX() &&
-					p1->getBullets()[i]->getX()+1 <= (leftObst[j].getX() + 21) &&
-					p1->getBullets()[i]->getY() >= leftObst[j].getY() &&
-					p1->getBullets()[i]->getY() <= (leftObst[j].getY() + 21)) {
+				// Check if hit obstacle
+				for (int j = 0; j < leftObst.size(); j++) {
+					if (p1->getBullets()[i]->getX() + 1 >= leftObst[j].getX() &&
+						p1->getBullets()[i]->getX() + 1 <= (leftObst[j].getX() + 21) &&
+						p1->getBullets()[i]->getY() >= leftObst[j].getY() &&
+						p1->getBullets()[i]->getY() <= (leftObst[j].getY() + 21)) {
 						p1->getBullets()[i]->setY(-1500);
 						leftObst[j].setY(-850);
+					}
 				}
 			}
 		}
-	}
 
-	// Check if hit obstacle 2
-	for (int i = 0; i < p1->getBullets().size(); i++) {
-		if (p1->getBullets()[i]->getY() > 500) {
+		// Check if hit obstacle 2
+		for (int i = 0; i < p1->getBullets().size(); i++) {
+			if (p1->getBullets()[i]->getY() > 500) {
 
-			// Check if hit obstacle
-			for (int j = 0; j < middleObst.size(); j++) {
-				if (p1->getBullets()[i]->getX() + 1 >= middleObst[j].getX() &&
-					p1->getBullets()[i]->getX() + 1 <= (middleObst[j].getX() + 21) &&
-					p1->getBullets()[i]->getY() >= middleObst[j].getY() &&
-					p1->getBullets()[i]->getY() <= (middleObst[j].getY() + 21)) {
-					p1->getBullets()[i]->setY(-1500);
-					middleObst[j].setY(-850);
+				// Check if hit obstacle
+				for (int j = 0; j < middleObst.size(); j++) {
+					if (p1->getBullets()[i]->getX() + 1 >= middleObst[j].getX() &&
+						p1->getBullets()[i]->getX() + 1 <= (middleObst[j].getX() + 21) &&
+						p1->getBullets()[i]->getY() >= middleObst[j].getY() &&
+						p1->getBullets()[i]->getY() <= (middleObst[j].getY() + 21)) {
+						p1->getBullets()[i]->setY(-1500);
+						middleObst[j].setY(-850);
+					}
 				}
 			}
 		}
-	}
 
-	// Check if hit obstacle 3
-	for (int i = 0; i < p1->getBullets().size(); i++) {
-		if (p1->getBullets()[i]->getY() > 500) {
+		// Check if hit obstacle 3
+		for (int i = 0; i < p1->getBullets().size(); i++) {
+			if (p1->getBullets()[i]->getY() > 500) {
 
-			// Check if hit obstacle
-			for (int j = 0; j < rightObst.size(); j++) {
-				if (p1->getBullets()[i]->getX() + 1 >= rightObst[j].getX() &&
-					p1->getBullets()[i]->getX() + 1 <= (rightObst[j].getX() + 21) &&
-					p1->getBullets()[i]->getY() >= rightObst[j].getY() &&
-					p1->getBullets()[i]->getY() <= (rightObst[j].getY() + 21)) {
-					p1->getBullets()[i]->setY(-1500);
-					rightObst[j].setY(-850);
+				// Check if hit obstacle
+				for (int j = 0; j < rightObst.size(); j++) {
+					if (p1->getBullets()[i]->getX() + 1 >= rightObst[j].getX() &&
+						p1->getBullets()[i]->getX() + 1 <= (rightObst[j].getX() + 21) &&
+						p1->getBullets()[i]->getY() >= rightObst[j].getY() &&
+						p1->getBullets()[i]->getY() <= (rightObst[j].getY() + 21)) {
+						p1->getBullets()[i]->setY(-1500);
+						rightObst[j].setY(-850);
+					}
 				}
 			}
 		}
-	}
 
-	// Check if alien touches player
-	for (int i = 0; i < 11; i++) {
-		if ((enemy1[i].getY() + 47) >= p1->getY() ||
-			(enemy2[i].getY() + 47) >= p1->getY() ||
-			(enemy3[i].getY() + 47) >= p1->getY() ||
-			(enemy4[i].getY() + 47) >= p1->getY() ||
-			(enemy5[i].getY() + 47) >= p1->getY()) {
-				restart();	
-				
+		// Check if alien touches player
+		for (int i = 0; i < 11; i++) {
+			if ((enemy1[i].getY() + 47) >= p1->getY() ||
+				(enemy2[i].getY() + 47) >= p1->getY() ||
+				(enemy3[i].getY() + 47) >= p1->getY() ||
+				(enemy4[i].getY() + 47) >= p1->getY() ||
+				(enemy5[i].getY() + 47) >= p1->getY()) {
+				restart(1);
+
 				updateScore();
-		}
-	}
-
-	if (p1->getBullets().size() > 0) {
-		// Vector 1
-		for (int i = 0; i < p1->getBullets().size(); i++) {
-			if (!(p1->getBullets()[i]->getY() < 0)) {
-				for (int j = 0; j < enemy1.size(); j++) {
-					if (p1->getBullets()[i]->getY() >= enemy1[j].getY() &&
-						p1->getBullets()[i]->getY() <= (enemy1[j].getY() + 47) &&
-						p1->getBullets()[i]->getX() >= enemy1[j].getX() &&
-						p1->getBullets()[i]->getX() <= (enemy1[j].getX() + 47))
-					{
-						p1->getBullets()[i]->setY(-1200);
-						enemy1[j].setY(-1000);
-						m_killCounter++;
-						m_currentScore += 10;
-						updateScore();
-						std::cout << m_currentScore << std::endl;
-						checkWin();
-						
-					}
-				}
 			}
 		}
 
-		// Vector 2
-		for (int i = 0; i < p1->getBullets().size(); i++) {
-			if (!(p1->getBullets()[i]->getY() < 0)) {
-				for (int j = 0; j < enemy2.size(); j++) {
-					if (p1->getBullets()[i]->getY() >= enemy2[j].getY() &&
-						p1->getBullets()[i]->getY() <= (enemy2[j].getY() + 47) &&
-						p1->getBullets()[i]->getX() >= enemy2[j].getX() &&
-						p1->getBullets()[i]->getX() <= (enemy2[j].getX() + 47))
-					{
-						p1->getBullets()[i]->setY(-1200);
-						enemy2[j].setY(-1000);
-						m_killCounter++;
-						m_currentScore += 20;
-						updateScore();
-						std::cout << m_currentScore << std::endl;
-						checkWin();
-						
+		if (p1->getBullets().size() > 0) {
+			// Vector 1
+			for (int i = 0; i < p1->getBullets().size(); i++) {
+				if (!(p1->getBullets()[i]->getY() < 0)) {
+					for (int j = 0; j < enemy1.size(); j++) {
+						if (p1->getBullets()[i]->getY() >= enemy1[j].getY() &&
+							p1->getBullets()[i]->getY() <= (enemy1[j].getY() + 47) &&
+							p1->getBullets()[i]->getX() >= enemy1[j].getX() &&
+							p1->getBullets()[i]->getX() <= (enemy1[j].getX() + 47))
+						{
+							p1->getBullets()[i]->setY(-1200);
+							enemy1[j].setY(-1000);
+							m_killCounter++;
+							m_currentScore += 10;
+							updateScore();
+							std::cout << m_currentScore << std::endl;
+							checkWin();
+
+						}
 					}
 				}
 			}
-		}
 
-		// Vector 3
-		for (int i = 0; i < p1->getBullets().size(); i++) {
-			if (!(p1->getBullets()[i]->getY() < 0)) {
-				for (int j = 0; j < enemy3.size(); j++) {
-					if (p1->getBullets()[i]->getY() >= enemy3[j].getY() &&
-						p1->getBullets()[i]->getY() <= (enemy3[j].getY() + 47) &&
-						p1->getBullets()[i]->getX() >= enemy3[j].getX() &&
-						p1->getBullets()[i]->getX() <= (enemy3[j].getX() + 47))
-					{
-						p1->getBullets()[i]->setY(-1200);
-						enemy3[j].setY(-1000);
-						m_killCounter++;
-						m_currentScore += 30;
-						updateScore();
-						std::cout << m_currentScore << std::endl;
-						checkWin();
-						
+			// Vector 2
+			for (int i = 0; i < p1->getBullets().size(); i++) {
+				if (!(p1->getBullets()[i]->getY() < 0)) {
+					for (int j = 0; j < enemy2.size(); j++) {
+						if (p1->getBullets()[i]->getY() >= enemy2[j].getY() &&
+							p1->getBullets()[i]->getY() <= (enemy2[j].getY() + 47) &&
+							p1->getBullets()[i]->getX() >= enemy2[j].getX() &&
+							p1->getBullets()[i]->getX() <= (enemy2[j].getX() + 47))
+						{
+							p1->getBullets()[i]->setY(-1200);
+							enemy2[j].setY(-1000);
+							m_killCounter++;
+							m_currentScore += 20;
+							updateScore();
+							std::cout << m_currentScore << std::endl;
+							checkWin();
+
+						}
 					}
 				}
 			}
-		}
 
-		// Vector 4
-		for (int i = 0; i < p1->getBullets().size(); i++) {
-			if (!(p1->getBullets()[i]->getY() < 0)) {
-				for (int j = 0; j < enemy4.size(); j++) {
-					if (p1->getBullets()[i]->getY() >= enemy4[j].getY() &&
-						p1->getBullets()[i]->getY() <= (enemy4[j].getY() + 47) &&
-						p1->getBullets()[i]->getX() >= enemy4[j].getX() &&
-						p1->getBullets()[i]->getX() <= (enemy4[j].getX() + 47))
-					{
-						p1->getBullets()[i]->setY(-1200);
-						enemy4[j].setY(-1000);
-						m_killCounter++;
-						m_currentScore += 40;
-						updateScore();
-						std::cout << m_currentScore << std::endl;
-						checkWin();
-						
+			// Vector 3
+			for (int i = 0; i < p1->getBullets().size(); i++) {
+				if (!(p1->getBullets()[i]->getY() < 0)) {
+					for (int j = 0; j < enemy3.size(); j++) {
+						if (p1->getBullets()[i]->getY() >= enemy3[j].getY() &&
+							p1->getBullets()[i]->getY() <= (enemy3[j].getY() + 47) &&
+							p1->getBullets()[i]->getX() >= enemy3[j].getX() &&
+							p1->getBullets()[i]->getX() <= (enemy3[j].getX() + 47))
+						{
+							p1->getBullets()[i]->setY(-1200);
+							enemy3[j].setY(-1000);
+							m_killCounter++;
+							m_currentScore += 30;
+							updateScore();
+							std::cout << m_currentScore << std::endl;
+							checkWin();
+
+						}
 					}
 				}
 			}
-		}
 
-		// Vector 5
-		for (int i = 0; i < p1->getBullets().size(); i++) {
-			if (!(p1->getBullets()[i]->getY() < 0)) {
-				for (int j = 0; j < enemy5.size(); j++) {
-					if (p1->getBullets()[i]->getY() >= enemy5[j].getY() &&
-						p1->getBullets()[i]->getY() <= (enemy5[j].getY() + 47) &&
-						p1->getBullets()[i]->getX() >= enemy5[j].getX() &&
-						p1->getBullets()[i]->getX() <= (enemy5[j].getX() + 47))
-					{
-						p1->getBullets()[i]->setY(-1200);
-						enemy5[j].setY(-1000);
-						m_killCounter++;
-						m_currentScore += 50;
-						updateScore();
-						std::cout << m_currentScore << std::endl;
-						checkWin();
-						
+			// Vector 4
+			for (int i = 0; i < p1->getBullets().size(); i++) {
+				if (!(p1->getBullets()[i]->getY() < 0)) {
+					for (int j = 0; j < enemy4.size(); j++) {
+						if (p1->getBullets()[i]->getY() >= enemy4[j].getY() &&
+							p1->getBullets()[i]->getY() <= (enemy4[j].getY() + 47) &&
+							p1->getBullets()[i]->getX() >= enemy4[j].getX() &&
+							p1->getBullets()[i]->getX() <= (enemy4[j].getX() + 47))
+						{
+							p1->getBullets()[i]->setY(-1200);
+							enemy4[j].setY(-1000);
+							m_killCounter++;
+							m_currentScore += 40;
+							updateScore();
+							std::cout << m_currentScore << std::endl;
+							checkWin();
 
+						}
+					}
+				}
+			}
+
+			// Vector 5
+			for (int i = 0; i < p1->getBullets().size(); i++) {
+				if (!(p1->getBullets()[i]->getY() < 0)) {
+					for (int j = 0; j < enemy5.size(); j++) {
+						if (p1->getBullets()[i]->getY() >= enemy5[j].getY() &&
+							p1->getBullets()[i]->getY() <= (enemy5[j].getY() + 47) &&
+							p1->getBullets()[i]->getX() >= enemy5[j].getX() &&
+							p1->getBullets()[i]->getX() <= (enemy5[j].getX() + 47))
+						{
+							p1->getBullets()[i]->setY(-1200);
+							enemy5[j].setY(-1000);
+							m_killCounter++;
+							m_currentScore += 50;
+							updateScore();
+							std::cout << m_currentScore << std::endl;
+							checkWin();
+
+
+						}
 					}
 				}
 			}
@@ -1056,7 +1082,7 @@ void GameBrain::handleEvents() {
 			std::cout << "Enter: " << m_menuChoice << std::endl;
 			// Change to game screen
 			if (m_menuChoice == 0 && m_screen == 0) {
-				restart();
+				restart(1);
 				m_screen = 2;
 			}
 

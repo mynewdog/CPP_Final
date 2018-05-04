@@ -26,12 +26,20 @@ void Enemy::setY(int y) {
 	m_enemy_coords.y = y;
 }
 
+void Enemy::setDifficulty(int dif) {
+	difficulty = dif;
+}
+
+int Enemy::getDifficulty() {
+	return difficulty;
+}
+
 void Enemy::moveX(int direction) {
 	if (direction == 0) {
-		m_enemy_coords.x -= 2;
+		m_enemy_coords.x -= getDifficulty();
 	}
 	else {
-		m_enemy_coords.x += 2;
+		m_enemy_coords.x += getDifficulty();
 	}
 }
 
