@@ -19,7 +19,7 @@ int direction = 1;
 int ticks = 0;
 int oldTime = 0;
 int before = 0;
-int randomCount = 3;
+int beforeEnemyProjectile = 0;
 int randomEnemy[3];
 
 
@@ -181,26 +181,24 @@ void GameBrain::updateEnemyVectors() {
 	
 }
 
-void GameBrain::setRandom() {
-	for (int i = 0; i < 3; i++) {
-		randomEnemy[i] = rand() % 11;
-	}
-}
-
 int GameBrain::getRandom() {
-	for (int i = 0; i < 3; i++) {
-		return randomEnemy[i];
-	}
+	srand(time(NULL));
+	int random = rand() % 11;
+	return random;
 }
 
-void GameBrain::enemyAI() {
-	for (int i = 0; i < enemy1.size(); i++) {		
-		if (enemy1[i].getY() > 0 && randomCount > 0) {
-			setRandom();
-			EnemyProjectile ep1(m_gameRenderer, enemy1[getRandom()].getX() + 23, enemy1[getRandom()].getY() + 47);
-			enemyProjectiles.push_back(ep1);
-			std::cout << getRandom() << std::endl;
-			randomCount--;
+void GameBrain::enemyAI() {	
+	int now = SDL_GetTicks();
+	int before = 0;
+	if (now > beforeEnemyProjectile + 3000) {
+		beforeEnemyProjectile = now;
+		for (int i = 0; i < enemy1.size(); i++) {
+			if (enemy1[i].getX() > p1->getX() &&
+				enemy1[i].getX() < p1->getX() + 48) {
+				std::cout << "Enemy[" << i << "]" << std::endl;
+				EnemyProjectile ep1(m_gameRenderer, enemy1[i].getX() + 23, enemy1[i].getY() + 47);
+				enemyProjectiles.push_back(ep1);
+			}
 		}
 	}
 }
